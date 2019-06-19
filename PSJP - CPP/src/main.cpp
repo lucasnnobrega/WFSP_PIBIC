@@ -106,7 +106,7 @@ void PSJP()
     }
 
     // Adicionando variavel no modelo 
-    //! verificar isso   
+    ////verificar isso   
     for(int i = 0; i < n; i++) {        
         for(int k = 0; k < M[i]; k++) {
             char var[100];
@@ -134,39 +134,17 @@ void PSJP()
         modelo.add(D[i]);
     }
 
-    /*
-    /////////////////////////////////////////////////////////////////
-
-    // P
-    // Maior produto D_i*c_i, para todo x_i E X
-    //? Como assim ser um array? Num era para ser um valor unico contendo o maximo?
-    //IloIntVarArray P(env, n);
-
-    // Adicionando variavel no modelo    
-    //! verificar isso
-    //for(int i = 0; i < n; i++){
-    //    char var[100];
-    //    sprintf(var, "P(%d)", i+1);
-    //    P[i].setName(var);
-    //    modelo.add(P[i]);
-    //}
-
-    //////////////////////////////////////////////////////////////////
-    */
-
     // P
     // Maior produto D_i*c_i, para todo x_i E X
     //? Implementado como um valor unico
     IloInt P(env, n);
 
     // Adicionando variavel no modelo    
-    //! verificar isso
+    //// verificar isso
     char var[100];
     sprintf(var, "P");
     P.setName(var);
     modelo.add(P);
-    
-
 
     // p_ik
     // Posicao da k-esima copia do simbolo x_i E X
@@ -177,7 +155,7 @@ void PSJP()
     }
 
     // Adicionando variavel no modelo 
-    //! verificar isso   
+    //// verificar isso   
     for(int i = 0; i < n; i++) {        
         for(int k = 0; k < M[i]; k++) {
             char var[100];
@@ -187,17 +165,7 @@ void PSJP()
         } 
     }
 
-    ///////////////////////////////////////////////////
-
-    //// Criando a Função Objetivo (FO) 
-    ////IloExpr sumY(env);
-    ////for(int k = 0; k < data.getNItems(); k++)
-    ////{   
-    ////sumY += y[k];
-    ////}
-    //// Adicionando a FO
-    ////modelo.add(IloMinimize(env, sumY));
-
+    
 
     // Criando a Função Objetivo (FO) 
     // min P
@@ -205,54 +173,62 @@ void PSJP()
     
     modelo.add(obj)
 
-    ///////////////////////////////////////////////////
-
     
 
     // Constraints and ranges
 
-    // P >= D_i * c_i, para i = 1, ... , n (4.2)
-    //! Conferir para o caso em que P for um array!!!
+    // P >= D_i * c_i, para i = 1, ... , n (4.2) (3)
     for(int i = 0; i < n; i++){
-        //* Um caso, P >= D_1*c_1
-        IloRange P_restrition(env, (D[i]*c[i]), P[i], IloInfinity);
-        // Adiciona a restricao do P no exemplo
-        modelo.add(P_restrition);
+        modelo.add( P >= D[i]*c[i] );
     }
 
-    // D_i ≥ d_i,k,k+1 , para todo i = 1, . . . , n,  para todo k ∈ K_i \ {M_i }, (4.3)
-
+    // D_i ≥ d_i,k,k+1 , para todo i = 1, . . . , n,  para todo k ∈ K_i \ {M_i }, (4.3) (4)
     for(int i = 0; i < n; i++){
-        for(int k = 0; k < n; k++){
-            IloRange D_restrition(env, d[])
+        for(int k = 0; k < M[i]-1; k++){
+            modelo.add(D[i] >= d[i][k]);
         }
     }
 
-    // somatorio1 somatorio2 y_ikh ≤ 1, ∀h ∈ {1, . . . , T MAX}, (4.4)    
-    IloExpr somatorio_somatorio_yikh(env);
-
-    for (int i = 0; i < n; i++) {
-        for (int k = 0; k < M[i]; k++) {
-            for(int h = 0; h < H[i][k]; h++){
-                somatorio_somatorio_yikh += y[i][k][h];            
+    // sum{i in X, k in K[i]} y_ikh ≤ 1, ∀h ∈ {1, . . . , T MAX}, (4.4) (5)
+    
+    for(int h = 0; h < TMAX-1; h++){
+        IloExpr soma(env);
+        for (int i = 0; i < n; i++) {  
+            for (int k = 0; k < M[i]; k++) {      
+                soma += y[i][k][h];            
             }
         }
+        modelo.add(soma <= 1);
     }
 
-    IloRange somatorio_somatorio_yikh_restrition(env, 0, somatorio_somatorio_yikh, 1)
-
-    modelo.add(somatorio_somatorio_yikh_restrition);
-
-    // somatorio_y_ikh ≤ 1, ∀i = 1, . . . , n, ∀k ∈ K i , (4.5)
-    IloExpr somatorio_somatorio_yikh(env);
-
-    for (int i = 0; i < n; i++) {
-        for (int k = 0; k < M[i]; k++) {
+    // sum{h in H[i][k]} y_ikh ≤ 1,, (4.4) (6) 
+    
+    for (int i = 0; i < n; i++) {  
+        for (int k = 0; k < M[i]; k++) {      
+            IloExpr soma(env);
             for(int h = 0; h < H[i][k]; h++){
-                somatorio_somatorio_yikh += y[i][k][h];            
+                soma += y[i][k][h];            
             }
         }
+        modelo.add(soma <= 1);
     }
+
+    // sum{k in K[i], h in H[i][k]} y_ikh ≤ 1,  (4.4) (7)
+    
+    for (int i = 0; i < n; i++) {  
+        IloExpr soma(env);
+        for (int k = 0; k < M[i]; k++) {      
+            for(int h = 0; h < H[i][k]; h++){
+                soma += y[i][k][h];            
+            }
+        }
+        modelo.add(soma <= 1);
+    }
+
+
+
+
+
 
 
 
