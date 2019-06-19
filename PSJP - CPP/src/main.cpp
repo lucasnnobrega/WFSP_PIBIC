@@ -134,19 +134,39 @@ void PSJP()
         modelo.add(D[i]);
     }
 
+    /*
+    /////////////////////////////////////////////////////////////////
+
     // P
     // Maior produto D_i*c_i, para todo x_i E X
     //? Como assim ser um array? Num era para ser um valor unico contendo o maximo?
-    IloIntVarArray P(env, n);
+    //IloIntVarArray P(env, n);
 
     // Adicionando variavel no modelo    
     //! verificar isso
-    for(int i = 0; i < n; i++){
-        char var[100];
-        sprintf(var, "P(%d)", i+1);
-        P[i].setName(var);
-        modelo.add(P[i]);
-    }
+    //for(int i = 0; i < n; i++){
+    //    char var[100];
+    //    sprintf(var, "P(%d)", i+1);
+    //    P[i].setName(var);
+    //    modelo.add(P[i]);
+    //}
+
+    //////////////////////////////////////////////////////////////////
+    */
+
+    // P
+    // Maior produto D_i*c_i, para todo x_i E X
+    //? Implementado como um valor unico
+    IloInt P(env, n);
+
+    // Adicionando variavel no modelo    
+    //! verificar isso
+    char var[100];
+    sprintf(var, "P");
+    P.setName(var);
+    modelo.add(P);
+    
+
 
     // p_ik
     // Posicao da k-esima copia do simbolo x_i E X
@@ -169,15 +189,22 @@ void PSJP()
 
     ///////////////////////////////////////////////////
 
-    //Criando a Função Objetivo (FO) 
-    //IloExpr sumY(env);
-    //for(int k = 0; k < data.getNItems(); k++)
-    //{   
-    //sumY += y[k];
-    //}
-    // Adicionando a FO
-    //modelo.add(IloMinimize(env, sumY));
+    //// Criando a Função Objetivo (FO) 
+    ////IloExpr sumY(env);
+    ////for(int k = 0; k < data.getNItems(); k++)
+    ////{   
+    ////sumY += y[k];
+    ////}
+    //// Adicionando a FO
+    ////modelo.add(IloMinimize(env, sumY));
+
+
+    // Criando a Função Objetivo (FO) 
+    // min P
+    IloObjective obj(env, P, IloObjective::Minimize);
     
+    modelo.add(obj)
+
     ///////////////////////////////////////////////////
 
     
