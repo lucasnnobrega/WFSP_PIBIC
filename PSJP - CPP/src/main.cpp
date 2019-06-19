@@ -16,16 +16,16 @@ using namespace std;
 
 void PSJP()
 {
-    // Creating a envirioment
+    // Criando o Ambiente
     IloEnv env;
     IloModel modelo(env);
 
-    // Dados
+    //* Dados
 
     // Numero de Simbolos
     int n = 14;
 
-    // Conjunto de Simbolos
+    // Conjunto de Simbolos X1 ... Xn
     int X[n];
 
     // Numero Maximo de copias do simbolo Xi E X
@@ -48,7 +48,7 @@ void PSJP()
     // Tamanho maximo das sequencias viaveis
     int TMAX = 4 * n;
 
-    // Prioridades dos símbolos
+    // Prioridades do símbolo Xi E X
     int c[n];  
     
     // Conjunto de posicoes que podem ser ocupadas pela k-ésima cópia do simbolo Xi E X
@@ -71,7 +71,7 @@ void PSJP()
 
     //* Variaveis
     
-    // y_ikh
+    // y_ikh , variavel binaria
     // Dimensão n pois i vai até n
     IloArray <IloArray <IloBoolVarArray> > y(env, n);
 
@@ -122,6 +122,7 @@ void PSJP()
     }
 
     // D_i
+    // Maior Distancia entre duas copias consecutivas do simbolo x_i E X
     IloIntVarArray D(env, n);
 
     // Adicionando variavel no modelo    
@@ -134,6 +135,8 @@ void PSJP()
     }
 
     // P
+    // Maior produto D_i*c_i, para todo x_i E X
+    //? Como assim ser um array? Num era para ser um valor unico contendo o maximo?
     IloIntVarArray P(env, n);
 
     // Adicionando variavel no modelo    
@@ -146,6 +149,7 @@ void PSJP()
     }
 
     // p_ik
+    // Posicao da k-esima copia do simbolo x_i E X
     IloArray <IloIntVarArray>  p(env, n);
     for (int i = 0; i < n; i++) {
         IloIntVarArray vetorAux(env, M[i]); 
@@ -163,24 +167,41 @@ void PSJP()
         } 
     }
 
-    /*
+    ///////////////////////////////////////////////////
 
-    // Decision variables
-    // y_ikh
-    IloArray<IloArray<IloBoolVarArray>> y(env, n);
+    //Criando a Função Objetivo (FO) 
+    //IloExpr sumY(env);
+    //for(int k = 0; k < data.getNItems(); k++)
+    //{   
+    //sumY += y[k];
+    //}
+    // Adicionando a FO
+    //modelo.add(IloMinimize(env, sumY));
+    
+    ///////////////////////////////////////////////////
 
-    /*
-    IloNumVarArray players(env, nPlayers, 0, 1, ILOBOOL);
-    //Creating objective function1
-    IloExpr to_optimize(env);
-    for (int i = 0; i < players.getSize(); ++i)
-        to_optimize += defesa[i] * players[i];
-
-    // Objective Function
-    IloObjective obj(env, to_optimize, IloObjective::Maximize);
+    
 
     // Constraints and ranges
 
+    // P >= D_i * c_i, para i = 1, ... , n (4.2)
+    //! Conferir para o caso em que P for um array!!!
+    for(int i = 0; i < n; i++){
+        //* Um caso, P >= D_1*c_1
+        IloRange P_restrition(env, (D[i]*c[i]), P, IloInfinity);
+        // Adiciona a restricao do P no exemplo
+        modelo.add(P_restrition);
+    }
+
+
+
+
+    // y_ikh E {0, 1}, para todo i = 1, . . . , n, para todo k ∈ K_i , para todo h ∈ H_ik. (4.13)
+
+
+
+
+    /*
     // means
     IloExpr sum_assistencia(env);
     IloExpr sum_arremesso(env);
