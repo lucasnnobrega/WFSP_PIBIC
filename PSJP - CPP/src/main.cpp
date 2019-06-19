@@ -188,15 +188,57 @@ void PSJP()
     //! Conferir para o caso em que P for um array!!!
     for(int i = 0; i < n; i++){
         //* Um caso, P >= D_1*c_1
-        IloRange P_restrition(env, (D[i]*c[i]), P, IloInfinity);
+        IloRange P_restrition(env, (D[i]*c[i]), P[i], IloInfinity);
         // Adiciona a restricao do P no exemplo
         modelo.add(P_restrition);
     }
 
+    // D_i ≥ d_i,k,k+1 , para todo i = 1, . . . , n,  para todo k ∈ K_i \ {M_i }, (4.3)
+
+    for(int i = 0; i < n; i++){
+        for(int k = 0; k < n; k++){
+            IloRange D_restrition(env, d[])
+        }
+    }
+
+    // somatorio1 somatorio2 y_ikh ≤ 1, ∀h ∈ {1, . . . , T MAX}, (4.4)    
+    IloExpr somatorio_somatorio_yikh(env);
+
+    for (int i = 0; i < n; i++) {
+        for (int k = 0; k < M[i]; k++) {
+            for(int h = 0; h < H[i][k]; h++){
+                somatorio_somatorio_yikh += y[i][k][h];            
+            }
+        }
+    }
+
+    IloRange somatorio_somatorio_yikh_restrition(env, 0, somatorio_somatorio_yikh, 1)
+
+    modelo.add(somatorio_somatorio_yikh_restrition);
+
+    // somatorio_y_ikh ≤ 1, ∀i = 1, . . . , n, ∀k ∈ K i , (4.5)
+    IloExpr somatorio_somatorio_yikh(env);
+
+    for (int i = 0; i < n; i++) {
+        for (int k = 0; k < M[i]; k++) {
+            for(int h = 0; h < H[i][k]; h++){
+                somatorio_somatorio_yikh += y[i][k][h];            
+            }
+        }
+    }
 
 
 
     // y_ikh E {0, 1}, para todo i = 1, . . . , n, para todo k ∈ K_i , para todo h ∈ H_ik. (4.13)
+    //! Conferir isso aqui
+    for (int i = 0; i < n; i++) {
+        for (int k = 0; k < M[i]; k++) {
+            for(int h = 0; h < H[i][k]; h++){
+                IloRange y_ikh_restrition(env, 0, y[i][k][h], 1);
+                modelo.add(y_ikh_restrition);
+            }
+        }
+    }
 
 
 
