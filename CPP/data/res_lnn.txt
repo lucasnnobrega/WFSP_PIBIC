@@ -1,0 +1,30 @@
+Number1
+Number2
+Number3
+Number4
+Number5
+Number6
+
+**********************************************
+Objective: 12
+
+Sequence:
+1 - 2 - 3 - 4 - 5 - 6 - 
+
+Occupied positions: 22 of 12
+symbol 1--> Priority:  10, Di:  5, Df:  4, Pi: 50, Pf: 40
+symbol 2--> Priority:  10, Di:  5, Df:  4, Pi: 50, Pf: 40
+symbol 3--> Priority:  10, Di:  5, Df:  4, Pi: 50, Pf: 40
+symbol 4--> Priority:  10, Di:  5, Df:  4, Pi: 50, Pf: 40
+symbol 5--> Priority:  10, Di:  5, Df:  4, Pi: 50, Pf: 40
+symbol 6--> Priority:  10, Di:  5, Df:  4, Pi: 50, Pf: 40
+
+(Available copies, Used copies)
+symbol 1 -->  5,  2
+symbol 2 -->  5,  2
+symbol 3 -->  5,  2
+symbol 4 -->  5,  2
+symbol 5 -->  5,  2
+symbol 6 -->  5,  2
+
+**********************************************

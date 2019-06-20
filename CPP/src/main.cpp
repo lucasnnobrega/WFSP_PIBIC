@@ -10,6 +10,8 @@
 #include <ilcplex/ilocplex.h>
 #include <iostream>
 #include <math.h>
+#include <string.h>
+#include "read_write.h"
 
 
 using namespace std;
@@ -287,14 +289,15 @@ void PSJP()
     env.out();
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-
-    std::cout<<"Entrou na main()"<<std::endl;
+    std::cout << "Entrou na main()" << std::endl;
     try
     {
         std::cout<<"Entrou no try"<<std::endl;
-        PSJP();
+        //PSJP();
+        //write_res('v', 12, 7);
+        read_instances();
     }
     catch (IloException &e)
     {

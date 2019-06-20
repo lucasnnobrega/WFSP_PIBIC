@@ -64,3 +64,6 @@ clean:
 
 rebuild: clean main
 
+run: rebuild
+	@echo "\n\n"
+	./main
