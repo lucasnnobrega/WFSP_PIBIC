@@ -25,14 +25,52 @@ int read_instances() {
   ifstream myfile ("./data/csp_instances/ins_05_10_1.txt");
   if (myfile.is_open())
   {
-    int counter = 0;
+    int count = 4;
+    for (int i = 0; i < count; i++)
+    {
+      getline(myfile, lines[i]);
+      cout << lines[i] << '\n';
+    }
+    /*
     while ( getline (myfile,line) )
     {
       cout << line << '\n';
     }
+    */
     //TODO: COMO SEPARAR CADA LINHA PARA CADA VARIAVEL
     //size_t lenght = line.copy(line, 100, 0);
     //lines[]
+
+    cout << endl;    
+
+    for (int i = 0; i < count; i++)
+    {
+      cout << "counter: " << i << " line: \"" << lines[i] << "\"" << '\n';
+    }
+
+    cout << endl;
+
+    int* myarray = new int[sizeof(lines[2])]; 
+    string to_compare = " ";
+
+    for (int i = 0; i < lines[2].length(); i++)
+    {
+      //if((lines[2][i] - '0') < 0 || (lines[2][i] - '0') > 9)
+
+      myarray[i] = lines[2][i] - '0';
+
+
+      cout << lines[2][i] << '\n';
+    }
+    
+
+    cout << endl;
+
+    for (int i = 0; i < lines[2].length(); i++)
+    {
+      cout << myarray[i] << '\n';
+    }
+
     myfile.close();
   }
 
