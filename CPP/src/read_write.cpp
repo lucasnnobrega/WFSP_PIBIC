@@ -37,39 +37,64 @@ int read_instances() {
       cout << line << '\n';
     }
     */
-    //TODO: COMO SEPARAR CADA LINHA PARA CADA VARIAVEL
-    //size_t lenght = line.copy(line, 100, 0);
-    //lines[]
 
     cout << endl;    
 
+    /*
     for (int i = 0; i < count; i++)
     {
       cout << "counter: " << i << " line: \"" << lines[i] << "\"" << '\n';
     }
+    */
 
     cout << endl;
 
     int* myarray = new int[sizeof(lines[2])]; 
+    int* myarray_clean = new int[sizeof(lines[2])]; 
     string to_compare = " ";
 
-    for (int i = 0; i < lines[2].length(); i++)
-    {
-      //if((lines[2][i] - '0') < 0 || (lines[2][i] - '0') > 9)
-
+    for (int i = 0; i < lines[2].length(); i++) {  
       myarray[i] = lines[2][i] - '0';
-
-
-      cout << lines[2][i] << '\n';
     }
     
+    int count_two_dig = 0;
+    
+    for (int i = 0; i < lines[2].length(); i++)
+    {
+      cout << "iteração n: " << i << endl;
 
+      cout << myarray[i] << " | " << myarray[i + 1] << endl;
+
+
+      if( myarray[i+1] >= 0 && myarray[i+1] <= 9 && myarray[i] > 0){
+        cout << "Numero Completo " << myarray[i] << myarray[i+1] << endl;
+        myarray_clean[i + count_two_dig] = myarray[i]*10+myarray[i+1];
+        count_two_dig += -2;
+      }
+      else if(myarray[i+1] < 0 && myarray[i] > 0){
+          cout << "Numero unico: " <<  myarray[i] << '\n';
+          myarray_clean[i + count_two_dig] = myarray[i];
+          count_two_dig += -1;
+      }
+      else cout << "" <<  myarray[i] << '\n';
+
+      cout << endl ;
+    }
+    cout << "end iteration" << endl << endl;
+    
     cout << endl;
 
     for (int i = 0; i < lines[2].length(); i++)
     {
-      cout << myarray[i] << '\n';
+      cout << "counter: " << i << " number: " << myarray[i] << " new "<< myarray_clean[i] << '\n';
     }
+
+     for (int i = 0; i < myarray_clean; i++)
+    {
+      cout << "counter: " << i << " number: " << myarray[i] << " new "<< myarray_clean[i] << '\n';
+    }
+
+
 
     myfile.close();
   }
