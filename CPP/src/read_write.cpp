@@ -6,7 +6,7 @@ using namespace std;
 
 typedef struct Files_Content {
   int number_of_symbols;
-  int n;
+  int m;
   int *priorities;
 } File_content;
 
@@ -62,7 +62,7 @@ File_content *read_instances(char* relative_file_path) {
     cout << endl;
 
     int number_of_symbols = linhas[0][0] - '0';
-    int n = linhas[1][0] - '0';
+    int m = linhas[1][0] - '0';
 
     int* myarray = new int[sizeof(linhas[2])]; 
     int* myarray_clean = new int[sizeof(linhas[2])]; 
@@ -114,11 +114,11 @@ File_content *read_instances(char* relative_file_path) {
 
     cout << "\n\n############################\n\nOthers Values:\n";
     cout << "Number of symbols: " << number_of_symbols << endl;
-    cout << "Number n: " << n << endl;
+    cout << "Number m: " << m << endl;
 
     
     content->number_of_symbols = number_of_symbols;
-    content->n = n;
+    content->m = m;
     content->priorities = myarray_clean;
     
 

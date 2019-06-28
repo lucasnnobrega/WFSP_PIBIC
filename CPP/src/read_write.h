@@ -4,7 +4,7 @@
 
 typedef struct Files_Content {
   int number_of_symbols;
-  int n;
+  int m;
   int *priorities;
 } File_content;
 

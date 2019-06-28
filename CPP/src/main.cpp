@@ -25,7 +25,9 @@ void PSJP(int number_of_symbols, int m, int *priorities)
     //* Dados
 
     // Numero de Simbolos
+    std::cout << "Entrou no PSJP"  << std::endl;
     int n = number_of_symbols;
+    std::cout << "Numero de Simbolos: " << number_of_symbols << " " << n << std::endl;
 
     // Conjunto de Simbolos X1 ... Xn
     int X[n];
@@ -33,35 +35,53 @@ void PSJP(int number_of_symbols, int m, int *priorities)
     // Numero Maximo de copias do simbolo Xi E X
     int M[n];
 
+    for(int i = 0; i < n; i++){
+        M[i] = m;
+    }
+
+
+    std::cout << "breakpoint 2 L:38" << std::endl;
+
     // Conjunto de indices das cópias xi E X,  Ki = {1, ..., Mi}
     // i  = {1,...N} 
     // Array de ponteiros
     int *K[n];
     
+    std::cout << "breakpoint 3 L:45" << std::endl;
+
     for (int i = 0; i < n; i++) {
+        //std::cout << "breakpoint 3.1 " << i << std::endl;
+
         int *aux = new int(M[i]);
         K[i] = aux;
 
+        //std::cout << "breakpoint 3.2 " << i << std::endl;
+
         for (int j = 0; j < M[i]; j++) {
+            //std::cout << "breakpoint 3.2.1 " << j << std::endl;
             K[i][j] = j;
         }
+
+        //std::cout << "breakpoint 3.3 " << i << std::endl;
     }
     
+    std::cout << "breakpoint 4 L:60" << std::endl;
+
     // Tamanho maximo das sequencias viaveis
     int TMAX = 4 * n;
 
     // Prioridades do símbolo Xi E X
-    //int c[n];
-    int *c;
-    c = priorities;  
+    int c[n];
+    
     
     // Conjunto de posicoes que podem ser ocupadas pela k-ésima cópia do simbolo Xi E X
     // Hik = {k, ... ,TMAX}
     int **H[n];
-    std::cout<<"Dados Criados, Agora, gerar as variáveis:"<<std::endl;
+    std::cout<<"Criando o array Hik:"<<std::endl;
 
     for (int i = 0; i < n; i++) {
-        H[i] = new int*[M[i]];
+        //H[i] = new int*[M[i]];
+        H[i] = new int*(M[i]);
 
         for (int k = 0; k < M[i]; k++) {
             H[i][k] = new int(TMAX - k);
@@ -73,6 +93,18 @@ void PSJP(int number_of_symbols, int m, int *priorities)
             }
         }
     }
+
+    std::cout << "Conferindo dados de entrada: " << std::endl;
+
+
+    
+    //* Conferindo dados de entrada
+    std::cout << "Conferindo dados de entrada: " << std::endl;
+    std::cout << "Numero de símbolos: " << n << std::endl;
+    std::cout << "TMAX: " << TMAX << std::endl;
+          
+
+    std::cout<<"Dados Criados, Agora, gerar as variáveis:"<<std::endl;
 
     //* Variaveis
     
@@ -305,8 +337,8 @@ int main(int argc, char *argv[])
             std::cout<<"Entrou no try -> IF"<<std::endl;
 
             std::cout << "number of symbols: " << aux->number_of_symbols << std::endl;
-            std::cout << "number n: " << aux->n  << std::endl;
-            PSJP(aux->number_of_symbols, aux->n);
+            std::cout << "number m: " << aux->m  << std::endl;
+            PSJP(aux->number_of_symbols, aux->m, aux->priorities);
             free(aux);
         }
     }
