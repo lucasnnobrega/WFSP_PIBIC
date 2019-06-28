@@ -17,12 +17,11 @@ int write(char verbose) {
     return 0;
 }
 
-int read_instances() {
-  string line;
+int read_instances(char* relative_file_path) {
   string lines[5];
   
   //TODO: colocar o nome das instancias dinamico
-  ifstream myfile ("./data/csp_instances/ins_05_10_1.txt");
+  ifstream myfile (relative_file_path);
   if (myfile.is_open())
   {
     int count = 4;
@@ -48,6 +47,9 @@ int read_instances() {
     */
 
     cout << endl;
+
+    int number_of_symbols = lines[0][0] - '0';
+    int n = lines[1][0] - '0';
 
     int* myarray = new int[sizeof(lines[2])]; 
     int* myarray_clean = new int[sizeof(lines[2])]; 
@@ -89,11 +91,17 @@ int read_instances() {
       cout << "counter: " << i << " number: " << myarray[i] << " new "<< myarray_clean[i] << '\n';
     }
 
-     for (int i = 0; i < myarray_clean; i++)
+    cout << "\n\n############################\n\nLast For:\n";
+
+    //TODO: Fix the constant here
+    for (int i = 0; i < number_of_symbols; i++)
     {
       cout << "counter: " << i << " number: " << myarray[i] << " new "<< myarray_clean[i] << '\n';
     }
 
+    cout << "\n\n############################\n\nOthers Values:\n";
+    cout << "Number of symbols: " << number_of_symbols << endl;
+    cout << "Number n: " << n << endl;
 
 
     myfile.close();

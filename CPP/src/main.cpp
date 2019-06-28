@@ -297,7 +297,7 @@ int main(int argc, char *argv[])
         std::cout<<"Entrou no try"<<std::endl;
         //PSJP();
         //write_res('v', 12, 7);
-        read_instances();
+        read_instances("./data/csp_instances/ins_05_20_4.txt");
     }
     catch (IloException &e)
     {
