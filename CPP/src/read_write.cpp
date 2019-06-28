@@ -132,7 +132,18 @@ File_content *read_instances(char* relative_file_path) {
   return content;
 }
 
-int write_res(char verbose, int objective, int number_of_symbols) {
+int write_res(char verbose,
+              int objective,
+              int number_of_symbols,
+              int occupied_positions,
+              int total_positions,
+              int* avaliable_copies,
+              int* used_copies,
+              int* priorities,
+              int* Di,
+              int* Df,
+              int* Pi,
+              int* Pf) {
 
     if(verbose == 'v')
         std::cout << "Criado o arquivo" << std::endl; 
@@ -153,18 +164,18 @@ int write_res(char verbose, int objective, int number_of_symbols) {
     }
     myfile << "\n\n";
 
-    myfile << "Occupied positions: " << 22 << " of " << 12 << "\n";
+    myfile << "Occupied positions: " << occupied_positions << " of " << total_positions << "\n";
 
-    for (int i = 1; i < number_of_symbols; i++)
+    for (int i = 0; i < number_of_symbols; i++)
     {
-        myfile << "symbol " << i << "--> Priority:  10, Di:  5, Df:  4, Pi: 50, Pf: 40" << "\n";
+        myfile << "symbol " << i+1 << "--> Priority:  "<< priorities[i] <<", Di:  5, Df:  4, Pi: 50, Pf: 40" << "\n";
     }
 
     myfile << "\n(Available copies, Used copies)\n";
     
-    for (int i = 1; i < number_of_symbols; i++)
+    for (int i = 0; i < number_of_symbols; i++)
     {
-        myfile << "symbol " << i << " -->  " << 5 << ",  " << 2 << "\n";  
+        myfile << "symbol " << i+1 << " -->  " << avaliable_copies[i] << ",  " << used_copies[i] << "\n";  
     }
     
     myfile << "\n**********************************************\n";

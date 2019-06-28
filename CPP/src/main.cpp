@@ -14,6 +14,7 @@
 #include "read_write.h"
 
 
+
 using namespace std;
 
 void PSJP(int number_of_symbols, int m, int *priorities)
@@ -72,36 +73,50 @@ void PSJP(int number_of_symbols, int m, int *priorities)
 
     // Prioridades do símbolo Xi E X
     int c[n];
-    
+
+    std::cout << std::endl;
+    for(int i = 0; i < n; i++){
+        c[i] = priorities[i];
+        std::cout << "Prioridade: " << c[i] << " ";
+    }
+     std::cout << std::endl;
+
     
     // Conjunto de posicoes que podem ser ocupadas pela k-ésima cópia do simbolo Xi E X
     // Hik = {k, ... ,TMAX}
     int **H[n];
-    std::cout<<"Criando o array Hik:"<<std::endl;
+    std::cout << "Criando o array Hik:" << std::endl;
 
     for (int i = 0; i < n; i++) {
         //H[i] = new int*[M[i]];
-        H[i] = new int*(M[i]);
+        
+        //std::cout << "breakpoint 5 i " << i << std::endl;
+        
+        H[i] = new int*[M[i]];
 
+        //std::cout << "breakpoint 6 H[i] Criado" << std::endl;
+        
         for (int k = 0; k < M[i]; k++) {
-            H[i][k] = new int(TMAX - k);
-          
             int aux = 0;          
+            //std::cout << "breakpoint 7 k:" << k << " TMAX " << TMAX <<" aux " << aux << std::endl;
+          
+            H[i][k] = new int[TMAX - k];
+ 
+            //std::cout << "breakpoint 8 TMAX-k "<< TMAX - k << std::endl;
             for (int j = k; j < TMAX; j++) {
+                //std::cout << "breakpoint 9 j " << j << " aux " << aux << std::endl;
                 H[i][k][aux] = j;
                 aux++;              
             }
         }
     }
-
-    std::cout << "Conferindo dados de entrada: " << std::endl;
-
-
     
     //* Conferindo dados de entrada
+    std::cout << "#####################################" << std::endl;
     std::cout << "Conferindo dados de entrada: " << std::endl;
     std::cout << "Numero de símbolos: " << n << std::endl;
     std::cout << "TMAX: " << TMAX << std::endl;
+    std::cout << "#####################################" << std::endl;
           
 
     std::cout<<"Dados Criados, Agora, gerar as variáveis:"<<std::endl;
@@ -112,6 +127,8 @@ void PSJP(int number_of_symbols, int m, int *priorities)
     // Dimensão n pois i vai até n
     IloArray <IloArray <IloBoolVarArray> > y(env, n);
 
+    std::cout << "breakpoint 10" << std::endl;
+
     for (int i = 0; i < n; i++) {
         IloArray<IloBoolVarArray> vetorAux(env, M[i]); 
         y[i] = vetorAux;
@@ -121,6 +138,8 @@ void PSJP(int number_of_symbols, int m, int *priorities)
             y[i][k] = vetorAux2;
         }
     }
+
+    std::cout << "breakpoint 11" << std::endl;
 
     // Adicionando variavel no modelo    
     for (int i = 0; i < n; i++) {        
@@ -134,6 +153,8 @@ void PSJP(int number_of_symbols, int m, int *priorities)
         }
     }
 
+    std::cout << "breakpoint 12" << std::endl;
+
     // d_i,k,k+1
     // Dimensao n, pois i vai ate n
     IloArray <IloIntVarArray> d(env, n);
@@ -141,6 +162,8 @@ void PSJP(int number_of_symbols, int m, int *priorities)
         IloIntVarArray vetorAux(env, M[i], 0, IloInfinity); 
         d[i] = vetorAux;
     }
+
+    std::cout << "breakpoint 13" << std::endl;
 
     // Adicionando variavel no modelo 
     for(int i = 0; i < n; i++) {        
@@ -157,6 +180,8 @@ void PSJP(int number_of_symbols, int m, int *priorities)
         } 
     }
 
+    std::cout << "breakpoint 14" << std::endl;
+
     // D_i
     // Maior Distancia entre duas copias consecutivas do simbolo x_i E X
     IloIntVarArray D(env, n, 0, IloInfinity);
@@ -169,6 +194,8 @@ void PSJP(int number_of_symbols, int m, int *priorities)
         modelo.add(D[i]);
     }
 
+    std::cout << "breakpoint 15" << std::endl;
+
     // P
     // Maior produto D_i*c_i, para todo x_i E X
     //? Implementado como um valor unico
@@ -179,6 +206,8 @@ void PSJP(int number_of_symbols, int m, int *priorities)
     sprintf(var, "P");
     P.setName(var);
     modelo.add(P);
+
+    std::cout << "breakpoint 16" << std::endl;
 
     // p_ik
     // Posicao da k-esima copia do simbolo x_i E X
@@ -198,6 +227,8 @@ void PSJP(int number_of_symbols, int m, int *priorities)
         } 
     }
  
+    std::cout << "breakpoint 17" << std::endl;
+
     // Criando a Função Objetivo (FO) 
     // min P
     IloObjective obj(env, P, IloObjective::Minimize);
@@ -251,6 +282,9 @@ void PSJP(int number_of_symbols, int m, int *priorities)
         modelo.add(soma <= 1);
     }
     
+    std::cout << "breakpoint 25" << std::endl;
+
+
     // (8)
     for(int i = 0; i < n; i++) {
         for (int k = 0; k < M[i]; k++){
@@ -262,31 +296,45 @@ void PSJP(int number_of_symbols, int m, int *priorities)
         }
     }
 
+    std::cout << "breakpoint 26" << std::endl;
+
     // (9)
     for(int i = 0; i < n; i++) {
         for (int k = 0; k < M[i] - 1; k++){
+            std::cout << "  breakpoint 26.1 i:" << i << " k:" << k << std::endl;
+
             IloExpr soma_esq(env);
             IloExpr soma_dir(env);
-            for (int h = 0; h < TMAX - k; h++) {
+            //?for (int h = 0; h < TMAX - k ; h++)
+            for (int h = 0; h < TMAX - k - 1; h++) {
+                std::cout << "    breakpoint 26.1.1 i:" << i << " k:" << k << " h:" << h << std::endl;
                 soma_esq += y[i][k][h];
                 soma_dir += y[i][k+1][h];
+                std::cout << "    breakpoint 26.1.1 i:" << i << " k:" << k << " h:" << h << "end" <<  std::endl;
             }
             modelo.add(soma_esq >= soma_dir);
         }
     }
 
-    // (10)
+    std::cout << "breakpoint 27" << std::endl;
+
+
+    // (10) Tese (4.9)
     for(int i = 0; i < n; i++) {
         for (int k = 0; k < M[i] - 1; k++){
             IloExpr soma(env);
-            for (int h = 0; h < TMAX - k; h++) {
+            //?for (int h = 0; h < TMAX - k -1; h++) {
+            for (int h = 0; h < TMAX - k -1; h++) {
                 soma += y[i][k+1][h];
             }
             modelo.add(p[i][k+1] >= p[i][k] - (1 - soma)*TMAX);
         }
     }
 
-    // (11)
+    std::cout << "breakpoint 28" << std::endl;
+
+
+    // (11) Tese (4.10)
     for(int i = 0; i < n; i++) {
         for (int k = 0; k < M[i] - 1; k++){
             for (int h = 0; h < TMAX - k; h++) {
@@ -318,6 +366,36 @@ void PSJP(int number_of_symbols, int m, int *priorities)
     cplex.solve();
     cplex.out() << endl << "solution status = " << cplex.getStatus() << endl;
 
+    std::cout << "breakpoint 100" << std::endl;
+
+    cplex.out() << y << endl;
+
+    for (size_t i = 0; i < n; i++)
+    {
+        //cplex.out() << y[i][0][0] << endl;
+        for (int j = 0; j < M[i]; j++)
+        {
+            for (int k = 0; k < TMAX-j; k++)
+            {
+                cplex.out() <<"i:" << i << "j:" << "k:" << k << " result:" << cplex.getValue(y[i][j][k]) << endl;
+               
+            }
+            
+        }
+        
+    }
+    
+
+    /*
+    for (int i = 0; i < n; i++) {
+        for (int k = 0; k < M[i]; k++) {
+            for (int j = 0; j < k; j++){
+                cplex.out() << y << endl;
+            }
+        }
+    }
+    */
+
     cplex.out() << "\e[32mcost\e[0m = " << cplex.getObjValue() << endl;
 
     env.out();
@@ -331,16 +409,28 @@ int main(int argc, char *argv[])
         File_content *aux = NULL;
 
         std::cout<<"Entrou no try"<<std::endl;
-        //write_res('v', 12, 7);
+        
         aux = read_instances("./data/csp_instances/ins_05_20_4.txt");
         if (aux){
             std::cout<<"Entrou no try -> IF"<<std::endl;
 
             std::cout << "number of symbols: " << aux->number_of_symbols << std::endl;
             std::cout << "number m: " << aux->m  << std::endl;
-            PSJP(aux->number_of_symbols, aux->m, aux->priorities);
+            //PSJP(aux->number_of_symbols, aux->m, aux->priorities);
+            
+            write_res('v', 12, aux->number_of_symbols,
+                12, 13, 
+                aux->m,
+                aux->priorities,
+                aux->priorities,
+                aux->priorities,
+                aux->priorities,
+                aux->priorities);    
+            
+            
             free(aux);
         }
+        */
     }
     catch (IloException &e)
     {
