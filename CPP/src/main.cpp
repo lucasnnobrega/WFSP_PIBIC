@@ -16,7 +16,7 @@
 
 using namespace std;
 
-void PSJP()
+void PSJP(int number_of_symbols, int m, int *priorities)
 {
     // Criando o Ambiente
     IloEnv env;
@@ -25,7 +25,7 @@ void PSJP()
     //* Dados
 
     // Numero de Simbolos
-    int n = 14;
+    int n = number_of_symbols;
 
     // Conjunto de Simbolos X1 ... Xn
     int X[n];
@@ -51,7 +51,9 @@ void PSJP()
     int TMAX = 4 * n;
 
     // Prioridades do símbolo Xi E X
-    int c[n];  
+    //int c[n];
+    int *c;
+    c = priorities;  
     
     // Conjunto de posicoes que podem ser ocupadas pela k-ésima cópia do simbolo Xi E X
     // Hik = {k, ... ,TMAX}
@@ -294,10 +296,19 @@ int main(int argc, char *argv[])
     std::cout << "Entrou na main()" << std::endl;
     try
     {
+        File_content *aux = NULL;
+
         std::cout<<"Entrou no try"<<std::endl;
-        //PSJP();
         //write_res('v', 12, 7);
-        read_instances("./data/csp_instances/ins_05_20_4.txt");
+        aux = read_instances("./data/csp_instances/ins_05_20_4.txt");
+        if (aux){
+            std::cout<<"Entrou no try -> IF"<<std::endl;
+
+            std::cout << "number of symbols: " << aux->number_of_symbols << std::endl;
+            std::cout << "number n: " << aux->n  << std::endl;
+            PSJP(aux->number_of_symbols, aux->n);
+            free(aux);
+        }
     }
     catch (IloException &e)
     {

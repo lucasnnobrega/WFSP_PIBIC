@@ -1,6 +1,15 @@
 #include <iostream>
 #include <fstream>
+#include <stdlib.h>
 using namespace std;
+
+
+typedef struct Files_Content {
+  int number_of_symbols;
+  int n;
+  int *priorities;
+} File_content;
+
 
 int verbose(){
     return 0;
@@ -17,9 +26,13 @@ int write(char verbose) {
     return 0;
 }
 
-int read_instances(char* relative_file_path) {
-  string lines[5];
+File_content *read_instances(char* relative_file_path) {
+  string linhas[5];
   
+
+  File_content *content;
+  content = (File_content*)malloc(sizeof(File_content));
+
   //TODO: colocar o nome das instancias dinamico
   ifstream myfile (relative_file_path);
   if (myfile.is_open())
@@ -27,8 +40,8 @@ int read_instances(char* relative_file_path) {
     int count = 4;
     for (int i = 0; i < count; i++)
     {
-      getline(myfile, lines[i]);
-      cout << lines[i] << '\n';
+      getline(myfile, linhas[i]);
+      cout << linhas[i] << '\n';
     }
     /*
     while ( getline (myfile,line) )
@@ -42,26 +55,26 @@ int read_instances(char* relative_file_path) {
     /*
     for (int i = 0; i < count; i++)
     {
-      cout << "counter: " << i << " line: \"" << lines[i] << "\"" << '\n';
+      cout << "counter: " << i << " line: \"" << linhas[i] << "\"" << '\n';
     }
     */
 
     cout << endl;
 
-    int number_of_symbols = lines[0][0] - '0';
-    int n = lines[1][0] - '0';
+    int number_of_symbols = linhas[0][0] - '0';
+    int n = linhas[1][0] - '0';
 
-    int* myarray = new int[sizeof(lines[2])]; 
-    int* myarray_clean = new int[sizeof(lines[2])]; 
+    int* myarray = new int[sizeof(linhas[2])]; 
+    int* myarray_clean = new int[sizeof(linhas[2])]; 
     string to_compare = " ";
 
-    for (int i = 0; i < lines[2].length(); i++) {  
-      myarray[i] = lines[2][i] - '0';
+    for (int i = 0; i < linhas[2].length(); i++) {  
+      myarray[i] = linhas[2][i] - '0';
     }
     
     int count_two_dig = 0;
     
-    for (int i = 0; i < lines[2].length(); i++)
+    for (int i = 0; i < linhas[2].length(); i++)
     {
       cout << "iteração n: " << i << endl;
 
@@ -86,7 +99,7 @@ int read_instances(char* relative_file_path) {
     
     cout << endl;
 
-    for (int i = 0; i < lines[2].length(); i++)
+    for (int i = 0; i < linhas[2].length(); i++)
     {
       cout << "counter: " << i << " number: " << myarray[i] << " new "<< myarray_clean[i] << '\n';
     }
@@ -103,13 +116,20 @@ int read_instances(char* relative_file_path) {
     cout << "Number of symbols: " << number_of_symbols << endl;
     cout << "Number n: " << n << endl;
 
+    
+    content->number_of_symbols = number_of_symbols;
+    content->n = n;
+    content->priorities = myarray_clean;
+    
 
     myfile.close();
   }
 
-  else cout << "Unable to open file"; 
+  else{
+    cout << "Unable to open file";
+  } 
 
-  return 0;
+  return content;
 }
 
 int write_res(char verbose, int objective, int number_of_symbols) {

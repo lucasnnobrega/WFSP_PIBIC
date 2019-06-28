@@ -1,8 +1,15 @@
 #ifndef read_write
 #define read_write
 
+
+typedef struct Files_Content {
+  int number_of_symbols;
+  int n;
+  int *priorities;
+} File_content;
+
 int write(char verbose);
 int write_res(char verbose, int objective, int number_of_symbols);
-int read_instances(char* relative_file_path);
+File_content *read_instances(char* relative_file_path);
 
 #endif // read_write
