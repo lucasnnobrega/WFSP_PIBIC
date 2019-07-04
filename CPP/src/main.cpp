@@ -12,6 +12,7 @@
 #include <math.h>
 #include <string.h>
 #include "read_write.h"
+#include <vector>
 
 
 
@@ -368,33 +369,52 @@ void PSJP(int number_of_symbols, int m, int *priorities)
 
     std::cout << "breakpoint 100" << std::endl;
 
-    cplex.out() << y << endl;
+    //cplex.out() << y << endl;
 
+    /*
     for (size_t i = 0; i < n; i++)
     {
         //cplex.out() << y[i][0][0] << endl;
-        for (int j = 0; j < M[i]; j++)
+        for (int k = 0; k < M[i]; k++)
         {
             for (int k = 0; k < TMAX-j; k++)
             {
-                cplex.out() <<"i:" << i << "j:" << "k:" << k << " result:" << cplex.getValue(y[i][j][k]) << endl;
+                cplex.out() <<"i:" << i << "k:" << "k:" << k << " result:" << cplex.getValue(y[i][j][k]) << endl;
                
             }
             
         }
         
     }
-    
+    */
 
-    /*
-    for (int i = 0; i < n; i++) {
+
+
+   vector< vector< int > > sequencia;
+
+    for (int i = 0; i < 2; i++) {   // 2 == n
         for (int k = 0; k < M[i]; k++) {
-            for (int j = 0; j < k; j++){
-                cplex.out() << y << endl;
+            for (int h = 0; h < TMAX - k; h++){
+                //cplex.out() << " OUT = " << cplex.getValue(y[i][k][h]) << endl;
+                if ( cplex.getValue(y[i][k][h])  == 0 ){
+                    vector < int > aux;
+                    aux.push_back(i);
+                    aux.push_back(k);
+                    aux.push_back(h); 
+
+                    sequencia.push_back(aux);
+                }                
             }
         }
     }
-    */
+
+    for (int i = 0; i < sequencia.size(); i++) { 
+        for (int j = 0; j < sequencia[i].size(); j++) 
+            std::cout << sequencia[i][j] << " ";
+        std::cout << "\n"; 
+    } 
+
+
 
     cplex.out() << "\e[32mcost\e[0m = " << cplex.getObjValue() << endl;
 
@@ -416,21 +436,27 @@ int main(int argc, char *argv[])
 
             std::cout << "number of symbols: " << aux->number_of_symbols << std::endl;
             std::cout << "number m: " << aux->m  << std::endl;
-            //PSJP(aux->number_of_symbols, aux->m, aux->priorities);
+            PSJP(aux->number_of_symbols, aux->m, aux->priorities);
+            /*
+            Write_content content;
+
+            content.objective = 12;
+            content.number_of_symbols = aux->number_of_symbols;
+            content.occupied_positions = 12;
+            content.total_positions = 13;
+            content.avaliable_copies = aux->priorities;
+            content.used_copies = aux->priorities;
+            content.priorities = aux->priorities;
+            content.Di = aux->priorities;
+            content.Df = aux->priorities;
+            content.Pi = aux->priorities;
+            content.Pf = aux->priorities;
+              
+            write_res('v', content);        
             
-            write_res('v', 12, aux->number_of_symbols,
-                12, 13, 
-                aux->m,
-                aux->priorities,
-                aux->priorities,
-                aux->priorities,
-                aux->priorities,
-                aux->priorities);    
-            
-            
+            */
             free(aux);
         }
-        */
     }
     catch (IloException &e)
     {

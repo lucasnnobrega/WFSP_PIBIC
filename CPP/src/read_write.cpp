@@ -10,6 +10,21 @@ typedef struct Files_Content {
   int *priorities;
 } File_content;
 
+typedef struct Write_Content {
+  int objective;
+  int number_of_symbols;
+  int occupied_positions;
+  int total_positions;
+  int* avaliable_copies;
+  int* used_copies;
+  int* priorities;
+  int* Di;
+  int* Df;
+  int* Pi;
+  int* Pf;
+} Write_content;
+
+
 
 int verbose(){
     return 0;
@@ -132,21 +147,36 @@ File_content *read_instances(char* relative_file_path) {
   return content;
 }
 
-int write_res(char verbose,
-              int objective,
-              int number_of_symbols,
-              int occupied_positions,
-              int total_positions,
-              int* avaliable_copies,
-              int* used_copies,
-              int* priorities,
-              int* Di,
-              int* Df,
-              int* Pi,
-              int* Pf) {
+int write_res(char verbose, Write_content content_to_write) {
 
-    if(verbose == 'v')
-        std::cout << "Criado o arquivo" << std::endl; 
+    int objective          = content_to_write.objective;
+    int number_of_symbols  = content_to_write.number_of_symbols ;
+    int occupied_positions = content_to_write.occupied_positions ;
+    int total_positions    = content_to_write.total_positions;
+    int* avaliable_copies  = content_to_write.avaliable_copies;
+    int* used_copies       = content_to_write.used_copies;
+    int* priorities        = content_to_write.priorities;
+    int* Di                = content_to_write.Di;
+    int* Df                = content_to_write.Df;
+    int* Pi                = content_to_write.Pi;
+    int* Pf                = content_to_write.Pf;
+
+
+    if(verbose == 'v'){
+        std::cout << "Lista de variáveis:" << std::endl; 
+        std::cout << " objective          " << objective << endl;
+        std::cout << " number_of_symbols  " << number_of_symbols << endl;
+        std::cout << " occupied_positions " << occupied_positions << endl;
+        std::cout << " total_positions    " << total_positions << endl;
+        std::cout << " ARRAY: avaliable_copies  " << avaliable_copies << endl;
+        std::cout << " ARRAY: used_copies       " << used_copies << endl;
+        std::cout << " ARRAY: priorities        " << priorities << endl;
+        std::cout << " ARRAY: Di                " << Di << endl;
+        std::cout << " ARRAY: Df                " << Df << endl;
+        std::cout << " ARRAY: Pi                " << Pi << endl;
+        std::cout << " ARRAY: Pf                " << Pf << endl;
+
+    }
     
     ofstream myfile;
     myfile.open ("./data/res_lnn.txt");
