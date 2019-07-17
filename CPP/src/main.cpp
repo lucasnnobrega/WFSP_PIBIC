@@ -404,17 +404,17 @@ void WFSP(int number_of_symbols, int m, int *priorities)
 
 int main(int argc, char *argv[])
 {
-    std::cout << "Entrou na main()" << std::endl;
+    std::cout << "Inside the main function" << std::endl;
     try
     {
-        std::cout<<"Entrou no try"<<std::endl;
+        std::cout<<"Inside the try"<<std::endl;
 
         
         File_content *aux = NULL;
         aux = read_instances("./data/csp_instances/ins_05_20_4.txt");
 
         if (aux){
-            std::cout<<"Entrou no try -> IF"<<std::endl;
+            std::cout<<"Inside the try -> IF"<<std::endl;
 
             std::cout << "number of symbols: " << aux->number_of_symbols << std::endl;
             std::cout << "number m: " << aux->m  << std::endl;
