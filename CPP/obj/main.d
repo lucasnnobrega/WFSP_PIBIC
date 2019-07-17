@@ -1,1 +1,1 @@
-obj/main.o: src/main.cpp src/read_write.h
+obj/main.o: src/main.cpp src/../include/read_write.h

@@ -7,11 +7,11 @@ company to the client.
 
 ## Installation
 
-Download the CPLEX installer and use the C++ API 
+Download the CPLEX installer and use the C++ API.
 
 ## Usage example
 
-Usage to alocate the data transmission through Digital TV
+Usage to alocate the data transmission through Digital TV.
 
 _For more examples and usage, please refer to the [WFSP Website](https://sites.google.com/site/weightedfairsequencesproblem/home)._
 

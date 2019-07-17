@@ -1,23 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
-using namespace std;
 
+using namespace std;
 
 typedef struct Files_Content {
   int number_of_symbols;
   int m;
   int *priorities;
 } File_content;
-
-/*
-class Files_Content {
-  int number_of_symbols;
-  int m;
-  int *priorities;
-}
-*/
-
 
 typedef struct Write_Content {
   int objective;
@@ -34,14 +25,13 @@ typedef struct Write_Content {
 } Write_content;
 
 
-
 int verbose(){
     return 0;
 }
 
 int write(char verbose) {
     if(verbose == 'v')
-        std::cout << "Criado o arquivo" << std::endl; 
+      std::cout << "Criado o arquivo" << std::endl; 
     
     ofstream myfile;
     myfile.open ("./data/example.txt");
@@ -100,7 +90,9 @@ File_content *read_instances(const char* relative_file_path) {
           myarray_clean[i + count_two_dig] = myarray[i];
           count_two_dig += -1;
       }
-      else cout << "" <<  myarray[i] << '\n';
+      else{
+        cout << "" <<  myarray[i] << '\n';
+      }
 
       cout << endl ;
     }
