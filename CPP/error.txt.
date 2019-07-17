@@ -1,0 +1,132 @@
+Entrou na main()
+Entrou no try
+5
+4
+10 10 6 2 2 
+
+
+
+iteração n: 0
+1 | 0
+Numero Completo 10
+
+iteração n: 1
+0 | -16
+0
+
+iteração n: 2
+-16 | 1
+-16
+
+iteração n: 3
+1 | 0
+Numero Completo 10
+
+iteração n: 4
+0 | -16
+0
+
+iteração n: 5
+-16 | 6
+-16
+
+iteração n: 6
+6 | -16
+Numero unico: 6
+
+iteração n: 7
+-16 | 2
+-16
+
+iteração n: 8
+2 | -16
+Numero unico: 2
+
+iteração n: 9
+-16 | 2
+-16
+
+iteração n: 10
+2 | -16
+Numero unico: 2
+
+iteração n: 11
+-16 | 0
+-16
+
+end iteration
+
+
+counter: 0 number: 1 new 10
+counter: 1 number: 0 new 10
+counter: 2 number: -16 new 6
+counter: 3 number: 1 new 2
+counter: 4 number: 0 new 2
+counter: 5 number: -16 new 0
+counter: 6 number: 6 new 0
+counter: 7 number: -16 new 0
+counter: 8 number: 2 new 0
+counter: 9 number: -16 new 0
+counter: 10 number: 2 new 0
+counter: 11 number: -16 new 0
+
+
+############################
+
+Last For:
+counter: 0 number: 1 new 10
+counter: 1 number: 0 new 10
+counter: 2 number: -16 new 6
+counter: 3 number: 1 new 2
+counter: 4 number: 0 new 2
+
+
+############################
+
+Others Values:
+Number of symbols: 5
+Number m: 4
+Entrou no try -> IF
+number of symbols: 5
+number m: 4
+Entrou no PSJP
+Numero de Simbolos: 5 5
+breakpoint 2 L:38
+breakpoint 3 L:45
+breakpoint 3.1 0
+breakpoint 3.2 0
+breakpoint 3.2.10
+breakpoint 3.2.11
+breakpoint 3.2.12
+breakpoint 3.2.13
+breakpoint 3.30
+breakpoint 3.1 1
+breakpoint 3.2 1
+breakpoint 3.2.10
+breakpoint 3.2.11
+breakpoint 3.2.12
+breakpoint 3.2.13
+breakpoint 3.31
+breakpoint 3.1 2
+breakpoint 3.2 2
+breakpoint 3.2.10
+breakpoint 3.2.11
+breakpoint 3.2.12
+breakpoint 3.2.13
+breakpoint 3.32
+breakpoint 3.1 3
+breakpoint 3.2 3
+breakpoint 3.2.10
+breakpoint 3.2.11
+breakpoint 3.2.12
+breakpoint 3.2.13
+breakpoint 3.33
+breakpoint 3.1 4
+breakpoint 3.2 4
+breakpoint 3.2.10
+breakpoint 3.2.11
+breakpoint 3.2.12
+breakpoint 3.2.13
+breakpoint 3.34
+breakpoint 4 L:60
+Dados Criados, Agora, gerar as variáveis:

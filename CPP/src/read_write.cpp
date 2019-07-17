@@ -10,6 +10,15 @@ typedef struct Files_Content {
   int *priorities;
 } File_content;
 
+/*
+class Files_Content {
+  int number_of_symbols;
+  int m;
+  int *priorities;
+}
+*/
+
+
 typedef struct Write_Content {
   int objective;
   int number_of_symbols;
@@ -41,7 +50,7 @@ int write(char verbose) {
     return 0;
 }
 
-File_content *read_instances(char* relative_file_path) {
+File_content *read_instances(const char* relative_file_path) {
   string linhas[5];
   
 
@@ -58,23 +67,8 @@ File_content *read_instances(char* relative_file_path) {
       getline(myfile, linhas[i]);
       cout << linhas[i] << '\n';
     }
-    /*
-    while ( getline (myfile,line) )
-    {
-      cout << line << '\n';
-    }
-    */
-
-    cout << endl;    
-
-    /*
-    for (int i = 0; i < count; i++)
-    {
-      cout << "counter: " << i << " line: \"" << linhas[i] << "\"" << '\n';
-    }
-    */
-
-    cout << endl;
+  
+    cout << endl << endl;    
 
     int number_of_symbols = linhas[0][0] - '0';
     int m = linhas[1][0] - '0';
@@ -194,7 +188,7 @@ int write_res(char verbose, Write_content content_to_write) {
     }
     myfile << "\n\n";
 
-    myfile << "Occupied positions: " << occupied_positions << " of " << total_positions << "\n";
+    myfile << "Occupied positions: " << occupied_positions << " of " << total_positions << "\n\n";
 
     for (int i = 0; i < number_of_symbols; i++)
     {
