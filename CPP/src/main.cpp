@@ -20,9 +20,9 @@ using namespace std;
 
 // Driver function to sort the 2D vector 
 // on basis of a particular column 
-bool sortcol( const vector<int>& v1, 
-               const vector<int>& v2 , int col) { 
- return v1[col] < v2[col]; 
+bool sortByCol( const vector<int>& v1, 
+              const vector<int>& v2) { 
+ return v1[1] < v2[1]; 
 } 
 
 
@@ -367,34 +367,72 @@ void WFSP(int number_of_symbols, int m, int *priorities)
 
 
 
-   vector< vector< int > > sequencia;
+   vector< vector< int > > sequence;
 
     for (int i = 0; i < n; i++) {   // 2 == n
         for (int k = 0; k < M[i]; k++) {
             for (int h = 0; h < TMAX - k; h++){
                 //cplex.out() << " OUT = " << cplex.getValue(y[i][k][h]) << endl;
-                if ( cplex.getValue(y[i][k][h])  == 0 ){
+                // If the value is equal to 1, save in the sequence vector
+                if ( cplex.getValue(y[i][k][h])  == 1 ){
                     vector < int > aux;
                     aux.push_back(i);
                     aux.push_back(k);
                     aux.push_back(h); 
 
-                    sequencia.push_back(aux);
+                    sequence.push_back(aux);
                 }                
             }
         }
     }
 
-    for (int i = 0; i < sequencia.size(); i++) { 
-        for (int j = 0; j < sequencia[i].size(); j++){ 
-            std::cout << sequencia[i][j] << " ";
+
+    sort(sequence.begin(), sequence.end(), sortByCol);
+
+    /*
+    for (int i = 0; i < sequence.size(); i++) { 
+        for (int j = 0; j < sequence[i].size(); j++){ 
+            std::cout << sequence[i][j] << " ";
         }
         std::cout << "\n"; 
-        std::cout << "símbolo: " << sequencia[i][0] << std::endl;
-        std::cout << "k-ésima cópia: " << sequencia[i][1] << std::endl;
-        std::cout << "posição h: " << sequencia[i][2] << std::endl;
+        std::cout << "símbolo: " << sequence[i][0] << std::endl;
+        std::cout << "k-ésima cópia: " << sequence[i][1] << std::endl;
+        std::cout << "posição h: " << sequence[i][2] << std::endl;
         std::cout << "\n";
     } 
+    */
+
+        Write_content content;
+
+        content.objective = cplex.getObjValue();
+        
+        content.number_of_symbols = number_of_symbols; // OK
+        
+
+        int aux = 0;
+        for(auto i = sequence.begin(); i < sequence.end(); i++){
+            aux ++;
+        }
+
+        content.occupied_positions = aux;
+
+
+        content.total_positions = TMAX; // OK
+        
+        content.avaliable_copies = priorities;
+        
+        content.used_copies = priorities;
+        
+        content.priorities = priorities;
+
+        int *nothing = NULL;
+
+        content.Di = nothing;
+        content.Df = nothing;
+        content.Pi = nothing;
+        content.Pf = nothing;
+            
+        write_res('v', content); 
 
 
 
@@ -419,24 +457,7 @@ int main(int argc, char *argv[])
 
             std::cout << "number of symbols: " << aux->number_of_symbols << std::endl;
             std::cout << "number m: " << aux->m  << std::endl;
-            WFSP(aux->number_of_symbols, aux->m, aux->priorities);
-            
-            Write_content content;
-
-            content.objective = 12;
-            content.number_of_symbols = aux->number_of_symbols;
-            content.occupied_positions = 12;
-            content.total_positions = 13;
-            content.avaliable_copies = aux->priorities;
-            content.used_copies = aux->priorities;
-            content.priorities = aux->priorities;
-            content.Di = aux->priorities;
-            content.Df = aux->priorities;
-            content.Pi = aux->priorities;
-            content.Pf = aux->priorities;
-              
-            write_res('v', content);        
-            
+            WFSP(aux->number_of_symbols, aux->m, aux->priorities); 
             free(aux);
         }
     }

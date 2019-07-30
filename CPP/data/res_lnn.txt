@@ -1,27 +1,13 @@
-Number1
-Number2
-Number3
-Number4
 
 **********************************************
-Objective: 12
+Objective: 0
 
 Sequence:
-1 - 2 - 3 - 4 - 
 
-Occupied positions: 12 of 13
 
-symbol 1--> Priority:  10, Di:  5, Df:  4, Pi: 50, Pf: 40
-symbol 2--> Priority:  10, Di:  5, Df:  4, Pi: 50, Pf: 40
-symbol 3--> Priority:  6, Di:  5, Df:  4, Pi: 50, Pf: 40
-symbol 4--> Priority:  2, Di:  5, Df:  4, Pi: 50, Pf: 40
-symbol 5--> Priority:  2, Di:  5, Df:  4, Pi: 50, Pf: 40
+Occupied positions: 0 of 0
+
 
 (Available copies, Used copies)
-symbol 1 -->  10,  10
-symbol 2 -->  10,  10
-symbol 3 -->  6,  6
-symbol 4 -->  2,  2
-symbol 5 -->  2,  2
 
 **********************************************
