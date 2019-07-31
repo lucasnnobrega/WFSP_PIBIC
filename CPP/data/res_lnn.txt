@@ -1,13 +1,27 @@
+Number1
+Number2
+Number3
+Number4
 
 **********************************************
 Objective: 0
 
 Sequence:
+1 - 1 - 1 - 1 - 
 
+Occupied positions: 4 of 20
 
-Occupied positions: 0 of 0
-
+symbol 1--> Priority:  10, Di:  0, Df:  0, Pi: 0, Pf: 1302781168
+symbol 2--> Priority:  10, Di:  0, Df:  0, Pi: 0, Pf: 32765
+symbol 3--> Priority:  6, Di:  0, Df:  0, Pi: 4, Pf: 1766007551
+symbol 4--> Priority:  2, Di:  0, Df:  0, Pi: 0, Pf: 21911
+symbol 5--> Priority:  2, Di:  0, Df:  0, Pi: 1302781168, Pf: 1789082416
 
 (Available copies, Used copies)
+symbol 1 -->  5,  4
+symbol 2 -->  5,  0
+symbol 3 -->  5,  0
+symbol 4 -->  5,  0
+symbol 5 -->  5,  0
 
 **********************************************

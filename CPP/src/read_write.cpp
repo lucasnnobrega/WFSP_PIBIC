@@ -1,30 +1,10 @@
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include <stdlib.h>
+#include "../include/read_write.h"
 
 using namespace std;
-
-typedef struct Files_Content
-{
-  int number_of_symbols;
-  int m;
-  int *priorities;
-} File_content;
-
-typedef struct Write_Content
-{
-  int objective;
-  int number_of_symbols;
-  int occupied_positions;
-  int total_positions;
-  int *avaliable_copies;
-  int *used_copies;
-  int *priorities;
-  int *Di;
-  int *Df;
-  int *Pi;
-  int *Pf;
-} Write_content;
 
 int verbose()
 {
@@ -148,6 +128,7 @@ int write_res(char verbose, Write_content content_to_write)
   int number_of_symbols = content_to_write.number_of_symbols;
   int occupied_positions = content_to_write.occupied_positions;
   int total_positions = content_to_write.total_positions;
+  vector<vector<int>> sequence = content_to_write.sequence;
   int *avaliable_copies = content_to_write.avaliable_copies;
   int *used_copies = content_to_write.used_copies;
   int *priorities = content_to_write.priorities;
@@ -158,11 +139,13 @@ int write_res(char verbose, Write_content content_to_write)
 
   if (verbose == 'v')
   {
+    std::cout << "Inside Write function" << endl;
     std::cout << "Lista de variáveis:" << endl;
     std::cout << " objective          " << objective << endl;
     std::cout << " number_of_symbols  " << number_of_symbols << endl;
     std::cout << " occupied_positions " << occupied_positions << endl;
     std::cout << " total_positions    " << total_positions << endl;
+    std::cout << " VECTOR: sequence   " << endl;
     std::cout << " ARRAY: avaliable_copies  " << avaliable_copies << endl;
     std::cout << " ARRAY: used_copies       " << used_copies << endl;
     std::cout << " ARRAY: priorities        " << priorities << endl;
@@ -181,10 +164,13 @@ int write_res(char verbose, Write_content content_to_write)
   }
   myfile << "\n**********************************************\n";
   myfile << "Objective: " << objective << "\n\n";
+
+  // ITS WRONG!!!
   myfile << "Sequence:\n";
-  for (int i = 1; i < number_of_symbols; i++)
+  for (int i = 0; i < sequence.size(); i++)
   {
-    myfile << i << " - ";
+    myfile << sequence[i][0] + 1 << " - ";
+    cout << sequence[i][0] + 1 << "-";
   }
   myfile << "\n\n";
 

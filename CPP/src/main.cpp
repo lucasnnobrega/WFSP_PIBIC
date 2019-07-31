@@ -25,7 +25,7 @@ bool sortByH(const vector<int> &v1,
     return v1[2] < v2[2];
 }
 
-void WFSP(int number_of_symbols, int m, int *priorities)
+void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
 {
     // Criando o Ambiente
     IloEnv env;
@@ -46,7 +46,7 @@ void WFSP(int number_of_symbols, int m, int *priorities)
 
     for (int i = 0; i < n; i++)
     {
-        M[i] = m;
+        M[i] = n; // CONFERIR
     }
 
     // Conjunto de indices das cópias xi E X,  Ki = {1, ..., Mi}
@@ -368,6 +368,11 @@ void WFSP(int number_of_symbols, int m, int *priorities)
     cplex.out() << endl
                 << "solution status = " << cplex.getStatus() << endl;
 
+    cplex.out() << "\e[32mcost\e[0m = " << cplex.getObjValue() << endl;
+
+    cplex.out() << endl
+                << endl
+                << endl;
     //cplex.out() << y << endl;
 
     /*
@@ -388,6 +393,7 @@ void WFSP(int number_of_symbols, int m, int *priorities)
     */
 
     vector<vector<int>> sequence;
+    int a = 0;
 
     for (int i = 0; i < n; i++)
     { // 2 == n
@@ -397,7 +403,8 @@ void WFSP(int number_of_symbols, int m, int *priorities)
             {
                 //cplex.out() << " OUT = " << cplex.getValue(y[i][k][h]) << endl;
                 // If the value is equal to 1, save in the sequence vector
-                if (cplex.getValue(y[i][k][h]) == 1)
+                //if (cplex.getValue(y[i][k][h]) == 1)
+                if (a < 4)
                 {
                     vector<int> aux;
                     aux.push_back(i);
@@ -405,6 +412,7 @@ void WFSP(int number_of_symbols, int m, int *priorities)
                     aux.push_back(h);
 
                     sequence.push_back(aux);
+                    a++;
                 }
             }
         }
@@ -412,18 +420,18 @@ void WFSP(int number_of_symbols, int m, int *priorities)
 
     sort(sequence.begin(), sequence.end(), sortByH);
 
-    /*
-    for (int i = 0; i < sequence.size(); i++) { 
-        for (int j = 0; j < sequence[i].size(); j++){ 
+    for (int i = 0; i < sequence.size(); i++)
+    {
+        for (int j = 0; j < sequence[i].size(); j++)
+        {
             std::cout << sequence[i][j] << " ";
         }
-        std::cout << "\n"; 
+        std::cout << "\n";
         std::cout << "símbolo: " << sequence[i][0] << std::endl;
         std::cout << "k-ésima cópia: " << sequence[i][1] << std::endl;
         std::cout << "posição h: " << sequence[i][2] << std::endl;
         std::cout << "\n";
-    } 
-    */
+    }
 
     Write_content content;
 
@@ -437,27 +445,75 @@ void WFSP(int number_of_symbols, int m, int *priorities)
         aux++;
     }
 
-    content.occupied_positions = aux;
+    content.occupied_positions = aux; //OK sequence.size()
 
     content.total_positions = TMAX; // OK
 
-    content.avaliable_copies = priorities;
+    content.avaliable_copies = M; // OK Max number of copies of symbol x_i € X
 
-    content.used_copies = priorities;
+    content.sequence = sequence;
+
+    /***************************************************************************/
+    // Array that storage the number of used copies of a symbol
+    int used_copies[n];
+
+    // First create a empty vector with only zeros
+    for (int i = 0; i < n; i++)
+    {
+        used_copies[i] = 0;
+    }
+
+    // Add one to the usage value
+    for (int i = 0; i < sequence.size(); i++)
+    {
+        // i = [i, k, h]
+        // i = [x_i, k-th copy, h position]
+        used_copies[sequence[i][0]]++;
+    }
+    content.used_copies = used_copies;
+    /***************************************************************************/
 
     content.priorities = priorities; // OK
 
-    int *nothing = NULL;
+    /***************************************************************************/
+    int Di[n];
+    for (int i = 0; i < n; i++)
+    {
+        Di[i] = 0;
+    }
+    content.Di = Di; // Still a doubt
+    /***************************************************************************/
+    // Df == D_i ?
+    // Maior distancia entre 2 copias consecutivas
+    int Df[n];
+    for (auto i = 0; i < n; i++)
+    {
+        Df[i] = cplex.getValue(D[i]);
+    }
+    content.Df = Df;
+    /***************************************************************************/
+    int Pi[n];
+    for (int i = 0; i < n; i++)
+    {
+        Pi[n] = priorities[i] * Di[i];
+    }
 
-    content.Di = nothing;
-    content.Df = nothing;
-    content.Pi = nothing;
-    content.Pf = nothing;
+    content.Pi = Pi;
+    /***************************************************************************/
+    int Pf[n];
+    for (int i = 0; i < n; i++)
+    {
+        Pf[n] = priorities[i] * Df[i];
+    }
 
-    write_res('v', content);
+    content.Pf = Pf;
 
-    cplex.out() << "\e[32mcost\e[0m = " << cplex.getObjValue() << endl;
+    //content.Di = D;
+    //content.Df = D;
+    //content.Pi = priorities;
+    //content.Pf = priorities;
 
+    write_res(verbose, content);
     env.out();
 }
 
@@ -469,7 +525,7 @@ int main(int argc, char *argv[])
         std::cout << "Inside the try" << std::endl;
 
         File_content *aux = NULL;
-        aux = read_instances("./data/csp_instances/ins_05_20_4.txt");
+        aux = read_instances("./data/ins_05_20_4.txt");
 
         if (aux)
         {
@@ -477,7 +533,7 @@ int main(int argc, char *argv[])
 
             std::cout << "number of symbols: " << aux->number_of_symbols << std::endl;
             std::cout << "number m: " << aux->m << std::endl;
-            WFSP(aux->number_of_symbols, aux->m, aux->priorities);
+            WFSP(aux->number_of_symbols, aux->m, aux->priorities, 'v');
             free(aux);
         }
     }
