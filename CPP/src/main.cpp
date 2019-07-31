@@ -106,14 +106,17 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     }
 
     //* Verify input data
-    std::cout << "#####################################" << std::endl;
-    std::cout << "Verify input data: " << std::endl;
-    std::cout << "Number of symbols: " << n << std::endl;
-    std::cout << "TMAX: " << TMAX << std::endl;
-    std::cout << "#####################################" << std::endl;
+    if (verbose == 'v')
+    {
+        std::cout << "#####################################" << std::endl;
+        std::cout << "Verify input data: " << std::endl;
+        std::cout << "Number of symbols: " << n << std::endl;
+        std::cout << "TMAX: " << TMAX << std::endl;
+        std::cout << "#####################################" << std::endl;
 
-    std::cout << "Dados Criados, Agora, gerar as variáveis: " << std::endl;
-    std::cout << "Created data, now creating the variables: " << std::endl;
+        std::cout << "Dados Criados, Agora, gerar as variáveis: " << std::endl;
+        std::cout << "Created data, now creating the variables: " << std::endl;
+    }
 
     //* Variaveis
 
@@ -346,17 +349,199 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         }
     }
 
-    /* 
-    // y_ikh E {0, 1}, para todo i = 1, . . . , n, para todo k ∈ K_i , para todo h ∈ H_ik. (4.13)
-    for (int i = 0; i < n; i++) {
-        for (int k = 0; k < M[i]; k++) {
-            for(int h = 0; h < H[i][k]; h++){
-                IloRange y_ikh_restrition(env, 0, y[i][k][h], 1);
-                modelo.add(y_ikh_restrition);
-            }
+    // (12) Tese ()
+    // Feito na implementação das variáveis
+
+    // (13) Tese ()
+    // Feito na implementação das variável
+
+    // (14) Tese ()
+    // Feito na implementação das variável
+
+    // (15) Tese ()
+    // Feito na implementação das variável
+
+    // NOVAS VARIÁVEIS
+
+    cout << "Declarando novas variaveis" << endl;
+    //W
+    IloIntVarArray W(env, n, 0, IloInfinity);
+
+    // Adicionando variavel no modelo
+    for (int i = 0; i < n; i++)
+    {
+        char var[100];
+        sprintf(var, "W(%d)", i);
+        W[i].setName(var);
+        modelo.add(W[i]);
+    }
+    //Ui
+    IloIntVarArray U(env, n, 0, IloInfinity);
+
+    // Adicionando variavel no modelo
+    for (int i = 0; i < n; i++)
+    {
+        char var[100];
+        sprintf(var, "U(%d)", i);
+        U[i].setName(var);
+        modelo.add(U[i]);
+    }
+
+    //Ri
+    IloIntVarArray R(env, n, 0, IloInfinity);
+
+    // Adicionando variavel no modelo
+    for (int i = 0; i < n; i++)
+    {
+        char var[100];
+        sprintf(var, "R(%d)", i);
+        R[i].setName(var);
+        modelo.add(R[i]);
+    }
+
+    // alpha
+    // Dimensão n pois i vai até n
+    IloArray<IloIntVarArray> alpha(env, n);
+
+    for (int i = 0; i < n; i++)
+    {
+        IloIntVarArray vetorAux(env, M[i], 0, IloInfinity);
+        alpha[i] = vetorAux;
+    }
+    cout << " no alpha" << endl;
+
+    // Adicionando variavel no modelo
+    for (int i = 0; i < n; i++)
+    {
+        cout << " alpha i " << i << endl;
+        for (int k = 0; k < M[i]; k++)
+        {
+            char var[100];
+            sprintf(var, "alpha(%d,%d)", i, k);
+
+            alpha[i][k].setName(var);
+
+            modelo.add(alpha[i][k]);
         }
     }
-    */
+
+    // w
+    // Dimensão n pois i vai até n
+    IloArray<IloBoolVarArray> w(env, n);
+
+    cout << "criado w" << endl;
+
+    for (int i = 0; i < n; i++)
+    {
+        IloBoolVarArray vetorAux(env, M[i]);
+        w[i] = vetorAux;
+    }
+
+    cout << "criado w interno" << endl;
+
+    // Adicionando variavel no modelo
+    for (int i = 0; i < n; i++)
+    {
+        for (int k = 0; k < M[i]; k++)
+        {
+            char var[100];
+            sprintf(var, "w(%d,%d)", i, k);
+            w[i][k].setName(var);
+            modelo.add(w[i][k]);
+        }
+    }
+
+    if (verbose == 'v')
+        cout << "Novas Restrições" << endl;
+    // (15)
+    for (int i = 0; i < n; i++)
+    {
+        modelo.add(D[i] >= W[i]);
+    }
+    if (verbose == 'v')
+        cout << "Restrição 15 Implementada" << endl;
+
+    // (16)
+    for (int i = 0; i < n; i++)
+    {
+        modelo.add(W[i] >= U[i] - R[i]);
+    }
+    if (verbose == 'v')
+        cout << "Restrição 16 Implementada" << endl;
+
+    // (17)
+    for (int i = 0; i < n; i++)
+    {
+        IloExpr soma(env);
+        for (int j = 0; j < n; j++)
+        {
+            for (int k = 0; k < M[i]; k++)
+            {
+                for (int h = 0; h < TMAX - k; h++)
+                {
+                    //soma += y[j][k][h] + p[i][1]
+                    soma += y[j][k][h];
+                }
+            }
+        }
+        modelo.add(U[i] == soma + p[i][0]);
+    }
+    if (verbose == 'v')
+        cout << "Restrição 17 Implementada" << endl;
+
+    // (18)
+    for (int i = 0; i < n; i++)
+    {
+        IloExpr soma(env);
+        for (int k = 0; k < M[i]; k++)
+        {
+            soma += alpha[i][k];
+        }
+        modelo.add(R[i] == soma);
+    }
+    if (verbose == 'v')
+        cout << "Restrição 18 Implementada" << endl;
+
+    // (19)
+    for (int i = 0; i < n; i++)
+    {
+        IloExpr soma(env);
+        for (int k = 0; k < M[i]; k++)
+        {
+            soma += w[i][k];
+        }
+        modelo.add(soma == 1);
+    }
+    if (verbose == 'v')
+        cout << "Restrição 19 Implementada" << endl;
+
+    // (20)
+    for (int i = 0; i < n; i++)
+    {
+        for (int k = 0; k < M[i]; k++)
+        {
+            modelo.add(alpha[i][k] <= 1 - w[i][k] + p[i][k]);
+        }
+    }
+    if (verbose == 'v')
+        cout << "Restrição 20 Implementada" << endl;
+
+    // (21)
+    for (int i = 0; i < n; i++)
+    {
+        for (int k = 0; k < M[i]; k++)
+        {
+            modelo.add(alpha[i][k] <= w[i][k] * TMAX);
+        }
+    }
+    if (verbose == 'v')
+        cout << "Restrição 21 Implementada" << endl;
+
+    // (22)
+    // Feito na implementação das variáveis
+
+    // (22)
+    // Feito na implementação das variáveis
 
     // Creating a CPLEX solver
     IloCplex cplex(env);
@@ -373,24 +558,6 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     cplex.out() << endl
                 << endl
                 << endl;
-    //cplex.out() << y << endl;
-
-    /*
-    for (size_t i = 0; i < n; i++)
-    {
-        //cplex.out() << y[i][0][0] << endl;
-        for (int k = 0; k < M[i]; k++)
-        {
-            for (int k = 0; k < TMAX-j; k++)
-            {
-                cplex.out() <<"i:" << i << "k:" << "k:" << k << " result:" << cplex.getValue(y[i][j][k]) << endl;
-               
-            }
-            
-        }
-        
-    }
-    */
 
     vector<vector<int>> sequence;
     int a = 0;
@@ -403,8 +570,10 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
             {
                 //cplex.out() << " OUT = " << cplex.getValue(y[i][k][h]) << endl;
                 // If the value is equal to 1, save in the sequence vector
-                //if (cplex.getValue(y[i][k][h]) == 1)
-                if (a < 4)
+                if (verbose == 'v')
+                    cplex.out() << cplex.getValue(y[i][k][h]);
+                if (cplex.getValue(y[i][k][h]) == 1)
+                //if (a < 4)
                 {
                     vector<int> aux;
                     aux.push_back(i);
@@ -417,6 +586,11 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
             }
         }
     }
+
+    if (verbose == 'v')
+        cout << endl
+             << endl
+             << endl;
 
     sort(sequence.begin(), sequence.end(), sortByH);
 
@@ -519,13 +693,15 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
 
 int main(int argc, char *argv[])
 {
-    std::cout << "Inside the main function" << std::endl;
+
+    std::cout
+        << "Inside the main function" << std::endl;
     try
     {
         std::cout << "Inside the try" << std::endl;
 
         File_content *aux = NULL;
-        aux = read_instances("./data/ins_05_20_4.txt");
+        aux = read_instances("./data/ins_05_20_4.txt", 'a');
 
         if (aux)
         {
@@ -533,7 +709,7 @@ int main(int argc, char *argv[])
 
             std::cout << "number of symbols: " << aux->number_of_symbols << std::endl;
             std::cout << "number m: " << aux->m << std::endl;
-            WFSP(aux->number_of_symbols, aux->m, aux->priorities, 'v');
+            WFSP(aux->number_of_symbols, aux->m, aux->priorities, 'a');
             free(aux);
         }
     }

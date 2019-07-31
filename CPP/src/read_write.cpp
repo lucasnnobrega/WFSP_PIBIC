@@ -23,7 +23,7 @@ int write(char verbose)
   return 0;
 }
 
-File_content *read_instances(const char *relative_file_path)
+File_content *read_instances(const char *relative_file_path, char verbose)
 {
   string linhas[5];
 

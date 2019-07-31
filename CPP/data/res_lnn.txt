@@ -7,18 +7,18 @@ Number4
 Objective: 0
 
 Sequence:
-1 - 1 - 1 - 1 - 
 
-Occupied positions: 4 of 20
 
-symbol 1--> Priority:  10, Di:  0, Df:  0, Pi: 0, Pf: 1302781168
-symbol 2--> Priority:  10, Di:  0, Df:  0, Pi: 0, Pf: 32765
-symbol 3--> Priority:  6, Di:  0, Df:  0, Pi: 4, Pf: 1766007551
-symbol 4--> Priority:  2, Di:  0, Df:  0, Pi: 0, Pf: 21911
-symbol 5--> Priority:  2, Di:  0, Df:  0, Pi: 1302781168, Pf: 1789082416
+Occupied positions: 0 of 20
+
+symbol 1--> Priority:  10, Di:  0, Df:  0, Pi: 0, Pf: -1089058688
+symbol 2--> Priority:  10, Di:  0, Df:  0, Pi: 0, Pf: 32766
+symbol 3--> Priority:  6, Di:  0, Df:  0, Pi: 4, Pf: 1397350911
+symbol 4--> Priority:  2, Di:  0, Df:  0, Pi: 0, Pf: 21870
+symbol 5--> Priority:  2, Di:  0, Df:  0, Pi: -1089058688, Pf: 1425741984
 
 (Available copies, Used copies)
-symbol 1 -->  5,  4
+symbol 1 -->  5,  0
 symbol 2 -->  5,  0
 symbol 3 -->  5,  0
 symbol 4 -->  5,  0

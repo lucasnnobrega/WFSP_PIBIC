@@ -10,7 +10,7 @@ typedef struct Files_Content
   int *priorities;
 } File_content;
 
-typedef struct Write_Content
+typedef struct Write_Content //log
 {
   int objective;
   int number_of_symbols;
@@ -30,6 +30,6 @@ int write(char verbose);
 
 int write_res(char verbose, Write_content content_to_write);
 
-File_content *read_instances(const char *relative_file_path);
+File_content *read_instances(const char *relative_file_path, char verbose);
 
 #endif // read_write
