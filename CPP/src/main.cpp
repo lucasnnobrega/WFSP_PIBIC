@@ -84,8 +84,6 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
 
     for (int i = 0; i < n; i++)
     {
-        //H[i] = new int*[M[i]];
-
         H[i] = new int *[M[i]];
 
         for (int k = 0; k < M[i]; k++)
@@ -156,7 +154,9 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
 
     // d_i,k,k+1
     // Dimensao n, pois i vai ate n
+    //Distance between the k-th and (k + 1)-th copies of symbol xi ∈ X, k ∈ Ki \ {Mi}.
     IloArray<IloIntVarArray> d(env, n);
+
     for (int i = 0; i < n; i++)
     {
         IloIntVarArray vetorAux(env, M[i], 0, IloInfinity);
@@ -196,8 +196,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     }
 
     // P
-    // Maior produto D_i*c_i, para todo x_i E X
     //? Implementado como um valor unico
+    // Maior produto D_i*c_i, para todo x_i E X
     IloIntVar P(env, 0, IloInfinity);
 
     // Adicionando variavel no modelo
@@ -227,12 +227,12 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         }
     }
 
-    // ███████╗ ██████╗
-    // ██╔════╝██╔═══██╗
-    // █████╗  ██║   ██║
-    // ██╔══╝  ██║   ██║
-    // ██║     ╚██████╔╝
-    // ╚═╝      ╚═════╝
+    // ███████╗   ██████╗
+    // ██╔════╝  ██╔═══██╗
+    // █████╗    ██║   ██║
+    // ██╔══╝    ██║   ██║
+    // ██║       ╚██████╔╝
+    // ╚═╝        ╚═════╝
     // Criando a Função Objetivo (FO)
     // min P
     IloObjective obj(env, P, IloObjective::Minimize);
@@ -246,13 +246,15 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     // ╚══════╝╚═╝╚═╝  ╚═╝╚═╝
     // Constraints
 
-    // P >= D_i * c_i, para i = 1, ... , n (4.2) (3)
+    // (4.2) (3)
+    // P >= D_i * c_i, para i = 1, ... , n
     for (int i = 0; i < n; i++)
     {
         modelo.add(P >= D[i] * c[i]);
     }
 
-    // D_i ≥ d_i,k,k+1 , para todo i = 1, . . . , n,  para todo k ∈ K_i \ {M_i }, (4.3) (4)
+    // (4.3) (4)
+    // D_i ≥ d_i,k,k+1 , para todo i = 1, . . . , n,  para todo k ∈ K_i \ {M_i }
     for (int i = 0; i < n; i++)
     {
         for (int k = 0; k < M[i] - 1; k++)
@@ -261,7 +263,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         }
     }
 
-    // sum{i in X, k in K[i]} y_ikh ≤ 1, ∀h ∈ {1, . . . , T MAX}, (4.4) (5)
+    // (4.4) (5)
+    // sum{i in X, k in K[i]} y_ikh ≤ 1, ∀h ∈ {1, . . . , T MAX}
     for (int h = 0; h < TMAX - 1; h++)
     {
         IloExpr soma(env);
@@ -304,7 +307,7 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         modelo.add(soma <= 1);
     }
 
-    // (8)
+    // (8) Tese (4.7)
     for (int i = 0; i < n; i++)
     {
         for (int k = 0; k < M[i]; k++)
@@ -318,7 +321,7 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         }
     }
 
-    // (9)
+    // (9) Tese (4.8)
     for (int i = 0; i < n; i++)
     {
         for (int k = 0; k < M[i] - 1; k++)
@@ -326,7 +329,6 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
 
             IloExpr soma_esq(env);
             IloExpr soma_dir(env);
-            //?for (int h = 0; h < TMAX - k ; h++)
             for (int h = 0; h < TMAX - k - 1; h++)
             {
 
@@ -343,7 +345,6 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         for (int k = 0; k < M[i] - 1; k++)
         {
             IloExpr soma(env);
-            //?for (int h = 0; h < TMAX - k -1; h++) {
             for (int h = 0; h < TMAX - k - 1; h++)
             {
                 soma += y[i][k + 1][h];

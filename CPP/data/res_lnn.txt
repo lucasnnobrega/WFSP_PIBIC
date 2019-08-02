@@ -11,11 +11,11 @@ Sequence:
 
 Occupied positions: 0 of 20
 
-symbol 1--> Priority:  10, Di:  0, Df:  0, Pi: 0, Pf: 21377280
-symbol 2--> Priority:  10, Di:  0, Df:  0, Pi: 0, Pf: 32766
-symbol 3--> Priority:  6, Di:  0, Df:  0, Pi: 4, Pf: -68758273
-symbol 4--> Priority:  2, Di:  0, Df:  0, Pi: 0, Pf: 22025
-symbol 5--> Priority:  2, Di:  0, Df:  0, Pi: 21377280, Pf: -34236256
+symbol 1--> Priority:  10, Di:  0, Df:  0, Pi: 0, Pf: 209692048
+symbol 2--> Priority:  10, Di:  0, Df:  0, Pi: 0, Pf: 32767
+symbol 3--> Priority:  6, Di:  0, Df:  0, Pi: 4, Pf: 993445119
+symbol 4--> Priority:  2, Di:  0, Df:  0, Pi: 0, Pf: 22064
+symbol 5--> Priority:  2, Di:  0, Df:  0, Pi: 209692048, Pf: 1007626400
 
 (Available copies, Used copies)
 symbol 1 -->  5,  0
