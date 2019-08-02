@@ -9,21 +9,10 @@
 #include <ilcplex/ilocplex.h>
 #include <iostream>
 #include <math.h>
-#include <string.h>
-#include <vector>
-#include <algorithm>
 
 #include "../include/read_write.h"
 
 using namespace std;
-
-// Driver function to sort the 2D vector
-// on basis of a particular column
-bool sortByH(const vector<int> &v1,
-             const vector<int> &v2)
-{
-    return v1[2] < v2[2];
-}
 
 void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
 {
@@ -31,6 +20,12 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     IloEnv env;
     IloModel modelo(env);
 
+    //     ██╗ ██╗          ██████╗  █████╗ ██████╗  ██████╗ ███████╗
+    //    ██╔╝██╔╝▄ ██╗▄    ██╔══██╗██╔══██╗██╔══██╗██╔═══██╗██╔════╝
+    //   ██╔╝██╔╝  ████╗    ██║  ██║███████║██║  ██║██║   ██║███████╗
+    //  ██╔╝██╔╝  ▀╚██╔▀    ██║  ██║██╔══██║██║  ██║██║   ██║╚════██║
+    // ██╔╝██╔╝     ╚═╝     ██████╔╝██║  ██║██████╔╝╚██████╔╝███████║
+    // ╚═╝ ╚═╝              ╚═════╝ ╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚══════╝
     //* Dados
 
     // Numero de Simbolos
@@ -46,7 +41,7 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
 
     for (int i = 0; i < n; i++)
     {
-        M[i] = n; // CONFERIR
+        M[i] = n; // CONFERIR ok
     }
 
     // Conjunto de indices das cópias xi E X,  Ki = {1, ..., Mi}
@@ -76,6 +71,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     for (int i = 0; i < n; i++)
     {
         c[i] = priorities[i];
+        char var[100];
+        sprintf(var, "Priority: 10");
         std::cout << "Priority: " << c[i] << " ";
     }
     std::cout << std::endl;
@@ -118,8 +115,14 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         std::cout << "Created data, now creating the variables: " << std::endl;
     }
 
-    //* Variaveis
+    // ██╗   ██╗ █████╗ ██████╗ ██╗ █████╗ ██╗   ██╗███████╗██╗███████╗    ██████╗ ██╗
+    // ██║   ██║██╔══██╗██╔══██╗██║██╔══██╗██║   ██║██╔════╝██║██╔════╝    ██╔══██╗██║
+    // ██║   ██║███████║██████╔╝██║███████║██║   ██║█████╗  ██║███████╗    ██████╔╝██║
+    // ╚██╗ ██╔╝██╔══██║██╔══██╗██║██╔══██║╚██╗ ██╔╝██╔══╝  ██║╚════██║    ██╔═══╝ ██║
+    //  ╚████╔╝ ██║  ██║██║  ██║██║██║  ██║ ╚████╔╝ ███████╗██║███████║    ██║██╗  ██║
+    //   ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝╚══════╝    ╚═╝╚═╝  ╚═╝
 
+    //* Variaveis
     // y_ikh , variavel binaria
     // Dimensão n pois i vai até n
     IloArray<IloArray<IloBoolVarArray>> y(env, n);
@@ -224,11 +227,23 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         }
     }
 
+    // ███████╗ ██████╗
+    // ██╔════╝██╔═══██╗
+    // █████╗  ██║   ██║
+    // ██╔══╝  ██║   ██║
+    // ██║     ╚██████╔╝
+    // ╚═╝      ╚═════╝
     // Criando a Função Objetivo (FO)
     // min P
     IloObjective obj(env, P, IloObjective::Minimize);
     modelo.add(obj);
 
+    // ███████╗    █████╗
+    // ██╔════╝   ██╔══██╗
+    // ███████╗   ███████║
+    // ╚════██║   ██╔══██║
+    // ███████║██╗██║  ██║██╗
+    // ╚══════╝╚═╝╚═╝  ╚═╝╚═╝
     // Constraints
 
     // P >= D_i * c_i, para i = 1, ... , n (4.2) (3)
@@ -363,7 +378,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
 
     // NOVAS VARIÁVEIS
 
-    cout << "Declarando novas variaveis" << endl;
+    if (verbose == 'v')
+        cout << GREEN << "Declarando Novas Variaveis (W, U, R, alpha[], w[])" << RESET << endl;
     //W
     IloIntVarArray W(env, n, 0, IloInfinity);
 
@@ -408,36 +424,30 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         IloIntVarArray vetorAux(env, M[i], 0, IloInfinity);
         alpha[i] = vetorAux;
     }
-    cout << " no alpha" << endl;
 
     // Adicionando variavel no modelo
     for (int i = 0; i < n; i++)
     {
-        cout << " alpha i " << i << endl;
         for (int k = 0; k < M[i]; k++)
         {
             char var[100];
             sprintf(var, "alpha(%d,%d)", i, k);
-
             alpha[i][k].setName(var);
-
             modelo.add(alpha[i][k]);
         }
     }
+    if (verbose == 'v')
+        cout << "Alpha Implementado" << endl;
 
     // w
     // Dimensão n pois i vai até n
     IloArray<IloBoolVarArray> w(env, n);
-
-    cout << "criado w" << endl;
 
     for (int i = 0; i < n; i++)
     {
         IloBoolVarArray vetorAux(env, M[i]);
         w[i] = vetorAux;
     }
-
-    cout << "criado w interno" << endl;
 
     // Adicionando variavel no modelo
     for (int i = 0; i < n; i++)
@@ -450,6 +460,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
             modelo.add(w[i][k]);
         }
     }
+    if (verbose == 'v')
+        cout << "w Implementado" << endl;
 
     if (verbose == 'v')
         cout << "Novas Restrições" << endl;
@@ -545,149 +557,26 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
 
     // Creating a CPLEX solver
     IloCplex cplex(env);
-    cplex.setParam(IloCplex::Param::Threads, 1);
+    cplex.setParam(IloCplex::Param::Threads, 0);
     cplex.extract(modelo);
+    cplex.exportModel("modelo.lp");
 
-    cplex.out() << endl;
+    cplex.out()
+        << endl
+        << "################################################################"
+        << endl;
     cplex.solve();
     cplex.out() << endl
                 << "solution status = " << cplex.getStatus() << endl;
 
-    cplex.out() << "\e[32mcost\e[0m = " << cplex.getObjValue() << endl;
+    cplex.out() << GREEN << "cost = " << RESET << cplex.getObjValue() << endl;
 
-    cplex.out() << endl
+    cplex.out() << "################################################################"
                 << endl
                 << endl;
 
-    vector<vector<int>> sequence;
-    int a = 0;
+    draftToLogger(modelo, y, cplex, number_of_symbols, n, TMAX, M, priorities, D, 'v');
 
-    for (int i = 0; i < n; i++)
-    { // 2 == n
-        for (int k = 0; k < M[i]; k++)
-        {
-            for (int h = 0; h < TMAX - k; h++)
-            {
-                //cplex.out() << " OUT = " << cplex.getValue(y[i][k][h]) << endl;
-                // If the value is equal to 1, save in the sequence vector
-                if (verbose == 'v')
-                    cplex.out() << cplex.getValue(y[i][k][h]);
-                if (cplex.getValue(y[i][k][h]) == 1)
-                //if (a < 4)
-                {
-                    vector<int> aux;
-                    aux.push_back(i);
-                    aux.push_back(k);
-                    aux.push_back(h);
-
-                    sequence.push_back(aux);
-                    a++;
-                }
-            }
-        }
-    }
-
-    if (verbose == 'v')
-        cout << endl
-             << endl
-             << endl;
-
-    sort(sequence.begin(), sequence.end(), sortByH);
-
-    for (int i = 0; i < sequence.size(); i++)
-    {
-        for (int j = 0; j < sequence[i].size(); j++)
-        {
-            std::cout << sequence[i][j] << " ";
-        }
-        std::cout << "\n";
-        std::cout << "símbolo: " << sequence[i][0] << std::endl;
-        std::cout << "k-ésima cópia: " << sequence[i][1] << std::endl;
-        std::cout << "posição h: " << sequence[i][2] << std::endl;
-        std::cout << "\n";
-    }
-
-    Write_content content;
-
-    content.objective = cplex.getObjValue();
-
-    content.number_of_symbols = number_of_symbols; // OK
-
-    int aux = 0;
-    for (auto i = sequence.begin(); i < sequence.end(); i++)
-    {
-        aux++;
-    }
-
-    content.occupied_positions = aux; //OK sequence.size()
-
-    content.total_positions = TMAX; // OK
-
-    content.avaliable_copies = M; // OK Max number of copies of symbol x_i € X
-
-    content.sequence = sequence;
-
-    /***************************************************************************/
-    // Array that storage the number of used copies of a symbol
-    int used_copies[n];
-
-    // First create a empty vector with only zeros
-    for (int i = 0; i < n; i++)
-    {
-        used_copies[i] = 0;
-    }
-
-    // Add one to the usage value
-    for (int i = 0; i < sequence.size(); i++)
-    {
-        // i = [i, k, h]
-        // i = [x_i, k-th copy, h position]
-        used_copies[sequence[i][0]]++;
-    }
-    content.used_copies = used_copies;
-    /***************************************************************************/
-
-    content.priorities = priorities; // OK
-
-    /***************************************************************************/
-    int Di[n];
-    for (int i = 0; i < n; i++)
-    {
-        Di[i] = 0;
-    }
-    content.Di = Di; // Still a doubt
-    /***************************************************************************/
-    // Df == D_i ?
-    // Maior distancia entre 2 copias consecutivas
-    int Df[n];
-    for (auto i = 0; i < n; i++)
-    {
-        Df[i] = cplex.getValue(D[i]);
-    }
-    content.Df = Df;
-    /***************************************************************************/
-    int Pi[n];
-    for (int i = 0; i < n; i++)
-    {
-        Pi[n] = priorities[i] * Di[i];
-    }
-
-    content.Pi = Pi;
-    /***************************************************************************/
-    int Pf[n];
-    for (int i = 0; i < n; i++)
-    {
-        Pf[n] = priorities[i] * Df[i];
-    }
-
-    content.Pf = Pf;
-
-    //content.Di = D;
-    //content.Df = D;
-    //content.Pi = priorities;
-    //content.Pf = priorities;
-
-    write_res(verbose, content);
     env.out();
 }
 
@@ -701,15 +590,14 @@ int main(int argc, char *argv[])
         std::cout << "Inside the try" << std::endl;
 
         File_content *aux = NULL;
-        aux = read_instances("./data/ins_05_20_4.txt", 'a');
+        aux = read_instances("./data/ins_05_20_4.txt", 's');
 
         if (aux)
         {
             std::cout << "Inside the try -> IF" << std::endl;
-
             std::cout << "number of symbols: " << aux->number_of_symbols << std::endl;
             std::cout << "number m: " << aux->m << std::endl;
-            WFSP(aux->number_of_symbols, aux->m, aux->priorities, 'a');
+            WFSP(aux->number_of_symbols, aux->m, aux->priorities, 'v');
             free(aux);
         }
     }
