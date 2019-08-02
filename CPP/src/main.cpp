@@ -304,7 +304,7 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
                 soma += y[i][k][h];
             }
         }
-        modelo.add(soma <= 1);
+        modelo.add(soma >= 1);
     }
 
     // (8) Tese (4.7)
