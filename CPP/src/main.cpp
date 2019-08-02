@@ -607,6 +607,10 @@ int main(int argc, char *argv[])
                   << e << std::endl;
         e.end();
     }
+    catch (...)
+    {
+        cerr << "Unknown exception caught" << endl;
+    }
 
     return 0;
 }

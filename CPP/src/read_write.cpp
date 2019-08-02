@@ -32,8 +32,6 @@ void draftToLogger(IloModel modelo,
 {
   IloEnv env = modelo.getEnv();
 
-  cplex.out() << GREEN << "teste " << cplex.getObjValue() << cplex.getValue(y[0][0][0]) << RESET << endl
-              << endl;
   vector<vector<int>> sequence;
   int a = 0;
 
@@ -45,8 +43,8 @@ void draftToLogger(IloModel modelo,
       {
         //cplex.out() << " OUT = " << cplex.getValue(y[i][k][h]) << endl;
         // If the value is equal to 1, save in the sequence vector
-        if (verbose == 'v')
-          cplex.out() << cplex.getValue(y[i][k][h]);
+        //if (verbose == 'v')
+        //  cplex.out() << cplex.getValue(y[i][k][h]);
         if (cplex.getValue(y[i][k][h]) == 1)
         //if (a < 4)
         {
