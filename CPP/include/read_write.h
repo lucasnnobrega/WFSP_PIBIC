@@ -1,7 +1,8 @@
-#ifndef READ_WRITE
-#define READ_WRITE
+#ifndef _READ_WRITE
+#define _READ_WRITE
 
 #include <vector>
+#include <ilcplex/ilocplex.h>
 
 #define GREEN "\e[32m"
 #define RESET "\e[0m"
