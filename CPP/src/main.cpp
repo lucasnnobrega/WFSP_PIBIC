@@ -272,7 +272,7 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         {
             for (int k = 0; k < M[i]; k++)
             {
-                if (h < TMAX - k)
+                if (h < TMAX - k && h >= H[i][k][0])
                     soma += y[i][k][h];
             }
         }
