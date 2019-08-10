@@ -5,6 +5,7 @@
 #include <ilcplex/ilocplex.h>
 
 #define GREEN "\e[32m"
+#define RED "\e[31m"
 #define RESET "\e[0m"
 
 using namespace std;
@@ -20,6 +21,7 @@ typedef struct Write_Content //log
 {
   int objective;
   int number_of_symbols;
+  int TMAX;
   int occupied_positions;
   int total_positions;
   std::vector<std::vector<int>> sequence;
@@ -28,13 +30,13 @@ typedef struct Write_Content //log
   int *priorities;
   int *Di;
   int *Df;
-  int *Pi;
-  int *Pf;
 } Write_content;
 
 int write(char verbose);
 
-int write_res(char verbose, Write_content content_to_write);
+int writeOutput(char verbose, Write_content content_to_write);
+
+int writeOutputCustom(char verbose, Write_content content_to_write);
 
 bool sortByH(const vector<int> &v1, const vector<int> &v2);
 
@@ -49,6 +51,7 @@ void draftToLogger(IloModel modelo,
                    IloIntVarArray D,
                    char verbose);
 
-File_content *read_instances(const char *relative_file_path, char verbose);
+//File_content *read_instances(const char *relative_file_path, char verbose);
+File_content *read_instances(string relative_file_path, char verbose);
 
 #endif // read_write

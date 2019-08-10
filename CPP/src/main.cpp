@@ -12,9 +12,11 @@
 
 #include "../include/read_write.h"
 
+#include "../include/argparser.hpp"
+
 using namespace std;
 
-void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
+void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
 {
     // Criando o Ambiente
     IloEnv env;
@@ -29,12 +31,16 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     //* Dados
 
     // Numero de Simbolos
-    std::cout << "Inside WFSP function" << std::endl;
+    if (verbose == 'v')
+        std::cout << GREEN << "Inside WFSP function" << RESET << std::endl;
     int n = number_of_symbols;
-    std::cout << "Number of symbols: " << number_of_symbols << " " << n << std::endl;
+    if (verbose == 'v')
+        std::cout << "Number of symbols: " << number_of_symbols << " n: " << n << std::endl;
 
     // Conjunto de Simbolos X1 ... Xn
     int X[n];
+    if (verbose == 'v')
+        cout << "X created" << endl;
 
     // Numero Maximo de copias do simbolo Xi E X
     int M[n];
@@ -43,6 +49,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     {
         M[i] = n; // CONFERIR ok
     }
+    if (verbose == 'v')
+        cout << "M created: M[0] = " << M[0] << endl;
 
     // Conjunto de indices das cópias xi E X,  Ki = {1, ..., Mi}
     // i  = {1,...N}
@@ -72,15 +80,17 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     {
         c[i] = priorities[i];
         char var[100];
-        sprintf(var, "Priority: 10");
-        std::cout << "Priority: " << c[i] << " ";
+        sprintf(var, "Priority: %d", c[i]);
+        if (verbose == 'v')
+            std::cout << "Priority: " << c[i] << " ";
     }
     std::cout << std::endl;
 
     // Conjunto de posicoes que podem ser ocupadas pela k-ésima cópia do simbolo Xi E X
     // Hik = {k, ... ,TMAX}
     int **H[n];
-    std::cout << "Creating the array Hik:" << std::endl;
+    if (verbose == 'v')
+        std::cout << "Creating the array Hik:" << std::endl;
 
     for (int i = 0; i < n; i++)
     {
@@ -109,7 +119,6 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         std::cout << "TMAX: " << TMAX << std::endl;
         std::cout << "#####################################" << std::endl;
 
-        std::cout << "Dados Criados, Agora, gerar as variáveis: " << std::endl;
         std::cout << "Created data, now creating the variables: " << std::endl;
     }
 
@@ -151,6 +160,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
             }
         }
     }
+    if (verbose == 'v')
+        std::cout << "y created" << std::endl;
 
     // d_i,k,k+1
     // Dimensao n, pois i vai ate n
@@ -181,6 +192,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
             modelo.add(d[i][k]);
         }
     }
+    if (verbose == 'v')
+        std::cout << "d created" << std::endl;
 
     // D_i
     // Maior Distancia entre duas copias consecutivas do simbolo x_i E X
@@ -194,6 +207,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         D[i].setName(var);
         modelo.add(D[i]);
     }
+    if (verbose == 'v')
+        std::cout << "D created" << std::endl;
 
     // P
     //? Implementado como um valor unico
@@ -205,6 +220,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     sprintf(var, "P");
     P.setName(var);
     modelo.add(P);
+    if (verbose == 'v')
+        std::cout << "P created" << std::endl;
 
     // p_ik
     // Posicao da k-esima copia do simbolo x_i E X
@@ -227,6 +244,9 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         }
     }
 
+    if (verbose == 'v')
+        std::cout << "p created" << std::endl;
+
     // ███████╗   ██████╗
     // ██╔════╝  ██╔═══██╗
     // █████╗    ██║   ██║
@@ -237,6 +257,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     // min P
     IloObjective obj(env, P, IloObjective::Minimize);
     modelo.add(obj);
+    if (verbose == 'v')
+        std::cout << "Objective function created" << std::endl;
 
     // ███████╗    █████╗
     // ██╔════╝   ██╔══██╗
@@ -252,6 +274,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     {
         modelo.add(P >= D[i] * c[i]);
     }
+    if (verbose == 'v')
+        std::cout << "Restriction 3 created" << std::endl;
 
     // (4.3) (4)
     // D_i ≥ d_i,k,k+1 , para todo i = 1, . . . , n,  para todo k ∈ K_i \ {M_i }
@@ -262,6 +286,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
             modelo.add(D[i] >= d[i][k]);
         }
     }
+    if (verbose == 'v')
+        std::cout << "Restriction 4 created" << std::endl;
 
     // (4.4) (5)
     // sum{i in X, k in K[i]} y_ikh ≤ 1, ∀h ∈ {1, . . . , T MAX}
@@ -278,6 +304,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         }
         modelo.add(soma <= 1);
     }
+    if (verbose == 'v')
+        std::cout << "Restriction 5 created" << std::endl;
 
     // sum{h in H[i][k]} y_ikh ≤ 1,, (4.4) (6)
     for (int i = 0; i < n; i++)
@@ -292,6 +320,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
             modelo.add(soma <= 1);
         }
     }
+    if (verbose == 'v')
+        std::cout << "Restriction 6 created" << std::endl;
 
     // sum{k in K[i], h in H[i][k]} y_ikh ≤ 1,  (4.4) (7)
     for (int i = 0; i < n; i++)
@@ -306,6 +336,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         }
         modelo.add(soma >= 1);
     }
+    if (verbose == 'v')
+        std::cout << "Restriction 7 created" << std::endl;
 
     // (8) Tese (4.7)
     for (int i = 0; i < n; i++)
@@ -320,6 +352,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
             modelo.add(p[i][k] == soma);
         }
     }
+    if (verbose == 'v')
+        std::cout << "Restriction 8 created" << std::endl;
 
     // (9) Tese (4.8)
     for (int i = 0; i < n; i++)
@@ -338,6 +372,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
             modelo.add(soma_esq >= soma_dir);
         }
     }
+    if (verbose == 'v')
+        std::cout << "Restriction 9 created" << std::endl;
 
     // (10) Tese (4.9)
     for (int i = 0; i < n; i++)
@@ -352,6 +388,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
             modelo.add(p[i][k + 1] >= p[i][k] - (1 - soma) * TMAX);
         }
     }
+    if (verbose == 'v')
+        std::cout << "Restriction 10 created" << std::endl;
 
     // (11) Tese (4.10)
     for (int i = 0; i < n; i++)
@@ -364,6 +402,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
             }
         }
     }
+    if (verbose == 'v')
+        std::cout << "Restriction 11 created" << std::endl;
 
     // (12) Tese ()
     // Feito na implementação das variáveis
@@ -377,10 +417,17 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     // (15) Tese ()
     // Feito na implementação das variável
 
-    // NOVAS VARIÁVEIS
+    // NEW VARIABLES
+    // ██╗   ██╗ █████╗ ██████╗ ██╗ █████╗ ██╗   ██╗███████╗██╗███████╗    ██████╗ ██╗██╗
+    // ██║   ██║██╔══██╗██╔══██╗██║██╔══██╗██║   ██║██╔════╝██║██╔════╝    ██╔══██╗██║██║
+    // ██║   ██║███████║██████╔╝██║███████║██║   ██║█████╗  ██║███████╗    ██████╔╝██║██║
+    // ╚██╗ ██╔╝██╔══██║██╔══██╗██║██╔══██║╚██╗ ██╔╝██╔══╝  ██║╚════██║    ██╔═══╝ ██║██║
+    //  ╚████╔╝ ██║  ██║██║  ██║██║██║  ██║ ╚████╔╝ ███████╗██║███████║    ██║██╗  ██║██║
+    //   ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝╚══════╝    ╚═╝╚═╝  ╚═╝╚═╝
+    // Variaveis PII
 
     if (verbose == 'v')
-        cout << GREEN << "Declarando Novas Variaveis (W, U, R, alpha[], w[])" << RESET << endl;
+        cout << GREEN << "Declaring New Variables (W, U, R, alpha[], w[])" << RESET << endl;
     //W
     IloIntVarArray W(env, n, 0, IloInfinity);
 
@@ -392,6 +439,9 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         W[i].setName(var);
         modelo.add(W[i]);
     }
+    if (verbose == 'v')
+        cout << "W created" << endl;
+
     //Ui
     IloIntVarArray U(env, n, 0, IloInfinity);
 
@@ -403,6 +453,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         U[i].setName(var);
         modelo.add(U[i]);
     }
+    if (verbose == 'v')
+        cout << "U created" << endl;
 
     //Ri
     IloIntVarArray R(env, n, 0, IloInfinity);
@@ -415,6 +467,8 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         R[i].setName(var);
         modelo.add(R[i]);
     }
+    if (verbose == 'v')
+        cout << "R created" << endl;
 
     // alpha
     // Dimensão n pois i vai até n
@@ -438,7 +492,7 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         }
     }
     if (verbose == 'v')
-        cout << "Alpha Implementado" << endl;
+        cout << "alpha created" << endl;
 
     // w
     // Dimensão n pois i vai até n
@@ -462,17 +516,19 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         }
     }
     if (verbose == 'v')
-        cout << "w Implementado" << endl;
+        cout << "w created" << endl;
 
+    //* New Restrictions
     if (verbose == 'v')
-        cout << "Novas Restrições" << endl;
+        cout << "New Restrictions" << endl;
+
     // (15)
     for (int i = 0; i < n; i++)
     {
         modelo.add(D[i] >= W[i]);
     }
     if (verbose == 'v')
-        cout << "Restrição 15 Implementada" << endl;
+        cout << "Restriction 15 created" << endl;
 
     // (16)
     for (int i = 0; i < n; i++)
@@ -480,8 +536,7 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         modelo.add(W[i] >= U[i] - R[i]);
     }
     if (verbose == 'v')
-        cout << "Restrição 16 Implementada" << endl;
-
+        cout << "Restriction 16 created" << endl;
     // (17)
     for (int i = 0; i < n; i++)
     {
@@ -492,7 +547,6 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
             {
                 for (int h = 0; h < TMAX - k; h++)
                 {
-                    //soma += y[j][k][h] + p[i][1]
                     soma += y[j][k][h];
                 }
             }
@@ -500,7 +554,7 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         modelo.add(U[i] == soma + p[i][0]);
     }
     if (verbose == 'v')
-        cout << "Restrição 17 Implementada" << endl;
+        cout << "Restriction 17 created" << endl;
 
     // (18)
     for (int i = 0; i < n; i++)
@@ -513,7 +567,7 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         modelo.add(R[i] == soma);
     }
     if (verbose == 'v')
-        cout << "Restrição 18 Implementada" << endl;
+        cout << "Restriction 18 created" << endl;
 
     // (19)
     for (int i = 0; i < n; i++)
@@ -526,7 +580,7 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         modelo.add(soma == 1);
     }
     if (verbose == 'v')
-        cout << "Restrição 19 Implementada" << endl;
+        cout << "Restriction 19 created" << endl;
 
     // (20)
     for (int i = 0; i < n; i++)
@@ -537,7 +591,7 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         }
     }
     if (verbose == 'v')
-        cout << "Restrição 20 Implementada" << endl;
+        cout << "Restriction 20 created" << endl;
 
     // (21)
     for (int i = 0; i < n; i++)
@@ -548,7 +602,7 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
         }
     }
     if (verbose == 'v')
-        cout << "Restrição 21 Implementada" << endl;
+        cout << "Restriction 21 created" << endl;
 
     // (22)
     // Feito na implementação das variáveis
@@ -557,55 +611,116 @@ void WFSP(int number_of_symbols, int m, int *priorities, char verbose)
     // Feito na implementação das variáveis
 
     // Creating a CPLEX solver
+    cout << "\n################################################################\n";
+    cout << "####################### CPLEX SOLVER ###########################\n";
     IloCplex cplex(env);
     cplex.setParam(IloCplex::Param::Threads, 0);
     cplex.extract(modelo);
     cplex.exportModel("modelo.lp");
 
-    cplex.out()
-        << endl
-        << "################################################################"
-        << endl;
     cplex.solve();
-    cplex.out() << endl
-                << "solution status = " << cplex.getStatus() << endl;
+    cplex.out() << "\nsolution status = " << cplex.getStatus() << endl;
 
-    cplex.out() << GREEN << "cost = " << RESET << cplex.getObjValue() << endl;
+    cplex.out() << GREEN << "ObjValue = " << RESET << cplex.getObjValue() << endl;
 
-    cplex.out() << "################################################################"
-                << endl
-                << endl;
+    cplex.out() << "################################################################\n\n";
 
-    draftToLogger(modelo, y, cplex, number_of_symbols, n, TMAX, M, priorities, D, 'v');
+    if (verbose == 'v')
+    {
+
+        cout << "W: " << endl;
+        for (size_t i = 0; i < n; i++)
+        {
+            //cout << " " << W[i] << " ";
+            cout << " " << cplex.getValue(W[i]) << " ";
+        }
+
+        cout << "\nU: " << endl;
+        for (size_t i = 0; i < n; i++)
+        {
+            //cout << " " << U[i] << " ";
+            cout << " " << cplex.getValue(U[i]) << " ";
+        }
+
+        cout << "\nR: " << endl;
+        for (size_t i = 0; i < n; i++)
+        {
+            //cout << " " << R[i] << " ";
+            cout << " " << cplex.getValue(R[i]) << " ";
+        }
+
+        cout << endl;
+        for (int i = 0; i < n; i++)
+        {
+            for (int k = 0; k < M[i]; k++)
+            {
+                printf("\np[%d][%d]: ", i, k);
+                cout << " -> " << cplex.getValue(p[i][k]) << "\t | " << p[i][k];
+            }
+        }
+    }
+
+    draftToLogger(modelo, y, cplex, number_of_symbols, n, TMAX, M, priorities, D, verbose);
 
     env.out();
 }
 
-int main(int argc, char *argv[])
+int main(int argc, const char **argv)
 {
 
-    std::cout
-        << "Inside the main function" << std::endl;
+    // Parser for the variable input
+    ArgumentParser parser;
+    parser.addArgument("-v", "--verbose", 1, false);
+    parser.addArgument("-i", "--input", 1, false);
+    // parse the command-line arguments
+    parser.parse(argc, argv);
+    string verbose = parser.retrieve<string>("verbose");
+    string relative_file_path = parser.retrieve<string>("input");
+    char verbose_char_read_instances = verbose[0];
+    char verbose_char_WFSP = verbose[1];
+
+    if (verbose_char_read_instances == 'v' && verbose_char_WFSP == 'v')
+    {
+
+        cout << GREEN << "\n\nInside the main function" << RESET << endl;
+        cout << "verbose:            " << verbose << endl;
+        cout << "relative_file_path: " << relative_file_path << endl;
+        cout << "verbose_char_read_instances: " << verbose_char_read_instances << endl;
+        cout << "verbose_char_WFSP: " << verbose_char_WFSP << endl;
+    }
+
     try
     {
-        std::cout << "Inside the try" << std::endl;
+        if (verbose_char_read_instances == 'v' && verbose_char_WFSP == 'v')
+            cout << GREEN << "Inside the try" << RESET << endl;
 
         File_content *aux = NULL;
-        aux = read_instances("./data/ins_05_20_4.txt", 's');
+        aux = read_instances(relative_file_path, verbose_char_read_instances);
 
         if (aux)
         {
-            std::cout << "Inside the try -> IF" << std::endl;
-            std::cout << "number of symbols: " << aux->number_of_symbols << std::endl;
-            std::cout << "number m: " << aux->m << std::endl;
-            WFSP(aux->number_of_symbols, aux->m, aux->priorities, 'v');
+            if (verbose_char_read_instances == 'v' && verbose_char_WFSP == 'v')
+            {
+                std::cout << "Inside the try -> IF" << std::endl;
+                std::cout << " number of symbols: " << aux->number_of_symbols << std::endl;
+                std::cout << " number m: " << aux->m << std::endl;
+                cout << " priorities: ";
+                for (auto i = 0; i < aux->number_of_symbols; i++)
+                {
+                    cout << aux->priorities[i] << " ";
+                }
+                cout << endl;
+            }
+
+            WFSP(aux->number_of_symbols, aux->m, aux->priorities, verbose_char_WFSP);
             free(aux);
         }
     }
     catch (IloException &e)
     {
-        std::cout << "\n \n\e[31mError IloException: \e[0m" << endl
-                  << e << std::endl;
+        cout << "\n \n"
+             << RED << "Error IloException: " << RESET << endl
+             << e << endl;
         e.end();
     }
     catch (...)

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <algorithm>
 #include <string.h>
+#include <memory>
 
 #include <ilcplex/ilocplex.h>
 
@@ -67,24 +68,13 @@ void draftToLogger(IloModel modelo,
 
   sort(sequence.begin(), sequence.end(), sortByH);
 
-  for (int i = 0; i < sequence.size(); i++)
-  {
-    for (int j = 0; j < sequence[i].size(); j++)
-    {
-      std::cout << sequence[i][j] << " ";
-    }
-    std::cout << "\n";
-    std::cout << "símbolo: " << sequence[i][0] << std::endl;
-    std::cout << "k-ésima cópia: " << sequence[i][1] << std::endl;
-    std::cout << "posição h: " << sequence[i][2] << std::endl;
-    std::cout << "\n";
-  }
-
   Write_content content;
 
   content.objective = cplex.getObjValue();
 
   content.number_of_symbols = number_of_symbols; // OK
+
+  content.TMAX = TMAX;
 
   int aux = 0;
   for (auto i = sequence.begin(); i < sequence.end(); i++)
@@ -134,29 +124,15 @@ void draftToLogger(IloModel modelo,
   // Df == D_i ?
   // Maior distancia entre 2 copias consecutivas
   int Df[n];
-  for (auto i = 0; i < n; i++)
+  for (int i = 0; i < n; i++)
   {
     Df[i] = cplex.getValue(D[i]);
   }
   content.Df = Df;
   /***************************************************************************/
-  int Pi[n];
-  for (int i = 0; i < n; i++)
-  {
-    Pi[n] = priorities[i] * Di[i];
-  }
 
-  content.Pi = Pi;
-  /***************************************************************************/
-  int Pf[n];
-  for (int i = 0; i < n; i++)
-  {
-    Pf[n] = priorities[i] * Df[i];
-  }
-
-  content.Pf = Pf;
-
-  write_res(verbose, content);
+  writeOutput(verbose, content);
+  writeOutputCustom(verbose, content);
 }
 
 int write(char verbose)
@@ -171,7 +147,8 @@ int write(char verbose)
   return 0;
 }
 
-File_content *read_instances(const char *relative_file_path, char verbose)
+//File_content *read_instances(const char *relative_file_path, char verbose)
+File_content *read_instances(string relative_file_path, char verbose)
 {
   string linhas[5];
 
@@ -190,14 +167,14 @@ File_content *read_instances(const char *relative_file_path, char verbose)
         cout << "Linha: " << linhas[i] << '\n';
     }
     if (verbose == 'v')
-      cout << endl
-           << endl;
+      cout << "\n\n";
 
-    int number_of_symbols = linhas[0][0] - '0';
+    int number_of_symbols = stoi(linhas[0]);
     int m = linhas[1][0] - '0';
 
-    int *myarray = new int[sizeof(linhas[2])];
-    int *myarray_clean = new int[sizeof(linhas[2])];
+    int *myarray = new int[sizeof(linhas[2]) * 2];
+    int *myarray_clean = new int[sizeof(linhas[2]) * 2];
+    int *myarray_final = new int[number_of_symbols];
     string to_compare = " ";
 
     for (int i = 0; i < linhas[2].length(); i++)
@@ -205,40 +182,69 @@ File_content *read_instances(const char *relative_file_path, char verbose)
       myarray[i] = linhas[2][i] - '0';
     }
 
-    int count_two_dig = 0;
+    if (verbose == 'v')
+    {
+      cout << "\n\n\n";
+      cout << "##########################################" << endl;
+      cout << "linhas[2].length(): " << linhas[2].length() << endl;
+    }
 
+    int numDigits = 0;
     for (int i = 0; i < linhas[2].length(); i++)
     {
       if (verbose == 'v')
       {
-        cout << "iteração n: " << i << endl;
-        cout << myarray[i] << " | " << myarray[i + 1] << endl;
+        cout << "Iteration n: " << i << endl;
+        cout << GREEN << "HEAD: " << RESET << myarray[i] << endl;
       }
 
-      if (myarray[i + 1] >= 0 && myarray[i + 1] <= 9 && myarray[i] > 0)
+      string compose_num_str;
+      //bool bigger_number = false;
+      while (myarray[i] >= 0)
       {
+        //compose_num_str.push_back(myarray[numDigits]);
+        compose_num_str.push_back(linhas[2][i]);
         if (verbose == 'v')
-          cout << "Numero Completo " << myarray[i] << myarray[i + 1] << endl;
-        myarray_clean[i + count_two_dig] = myarray[i] * 10 + myarray[i + 1];
-        count_two_dig += -2;
+        {
+          cout << "myarray[i]: " << myarray[i] << endl;
+          cout << "i: " << i << " compose_num_str: " << compose_num_str << endl;
+        }
+        i++;
+        numDigits++;
+        //bigger_number = true;
       }
-      else if (myarray[i + 1] < 0 && myarray[i] > 0)
-      {
-        if (verbose == 'v')
-          cout << "Numero unico: " << myarray[i] << '\n';
-        myarray_clean[i + count_two_dig] = myarray[i];
-        count_two_dig += -1;
-      }
-      else
-      {
-        if (verbose == 'v')
-          cout << "" << myarray[i] << '\n';
-      }
+      myarray_clean[i - numDigits] = stoi(compose_num_str);
 
-      cout << endl;
+      if (verbose == 'v')
+      {
+        cout << "myarray_clean[i]: " << myarray_clean[i];
+        cout << endl
+             << endl;
+      }
     }
     if (verbose == 'v')
-      cout << "end iteration" << endl
+    {
+      cout << "##########################################" << endl;
+
+      cout << "myarray_clean[i]: ";
+      for (int i = 0; i < linhas[2].length(); i++)
+      {
+        cout << myarray_clean[i] << " ";
+      }
+      cout << "\nmyarray_final[i]: ";
+    }
+    for (int i = 0; i < number_of_symbols; i++)
+    {
+      myarray_final[i] = myarray_clean[i];
+
+      if (verbose == 'v')
+      {
+        cout << myarray_clean[i] << " ";
+      }
+    }
+
+    if (verbose == 'v')
+      cout << "\nend iteration" << endl
            << endl
            << endl;
 
@@ -248,25 +254,31 @@ File_content *read_instances(const char *relative_file_path, char verbose)
         cout << "counter: " << i << " number: " << myarray[i] << " new " << myarray_clean[i] << '\n';
     }
 
-    cout << "\n\n############################\n\nLast For:\n";
-
-    //TODO: Fix the constant here
-    for (int i = 0; i < number_of_symbols; i++)
+    if (verbose == 'v')
     {
-      cout << "counter: " << i << " number: " << myarray[i] << " new " << myarray_clean[i] << '\n';
+      cout << "\n\n############################\n\nLast For:\n";
+      for (int i = 0; i < number_of_symbols; i++)
+      {
+        cout << "counter: " << i << " number: " << myarray[i] << " new " << myarray_clean[i] << '\n';
+      }
     }
 
-    cout << "\n\n############################\n\nOthers Values:\n";
-    cout << "Number of symbols: " << number_of_symbols << endl;
-    cout << "Number m: " << m << endl;
+    free(myarray);
+    free(myarray_clean);
+
+    if (verbose == 'v')
+    {
+      cout << "\n\n############################\n\nOthers Values:\n";
+      cout << "Number of symbols: " << number_of_symbols << endl;
+      cout << "Number m: " << m << endl;
+    }
 
     content->number_of_symbols = number_of_symbols;
     content->m = m;
-    content->priorities = myarray_clean;
+    content->priorities = myarray_final;
 
     myfile.close();
   }
-
   else
   {
     cout << "Unable to open file";
@@ -276,7 +288,91 @@ File_content *read_instances(const char *relative_file_path, char verbose)
   return content;
 }
 
-int write_res(char verbose, Write_content content_to_write)
+int writeOutput(char verbose, Write_content content_to_write)
+{
+
+  int objective = content_to_write.objective;
+  int number_of_symbols = content_to_write.number_of_symbols;
+  int TMAX = content_to_write.TMAX;
+  int occupied_positions = content_to_write.occupied_positions;
+  int total_positions = content_to_write.total_positions;
+  vector<vector<int>> sequence = content_to_write.sequence;
+  int *avaliable_copies = content_to_write.avaliable_copies;
+  int *used_copies = content_to_write.used_copies;
+  int *priorities = content_to_write.priorities;
+  int *Di = content_to_write.Di;
+  int *Df = content_to_write.Df;
+
+  if (verbose == 'v')
+  {
+    std::cout << GREEN << "Inside Write function" << RESET << endl;
+    std::cout << "Lista de variáveis:       " << endl;
+    std::cout << " objective                " << objective << endl;
+    std::cout << " number_of_symbols        " << number_of_symbols << endl;
+    std::cout << " TMAX                     " << TMAX << endl;
+    std::cout << " occupied_positions       " << occupied_positions << endl;
+    std::cout << " total_positions          " << total_positions << endl;
+    std::cout << " VECTOR: sequence         " << endl;
+    std::cout << " ARRAY: avaliable_copies  " << avaliable_copies << endl;
+    std::cout << " ARRAY: used_copies       " << used_copies << endl;
+    std::cout << " ARRAY: priorities        " << priorities << endl;
+    std::cout << " ARRAY: Di                " << Di << endl;
+    std::cout << " ARRAY: Df                " << Df << endl;
+  }
+
+  ofstream myfile;
+  myfile.open("./data/res_lnn.txt");
+
+  for (int i = 1; i < number_of_symbols; i++)
+  {
+    myfile << "Number" << i << "\n";
+  }
+
+  myfile << "\n**********************************************\n";
+  myfile << "Objective: " << objective << "\n\n";
+
+  // HELP PLEASE
+  myfile << "Sequence:\n";
+  for (int i = 0; i < TMAX; i++)
+  {
+    if (i < sequence.size())
+    {
+      myfile << sequence[i][0] + 1 << " - ";
+      if (verbose == 'v')
+        cout << sequence[i][0] + 1 << "-";
+    }
+    else
+    {
+      myfile << "*"
+             << " - ";
+      if (verbose == 'v')
+        cout << "*"
+             << " - ";
+    }
+  }
+  myfile << "\n\n";
+
+  myfile << "Occupied positions: " << occupied_positions << " of " << total_positions << "\n\n";
+
+  for (int i = 0; i < number_of_symbols; i++)
+  {
+    myfile << "symbol " << i + 1 << "--> Priority:  " << priorities[i]
+           << ", Di:  " << Di[i] << ", Df:  " << Df[i] << ", Pi: " << priorities[i] * Di[i] << ", Pf: " << priorities[i] * Df[i] << "\n";
+  }
+
+  myfile << "\n(Available copies, Used copies)\n";
+
+  for (int i = 0; i < number_of_symbols; i++)
+  {
+    myfile << "symbol " << i + 1 << " -->  " << avaliable_copies[i] << ",  " << used_copies[i] << "\n";
+  }
+
+  myfile << "\n**********************************************\n";
+  myfile.close();
+  return 0;
+}
+
+int writeOutputCustom(char verbose, Write_content content_to_write)
 {
 
   int objective = content_to_write.objective;
@@ -289,62 +385,33 @@ int write_res(char verbose, Write_content content_to_write)
   int *priorities = content_to_write.priorities;
   int *Di = content_to_write.Di;
   int *Df = content_to_write.Df;
-  int *Pi = content_to_write.Pi;
-  int *Pf = content_to_write.Pf;
-
-  if (verbose == 'v')
-  {
-    std::cout << "Inside Write function" << endl;
-    std::cout << "Lista de variáveis:" << endl;
-    std::cout << " objective          " << objective << endl;
-    std::cout << " number_of_symbols  " << number_of_symbols << endl;
-    std::cout << " occupied_positions " << occupied_positions << endl;
-    std::cout << " total_positions    " << total_positions << endl;
-    std::cout << " VECTOR: sequence   " << endl;
-    std::cout << " ARRAY: avaliable_copies  " << avaliable_copies << endl;
-    std::cout << " ARRAY: used_copies       " << used_copies << endl;
-    std::cout << " ARRAY: priorities        " << priorities << endl;
-    std::cout << " ARRAY: Di                " << Di << endl;
-    std::cout << " ARRAY: Df                " << Df << endl;
-    std::cout << " ARRAY: Pi                " << Pi << endl;
-    std::cout << " ARRAY: Pf                " << Pf << endl;
-  }
 
   ofstream myfile;
-  myfile.open("./data/res_lnn.txt");
+  myfile.open("./data/custom_output.txt");
+  myfile << "MY COMMENTS:\n\n";
 
-  for (int i = 1; i < number_of_symbols; i++)
-  {
-    myfile << "Number" << i << "\n";
-  }
-  myfile << "\n**********************************************\n";
-  myfile << "Objective: " << objective << "\n\n";
-
-  // ITS WRONG!!!
-  myfile << "Sequence:\n";
+  myfile << "Sequence in the program:\n";
+  myfile << "i - k - h"
+         << "\n";
   for (int i = 0; i < sequence.size(); i++)
   {
-    myfile << sequence[i][0] + 1 << " - ";
-    cout << sequence[i][0] + 1 << "-";
+    myfile << sequence[i][0] << " - " << sequence[i][1] << " - " << sequence[i][2] << "\n";
   }
-  myfile << "\n\n";
 
-  myfile << "Occupied positions: " << occupied_positions << " of " << total_positions << "\n\n";
-
-  for (int i = 0; i < number_of_symbols; i++)
+  myfile << "\nSequence in the mathematical format:\n";
+  myfile << "(i+1) - (k+1) - (h+1)\n";
+  for (int i = 0; i < sequence.size(); i++)
   {
-    myfile << "symbol " << i + 1 << "--> Priority:  " << priorities[i]
-           << ", Di:  " << Di[i] << ", Df:  " << Df[i] << ", Pi: " << Pi[i] << ", Pf: " << Pf[i] << "\n";
+    myfile << "  " << sequence[i][0] + 1 << "   -   " << sequence[i][1] + 1 << "   -   " << sequence[i][2] + 1 << "\n";
   }
 
-  myfile << "\n(Available copies, Used copies)\n";
-
-  for (int i = 0; i < number_of_symbols; i++)
+  myfile << "\nSequence in the mathematical format for CSV:\n";
+  myfile << "(i+1),(k+1),(h+1),\n";
+  for (int i = 0; i < sequence.size(); i++)
   {
-    myfile << "symbol " << i + 1 << " -->  " << avaliable_copies[i] << ",  " << used_copies[i] << "\n";
+    myfile << sequence[i][0] + 1 << "," << sequence[i][1] + 1 << "," << sequence[i][2] + 1 << "\n";
   }
 
-  myfile << "\n**********************************************\n";
   myfile.close();
   return 0;
 }
