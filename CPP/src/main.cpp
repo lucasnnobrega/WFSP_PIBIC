@@ -300,6 +300,13 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
             {
                 if (h < TMAX - k && h >= H[i][k][0])
                     soma += y[i][k][h];
+
+                /* BRANCH function-modulation
+                if (h >= H[i][k][0])
+                {
+                    soma += y[i][k][h - k];
+                }
+                */
             }
         }
         modelo.add(soma <= 1);
@@ -339,7 +346,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     if (verbose == 'v')
         std::cout << "Restriction 7 created" << std::endl;
 
-    // (8) Tese (4.7)
+    // Missing for all k_i in K in the Article (8) Tese (4.7)
     for (int i = 0; i < n; i++)
     {
         for (int k = 0; k < M[i]; k++)
@@ -517,6 +524,13 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     }
     if (verbose == 'v')
         cout << "w created" << endl;
+
+    // ███╗   ██╗███████╗██╗    ██╗    ██████╗ ███████╗███████╗████████╗██████╗ ██╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗███████╗
+    // ████╗  ██║██╔════╝██║    ██║    ██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔══██╗██║██╔════╝╚══██╔══╝██║██╔═══██╗████╗  ██║██╔════╝
+    // ██╔██╗ ██║█████╗  ██║ █╗ ██║    ██████╔╝█████╗  ███████╗   ██║   ██████╔╝██║██║        ██║   ██║██║   ██║██╔██╗ ██║███████╗
+    // ██║╚██╗██║██╔══╝  ██║███╗██║    ██╔══██╗██╔══╝  ╚════██║   ██║   ██╔══██╗██║██║        ██║   ██║██║   ██║██║╚██╗██║╚════██║
+    // ██║ ╚████║███████╗╚███╔███╔╝    ██║  ██║███████╗███████║   ██║   ██║  ██║██║╚██████╗   ██║   ██║╚██████╔╝██║ ╚████║███████║
+    // ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝     ╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 
     //* New Restrictions
     if (verbose == 'v')
