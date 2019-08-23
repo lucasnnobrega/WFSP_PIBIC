@@ -9,11 +9,11 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/CPP/main",
-      "args": [],
-      "stopAtEntry": true,
+      "args": ["--verbose", "vv", "-i", "./data/ins_05_20_4.txt"],
+      "stopAtEntry": false,
       "cwd": "${workspaceFolder}/CPP",
       "environment": [],
-      "externalConsole": true,
+      "externalConsole": false,
       "MIMode": "gdb",
       "setupCommands": [
         {

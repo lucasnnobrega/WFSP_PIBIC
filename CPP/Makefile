@@ -15,8 +15,8 @@ CONCERTLIBDIR = $(CONCERTDIR)/lib/x86-64_linux/static_pic
 CPPC = g++
 #############################
 
-#### opcoes de compilacao e includes
-CCOPT = $(BITS_OPTION) -O3 -fPIC -fexceptions -DNDEBUG -DIL_STD -std=c++0x
+#### opcoes de compilacao e includes -O0 == Nao otimizar
+CCOPT = $(BITS_OPTION) -O3 -fPIC -fexceptions -DNDEBUG -DIL_STD -std=c++0x -g -O0
 CONCERTINCDIR = $(CONCERTDIR)/include
 CPLEXINCDIR   = $(CPLEXDIR)/include
 CCFLAGS = $(CCOPT) -I$(CPLEXINCDIR) -I$(CONCERTINCDIR)

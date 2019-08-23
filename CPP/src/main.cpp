@@ -55,7 +55,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     // Conjunto de indices das cópias xi E X,  Ki = {1, ..., Mi}
     // i  = {1,...N}
     // Array de ponteiros
-    int *K[n];
+    volatile int *K[n]; // Force declaration without optimization
 
     for (int i = 0; i < n; i++)
     {
@@ -74,6 +74,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
 
     // Prioridades do símbolo Xi E X
     int c[n];
+    //vector<int> c[n];
 
     std::cout << std::endl;
     for (int i = 0; i < n; i++)
@@ -170,7 +171,8 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
 
     for (int i = 0; i < n; i++)
     {
-        IloIntVarArray vetorAux(env, M[i], 0, IloInfinity);
+        //IloIntVarArray vetorAux(env, M[i], 0, IloIntMax);
+        IloIntVarArray vetorAux(env, M[i], 0, IloIntMax);
         d[i] = vetorAux;
     }
 
@@ -197,7 +199,8 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
 
     // D_i
     // Maior Distancia entre duas copias consecutivas do simbolo x_i E X
-    IloIntVarArray D(env, n, 0, IloInfinity);
+    //IloIntVarArray D(env, n, 0, IloIntMax);
+    IloIntVarArray D(env, n, 0, IloIntMax);
 
     // Adicionando variavel no modelo
     for (int i = 0; i < n; i++)
@@ -213,7 +216,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     // P
     //? Implementado como um valor unico
     // Maior produto D_i*c_i, para todo x_i E X
-    IloIntVar P(env, 0, IloInfinity);
+    IloIntVar P(env, 0, IloIntMax);
 
     // Adicionando variavel no modelo
     char var[100];
@@ -228,7 +231,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     IloArray<IloIntVarArray> p(env, n);
     for (int i = 0; i < n; i++)
     {
-        IloIntVarArray vetorAux(env, M[i], 0, IloInfinity);
+        IloIntVarArray vetorAux(env, M[i], 0, IloIntMax);
         p[i] = vetorAux;
     }
 
@@ -436,7 +439,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     if (verbose == 'v')
         cout << GREEN << "Declaring New Variables (W, U, R, alpha[], w[])" << RESET << endl;
     //W
-    IloIntVarArray W(env, n, 0, IloInfinity);
+    IloIntVarArray W(env, n, 0, IloIntMax);
 
     // Adicionando variavel no modelo
     for (int i = 0; i < n; i++)
@@ -450,7 +453,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
         cout << "W created" << endl;
 
     //Ui
-    IloIntVarArray U(env, n, 0, IloInfinity);
+    IloIntVarArray U(env, n, 0, IloIntMax);
 
     // Adicionando variavel no modelo
     for (int i = 0; i < n; i++)
@@ -464,7 +467,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
         cout << "U created" << endl;
 
     //Ri
-    IloIntVarArray R(env, n, 0, IloInfinity);
+    IloIntVarArray R(env, n, 0, IloIntMax);
 
     // Adicionando variavel no modelo
     for (int i = 0; i < n; i++)
@@ -483,7 +486,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
 
     for (int i = 0; i < n; i++)
     {
-        IloIntVarArray vetorAux(env, M[i], 0, IloInfinity);
+        IloIntVarArray vetorAux(env, M[i], 0, IloIntMax);
         alpha[i] = vetorAux;
     }
 
