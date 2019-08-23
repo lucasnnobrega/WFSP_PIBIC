@@ -357,7 +357,8 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
             IloExpr soma(env);
             for (int h = 0; h < TMAX - k; h++)
             {
-                soma += y[i][k][h] * H[i][k][h];
+                if (h > H[i][k][0])
+                    soma += y[i][k][h] * h;
             }
             modelo.add(p[i][k] == soma);
         }
@@ -676,6 +677,43 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
             }
         }
     }
+
+    cplex.out() << "\n\n################################################################\n";
+    cplex.out() << "#################### Y #########################################\n\n";
+
+    for (int i = 0; i < n; i++)
+    { // 2 == n
+        for (int k = 0; k < M[i]; k++)
+        {
+            for (int h = 0; h < TMAX - k; h++)
+            {
+                printf("y[%d][%d][%d] = ", i, k, h);
+                cplex.out() << cplex.getValue(y[i][k][h]) << endl;
+            }
+        }
+    }
+
+    cplex.out() << "################################################################\n\n";
+
+    cplex.out() << "\n\n################################################################\n";
+    cplex.out() << "#################### H #########################################\n\n";
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int k = 0; k < M[i]; k++)
+        {
+            int aux = 0;
+
+            for (int j = k; j < TMAX; j++)
+            {
+                printf("H[%d][%d][%d] = ", i, k, aux);
+                cplex.out() << H[i][k][aux] << endl;
+                aux++;
+            }
+        }
+    }
+
+    cplex.out() << "################################################################\n\n";
 
     draftToLogger(modelo, y, cplex, number_of_symbols, n, TMAX, M, priorities, D, verbose);
 
