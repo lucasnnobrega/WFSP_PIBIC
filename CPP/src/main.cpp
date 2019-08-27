@@ -767,7 +767,7 @@ int main(int argc, const char **argv)
                 cout << endl;
             }
 
-            //WFSP(aux->number_of_symbols, aux->m, aux->priorities, verbose_char_WFSP);
+            WFSP(aux->number_of_symbols, aux->m, aux->priorities, verbose_char_WFSP);
             free(aux);
         }
     }
