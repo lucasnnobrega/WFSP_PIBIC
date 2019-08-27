@@ -1,5 +1,5 @@
 #include <iostream>
-#include <fstream>
+//#include <fstream>
 #include <vector>
 #include <stdlib.h>
 #include <algorithm>
@@ -284,6 +284,41 @@ File_content *read_instances(string relative_file_path, char verbose)
     cout << "Unable to open file";
     exit(1);
   }
+
+  return content;
+}
+
+File_content *read_instances_clean(string relative_file_path, char verbose)
+{
+  int number_of_symbols;
+  int m;
+
+  ifstream entrada(relative_file_path);
+  entrada >> number_of_symbols;
+  entrada >> m;
+
+  int priorities[number_of_symbols];
+
+  for (int i = 0; i < number_of_symbols; i++)
+  {
+    entrada >> priorities[i];
+  }
+
+  std::cout << "\n\nTeste com função nova" << std::endl;
+
+  for (int j = 0; j < number_of_symbols; j++)
+  {
+    cout << " |priority " << priorities[j];
+  }
+
+  cout << endl;
+
+  File_content *content;
+  content = (File_content *)malloc(sizeof(File_content));
+
+  content->number_of_symbols = number_of_symbols;
+  content->m = m;
+  content->priorities = priorities;
 
   return content;
 }

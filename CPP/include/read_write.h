@@ -54,4 +54,6 @@ void draftToLogger(IloModel modelo,
 //File_content *read_instances(const char *relative_file_path, char verbose);
 File_content *read_instances(string relative_file_path, char verbose);
 
+File_content *read_instances_clean(string relative_file_path, char verbose);
+
 #endif // read_write

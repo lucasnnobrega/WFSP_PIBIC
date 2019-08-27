@@ -750,7 +750,7 @@ int main(int argc, const char **argv)
             cout << GREEN << "Inside the try" << RESET << endl;
 
         File_content *aux = NULL;
-        aux = read_instances(relative_file_path, verbose_char_read_instances);
+        aux = read_instances_clean(relative_file_path, verbose_char_read_instances);
 
         if (aux)
         {
@@ -767,7 +767,7 @@ int main(int argc, const char **argv)
                 cout << endl;
             }
 
-            WFSP(aux->number_of_symbols, aux->m, aux->priorities, verbose_char_WFSP);
+            //WFSP(aux->number_of_symbols, aux->m, aux->priorities, verbose_char_WFSP);
             free(aux);
         }
     }
