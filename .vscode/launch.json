@@ -3,6 +3,7 @@
   // Hover to view descriptions of existing attributes.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   // "./data/MyInstances/Exemplo\ da\ tese/ins_05_15_tese.txt"
+  // "./data/MyInstances/Exemplo da tese/ins_05_15_tese.txt"
   "version": "0.2.0",
   "configurations": [
     {
@@ -10,12 +11,7 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/CPP/main",
-      "args": [
-        "--verbose",
-        "vv",
-        "-i",
-        "./data/MyInstances/Exemplo da tese/ins_05_15_tese.txt"
-      ],
+      "args": ["--verbose", "vv", "-i", "./data/ins_05_20_4.txt"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}/CPP",
       "environment": [],
