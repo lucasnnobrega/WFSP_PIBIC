@@ -396,6 +396,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
             {
                 soma += y[i][k + 1][h];
             }
+            //modelo.add(p[i][k + 1] >= 2 + p[i][k] - (1 - soma) * TMAX);
             modelo.add(p[i][k + 1] >= p[i][k] - (1 - soma) * TMAX);
         }
     }
@@ -677,7 +678,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
             }
         }
     }
-
+    /*
     cplex.out() << "\n\n################################################################\n";
     cplex.out() << "#################### Y #########################################\n\n";
 
@@ -714,6 +715,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     }
 
     cplex.out() << "################################################################\n\n";
+    */
 
     draftToLogger(modelo, y, cplex, number_of_symbols, n, TMAX, M, priorities, D, verbose);
 
