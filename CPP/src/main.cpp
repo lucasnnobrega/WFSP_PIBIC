@@ -11,8 +11,9 @@
 #include <math.h>
 
 #include "../include/read_write.h"
-
 #include "../include/argparser.hpp"
+
+#include "../include/MyCutCallback.h"
 
 using namespace std;
 
@@ -629,10 +630,26 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     // (22)
     // Feito na implementação das variáveis
 
+    //     ██╗ ██╗     ██████╗██████╗ ██╗     ███████╗██╗  ██╗
+    //    ██╔╝██╔╝    ██╔════╝██╔══██╗██║     ██╔════╝╚██╗██╔╝
+    //   ██╔╝██╔╝     ██║     ██████╔╝██║     █████╗   ╚███╔╝
+    //  ██╔╝██╔╝      ██║     ██╔═══╝ ██║     ██╔══╝   ██╔██╗
+    // ██╔╝██╔╝       ╚██████╗██║     ███████╗███████╗██╔╝ ██╗
+    // ╚═╝ ╚═╝         ╚═════╝╚═╝     ╚══════╝╚══════╝╚═╝  ╚═╝
+
+    // CPLEX
     // Creating a CPLEX solver
-    cout << "\n################################################################\n";
+    cout
+        << "\n################################################################\n";
     cout << "####################### CPLEX SOLVER ###########################\n";
-    IloCplex cplex(env);
+    IloCplex cplex(modelo);
+
+    //manda o cplex usar os callbacks
+    const IloIntVarArray &D_ref = D;
+
+    MyCutCallback *cutCbk = new (env) MyCutCallback(env, D_ref);
+    cplex.use(cutCbk);
+
     cplex.setParam(IloCplex::Param::Threads, 0);
     cplex.extract(modelo);
     cplex.exportModel("modelo.lp");

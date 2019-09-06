@@ -19,7 +19,7 @@ private:
 
 public:
    //construtor da classe
-   MyCutCallback(IloEnv env, const IloArray<IloBoolVarArray> &);
+   MyCutCallback(IloEnv env, const IloIntVarArray &);
 
    //metodo que retorna uma copia do calback. Cplex exige este método.
    IloCplex::CallbackI *duplicateCallback() const;
@@ -29,7 +29,7 @@ public:
 
    //
    //std::vector<IloConstraint> *MyCutCallback::separate_p3(int n_max_p3)
-   std::vector<IloConstraint> *MyCutCallback::separate_p3(int n_max_p3)
+   std::vector<IloConstraint> *separate();
 };
 
 #endif

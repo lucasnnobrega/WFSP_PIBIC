@@ -1,7 +1,6 @@
 #include "../include/MyCutCallback.h"
-#include "../include/NodeInfo.h"
 
-MyCutCallback::MyCutCallback(IloEnv env, const IloArray<IloBoolVarArray> &x_ref) : IloCplex::UserCutCallbackI(env), x(x_ref), x_vars(env)
+MyCutCallback::MyCutCallback(IloEnv env, const IloIntVarArray &x_ref) : IloCplex::UserCutCallbackI(env), x(x_ref), x_vars(env)
 {
    //preenche x_vars
    /*
@@ -25,7 +24,7 @@ IloCplex::CallbackI *MyCutCallback::duplicateCallback() const
    return new (getEnv()) MyCutCallback(getEnv(), x);
 }
 
-std::vector<IloConstraint> *MyCutCallback::separate_p3(int n_max_p3)
+std::vector<IloConstraint> *MyCutCallback::separate()
 {
    //pede todos os valores das variaveis x de uma vez só ao CPLEX
    //IloNumArray x_vals(getEnv(), (Graph::getOrder() * (Graph::getOrder() - 1)) / 2);
@@ -81,31 +80,17 @@ std::vector<IloConstraint> *MyCutCallback::separate_p3(int n_max_p3)
    }
    */
 
-   std::vector<std::pair<IloConstraint, double>> p3s_cons_aux;
+   std::vector<IloConstraint> *cons = new std::vector<IloConstraint>();
 
    for (int i = 0; i < x_vars.getSize() - 1; i++)
    {
-      if (x_vals[i] >= x_vals[i + 1])
+      if (x_vals[i] > x_vals[i + 1] + 0.001)
       {
-         // How to calculate the weight of each violation?
-         double viol = 0.5;
-         p3s_cons_aux.push_back(std::make_pair(x[i] <= x[i + 1], viol));
+
+         double viol = x_vals[i] - x_vals[i + 1];
+         cons->push_back(x[i] <= x[i + 1]);
       }
    }
-
-   if (n_max_p3 == -1)
-   {
-      n_max_p3 = p3s_cons_aux.size();
-   }
-   else
-   {
-      //std::sort(p3s_cons_aux.begin(), p3s_cons_aux.end(), compare_p3_viol);
-      std::sort(p3s_cons_aux.begin(), p3s_cons_aux.end(), p3s_cons_aux);
-   }
-
-   std::vector<IloConstraint> *cons = new std::vector<IloConstraint>();
-   for (int i = 0; i < p3s_cons_aux.size() and i < n_max_p3; i++)
-      cons->push_back(p3s_cons_aux[i].first);
 
    return cons;
 }
@@ -115,7 +100,7 @@ void MyCutCallback::main()
 {
    int n_p3 = x.getSize();
 
-   std::vector<IloConstraint> *cons_p3 = separate_p3(n_p3);
+   std::vector<IloConstraint> *cons_p3 = separate();
 
    //adiciona os cortes
    for (int i = 0; i < cons_p3->size(); i++)
