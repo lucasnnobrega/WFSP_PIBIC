@@ -250,6 +250,44 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     if (verbose == 'v')
         std::cout << "p created" << std::endl;
 
+    // new variable
+    //     ██╗ ██╗    ███╗   ██╗███████╗██╗    ██╗    ██╗   ██╗ █████╗ ██████╗ ██╗ █████╗ ██████╗ ██╗     ███████╗
+    //    ██╔╝██╔╝    ████╗  ██║██╔════╝██║    ██║    ██║   ██║██╔══██╗██╔══██╗██║██╔══██╗██╔══██╗██║     ██╔════╝
+    //   ██╔╝██╔╝     ██╔██╗ ██║█████╗  ██║ █╗ ██║    ██║   ██║███████║██████╔╝██║███████║██████╔╝██║     █████╗
+    //  ██╔╝██╔╝      ██║╚██╗██║██╔══╝  ██║███╗██║    ╚██╗ ██╔╝██╔══██║██╔══██╗██║██╔══██║██╔══██╗██║     ██╔══╝
+    // ██╔╝██╔╝       ██║ ╚████║███████╗╚███╔███╔╝     ╚████╔╝ ██║  ██║██║  ██║██║██║  ██║██████╔╝███████╗███████╗
+    // ╚═╝ ╚═╝        ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝       ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝
+
+    IloFloatVarArray E(env, TMAX - 1, 0, IloIntMax);
+
+    // Adicionando variavel no modelo
+    for (int h = 0; h < TMAX - 1; h++)
+    {
+        char var[100];
+        sprintf(var, "E(%d)", h);
+        E[h].setName(var);
+        modelo.add(E[h]);
+    }
+    if (verbose == 'v')
+        std::cout << "E created" << std::endl;
+
+    // sum{i in X, k in K[i]} y_ikh ≤ 1, ∀h ∈ {1, . . . , T MAX}
+    for (int h = 0; h < TMAX - 1; h++)
+    {
+        IloExpr soma(env);
+        for (int i = 0; i < n; i++)
+        {
+            for (int k = 0; k < M[i]; k++)
+            {
+                if (h < TMAX - k && h >= H[i][k][0])
+                    soma += y[i][k][h];
+            }
+        }
+        modelo.add(E[h] >= soma - 1);
+    }
+    if (verbose == 'v')
+        std::cout << "New restriction created" << std::endl;
+
     // ███████╗   ██████╗
     // ██╔════╝  ██╔═══██╗
     // █████╗    ██║   ██║
@@ -258,8 +296,15 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     // ╚═╝        ╚═════╝
     // Criando a Função Objetivo (FO)
     // min P
-    IloObjective obj(env, P, IloObjective::Minimize);
+    IloExpr soma(env);
+    for (int h = 0; h < TMAX - 1; h++)
+    {
+        soma += E[h];
+    }
+
+    IloObjective obj(env, (P + soma * TMAX * c[0]), IloObjective::Minimize);
     modelo.add(obj);
+
     if (verbose == 'v')
         std::cout << "Objective function created" << std::endl;
 
@@ -312,7 +357,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
                 */
             }
         }
-        modelo.add(soma <= 1);
+        // modelo.add(soma <= 1);
     }
     if (verbose == 'v')
         std::cout << "Restriction 5 created" << std::endl;
@@ -632,8 +677,9 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     // Creating a CPLEX solver
     cout << "\n################################################################\n";
     cout << "####################### CPLEX SOLVER ###########################\n";
-    IloCplex cplex(env);
+    IloCplex cplex(modelo);
     cplex.setParam(IloCplex::Param::Threads, 0);
+
     cplex.extract(modelo);
     cplex.exportModel("modelo.lp");
 
