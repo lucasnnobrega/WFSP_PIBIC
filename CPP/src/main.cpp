@@ -647,8 +647,8 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     //manda o cplex usar os callbacks
     const IloIntVarArray &D_ref = D;
 
-    MyCutCallback *cutCbk = new (env) MyCutCallback(env, D_ref);
-    cplex.use(cutCbk);
+    //MyCutCallback *cutCbk = new (env) MyCutCallback(env, D_ref);
+    //cplex.use(cutCbk);
 
     cplex.setParam(IloCplex::Param::Threads, 0);
     cplex.extract(modelo);

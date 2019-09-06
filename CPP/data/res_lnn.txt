@@ -11,7 +11,7 @@ Sequence:
 
 Occupied positions: 11 of 15
 
-symbol 1--> Priority:  12, Di:  0, Df:  4, Pi: 0, Pf: 48
+symbol 1--> Priority:  5, Di:  0, Df:  4, Pi: 0, Pf: 20
 symbol 2--> Priority:  5, Di:  0, Df:  4, Pi: 0, Pf: 20
 symbol 3--> Priority:  5, Di:  0, Df:  6, Pi: 0, Pf: 30
 symbol 4--> Priority:  5, Di:  0, Df:  6, Pi: 0, Pf: 30
