@@ -17,7 +17,7 @@
 
 using namespace std;
 
-void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
+void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_param, int thread_param)
 {
     // Criando o Ambiente
     IloEnv env;
@@ -639,18 +639,37 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
 
     // CPLEX
     // Creating a CPLEX solver
-    cout
-        << "\n################################################################\n";
+    cout << "\n################################################################\n";
     cout << "####################### CPLEX SOLVER ###########################\n";
     IloCplex cplex(modelo);
 
-    //manda o cplex usar os callbacks
-    const IloIntVarArray &D_ref = D;
+    if (cut_param == 5)
+    {
+        cplex.out() << "Using callback nº 5" << endl;
+        // Create a variable for callback use
+        const IloIntVarArray &D_ref = D;
 
-    //MyCutCallback *cutCbk = new (env) MyCutCallback(env, D_ref);
-    //cplex.use(cutCbk);
+        // Instance of MyCutCallback
+        MyCutCallback *cutCbk = new (env) MyCutCallback(env, D_ref);
 
-    cplex.setParam(IloCplex::Param::Threads, 0);
+        // Tell CPLEX to use the Callback
+        cplex.use(cutCbk);
+    }
+    else
+    {
+        cplex.out() << "Without callbacks implementation" << endl;
+    }
+
+    // Fixing the number of threads to 1 to make a benchmark
+    cplex.setParam(IloCplex::Param::Threads, thread_param);
+
+    // Fixing the method to solve
+    // | Value | Symbolic Name             | Meaning
+    // |   0   | CPX_MIPSEARCH_AUTO        | Automatic: let CPLEX choose; default
+    // |   1   | CPX_MIPSEARCH_TRADITIONAL | Apply traditional branch and cut strategy; disable dynamic search
+    // |   2   | CPX_MIPSEARCH_DYNAMIC     | Apply dynamic search
+    cplex.setParam(IloCplex::Param::MIP::Strategy::Search, CPX_MIPSEARCH_TRADITIONAL);
+
     cplex.extract(modelo);
     cplex.exportModel("modelo.lp");
 
@@ -659,6 +678,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
 
     cplex.out() << GREEN << "ObjValue = " << RESET << cplex.getObjValue() << endl;
 
+    /*
     cplex.out() << "################################################################\n\n";
 
     if (verbose == 'v')
@@ -699,7 +719,6 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose)
     cplex.out() << "\n\n D getsize? \n"
                 << D.getSize() << "\n";
 
-    /*
     cplex.out() << "\n\n################################################################\n";
     cplex.out() << "#################### Y #########################################\n\n";
 
@@ -748,14 +767,48 @@ int main(int argc, const char **argv)
 
     // Parser for the variable input
     ArgumentParser parser;
+
+    // Types of arguments
     parser.addArgument("-v", "--verbose", 1, false);
     parser.addArgument("-i", "--input", 1, false);
-    // parse the command-line arguments
+    parser.addArgument("-c", "--cuts", 1, false);
+    parser.addArgument("-t", "--thread", 1, false);
+
+    // Parse the command-line arguments
     parser.parse(argc, argv);
+
     string verbose = parser.retrieve<string>("verbose");
-    string relative_file_path = parser.retrieve<string>("input");
+
+    // Because verbose is a string (array)
     char verbose_char_read_instances = verbose[0];
     char verbose_char_WFSP = verbose[1];
+
+    string relative_file_path = parser.retrieve<string>("input");
+
+    string cuts = parser.retrieve<string>("cuts");
+    int cut_param = cuts[0] - '0';
+
+    /* check here if cut_param is bounded by 0 and 9 */
+    if (cut_param < 0 or cut_param > 9)
+    {
+        cerr << "Cut argument out of boundary [0, 9]" << endl;
+        exit(0);
+    }
+
+    string thread = parser.retrieve<string>("thread");
+    int thread_param = stoi(thread);
+
+    /* check here if thread is bounded by 0 and 9 */
+    if (thread_param < 0 or thread_param > 16)
+    {
+        cerr << "Thread argument out of boundary [0, 16]" << endl;
+        exit(0);
+    }
+
+    cout << "thread      : " << thread_param << endl;
+    cout << "thread param: " << thread_param << endl;
+
+    exit(0);
 
     if (verbose_char_read_instances == 'v' && verbose_char_WFSP == 'v')
     {
@@ -790,7 +843,7 @@ int main(int argc, const char **argv)
                 cout << endl;
             }
 
-            WFSP(aux->number_of_symbols, aux->m, aux->priorities, verbose_char_WFSP);
+            WFSP(aux->number_of_symbols, aux->m, aux->priorities, verbose_char_WFSP, cut_param, thread_param);
             free(aux);
         }
     }
