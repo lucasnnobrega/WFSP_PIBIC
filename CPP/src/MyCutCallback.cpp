@@ -12,10 +12,17 @@ MyCutCallback::MyCutCallback(IloEnv env, const IloIntVarArray &x_ref) : IloCplex
       }
    }
    */
-   for (int i = 0; i < x.getSize(); i)
+
+   std::cout << "Inside Callback Constructor" << std::endl;
+   //std::cout << "x.getSize() -> " << x.getSize() << std::endl;
+
+   for (int i = 0; i < x.getSize(); i++)
    {
+      std::cout << i << std::endl;
       this->x_vars.add(this->x[i]);
    }
+
+   std::cout << "Inside Callback Constructor" << std::endl;
 }
 
 //cplex exige a implementacao deste metodo. Ele apenas retorna uma copia do callback
@@ -79,6 +86,8 @@ std::vector<IloConstraint> *MyCutCallback::separate()
       }
    }
    */
+
+   //std::cout << "INSIDE CALLBACK SEPARATE METHOD" << std::endl;
 
    std::vector<IloConstraint> *cons = new std::vector<IloConstraint>();
 

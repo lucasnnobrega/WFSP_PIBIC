@@ -5,6 +5,7 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
+#include <iostream>
 
 /** Cut callback */
 class MyCutCallback : public IloCplex::UserCutCallbackI
@@ -19,7 +20,7 @@ private:
 
 public:
    //construtor da classe
-   MyCutCallback(IloEnv env, const IloIntVarArray &);
+   MyCutCallback(IloEnv env, const IloIntVarArray &x_ref);
 
    //metodo que retorna uma copia do calback. Cplex exige este método.
    IloCplex::CallbackI *duplicateCallback() const;
