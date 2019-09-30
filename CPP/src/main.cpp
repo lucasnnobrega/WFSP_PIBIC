@@ -11,9 +11,8 @@
 #include <math.h>
 
 #include "../include/read_write.h"
-#include "../include/argparser.hpp"
 
-#include "../include/MyCutCallback.h"
+#include "../include/argparser.hpp"
 
 using namespace std;
 
@@ -251,6 +250,44 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     if (verbose == 'v')
         std::cout << "p created" << std::endl;
 
+    // new variable
+    //     ██╗ ██╗    ███╗   ██╗███████╗██╗    ██╗    ██╗   ██╗ █████╗ ██████╗ ██╗ █████╗ ██████╗ ██╗     ███████╗
+    //    ██╔╝██╔╝    ████╗  ██║██╔════╝██║    ██║    ██║   ██║██╔══██╗██╔══██╗██║██╔══██╗██╔══██╗██║     ██╔════╝
+    //   ██╔╝██╔╝     ██╔██╗ ██║█████╗  ██║ █╗ ██║    ██║   ██║███████║██████╔╝██║███████║██████╔╝██║     █████╗
+    //  ██╔╝██╔╝      ██║╚██╗██║██╔══╝  ██║███╗██║    ╚██╗ ██╔╝██╔══██║██╔══██╗██║██╔══██║██╔══██╗██║     ██╔══╝
+    // ██╔╝██╔╝       ██║ ╚████║███████╗╚███╔███╔╝     ╚████╔╝ ██║  ██║██║  ██║██║██║  ██║██████╔╝███████╗███████╗
+    // ╚═╝ ╚═╝        ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝       ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝
+
+    IloFloatVarArray E(env, TMAX - 1, 0, IloIntMax);
+
+    // Adicionando variavel no modelo
+    for (int h = 0; h < TMAX - 1; h++)
+    {
+        char var[100];
+        sprintf(var, "E(%d)", h);
+        E[h].setName(var);
+        modelo.add(E[h]);
+    }
+    if (verbose == 'v')
+        std::cout << "E created" << std::endl;
+
+    // sum{i in X, k in K[i]} y_ikh ≤ 1, ∀h ∈ {1, . . . , T MAX}
+    for (int h = 0; h < TMAX - 1; h++)
+    {
+        IloExpr soma(env);
+        for (int i = 0; i < n; i++)
+        {
+            for (int k = 0; k < M[i]; k++)
+            {
+                if (h < TMAX - k && h >= H[i][k][0])
+                    soma += y[i][k][h];
+            }
+        }
+        modelo.add(E[h] >= soma - 1);
+    }
+    if (verbose == 'v')
+        std::cout << "New restriction created" << std::endl;
+
     // ███████╗   ██████╗
     // ██╔════╝  ██╔═══██╗
     // █████╗    ██║   ██║
@@ -259,8 +296,15 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     // ╚═╝        ╚═════╝
     // Criando a Função Objetivo (FO)
     // min P
-    IloObjective obj(env, P, IloObjective::Minimize);
+    IloExpr soma(env);
+    for (int h = 0; h < TMAX - 1; h++)
+    {
+        soma += E[h];
+    }
+
+    IloObjective obj(env, (P + soma * TMAX * c[0]), IloObjective::Minimize);
     modelo.add(obj);
+
     if (verbose == 'v')
         std::cout << "Objective function created" << std::endl;
 
@@ -313,7 +357,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
                 */
             }
         }
-        modelo.add(soma <= 1);
+        // modelo.add(soma <= 1);
     }
     if (verbose == 'v')
         std::cout << "Restriction 5 created" << std::endl;
@@ -636,29 +680,11 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     //  ██╔╝██╔╝      ██║     ██╔═══╝ ██║     ██╔══╝   ██╔██╗
     // ██╔╝██╔╝       ╚██████╗██║     ███████╗███████╗██╔╝ ██╗
     // ╚═╝ ╚═╝         ╚═════╝╚═╝     ╚══════╝╚══════╝╚═╝  ╚═╝
-
     // CPLEX
     // Creating a CPLEX solver
     cout << "\n################################################################\n";
     cout << "####################### CPLEX SOLVER ###########################\n";
     IloCplex cplex(modelo);
-
-    if (cut_param == 5)
-    {
-        cplex.out() << "Using callback nº 5" << endl;
-        // Create a variable for callback use
-        const IloIntVarArray &D_ref = D;
-
-        // Instance of MyCutCallback
-        MyCutCallback *cutCbk = new (env) MyCutCallback(env, D_ref);
-
-        // Tell CPLEX to use the Callback
-        cplex.use(cutCbk);
-    }
-    else
-    {
-        cplex.out() << "Without callbacks implementation" << endl;
-    }
 
     // Fixing the number of threads to 1 to make a benchmark
     cplex.setParam(IloCplex::Param::Threads, thread_param);
@@ -715,10 +741,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
             }
         }
     }
-    cplex.out() << "\n\n################################################################\n";
-    cplex.out() << "\n\n D getsize? \n"
-                << D.getSize() << "\n";
-
+    
     cplex.out() << "\n\n################################################################\n";
     cplex.out() << "#################### Y #########################################\n\n";
 
@@ -805,10 +828,10 @@ int main(int argc, const char **argv)
         exit(0);
     }
 
-    cout << "thread      : " << thread_param << endl;
-    cout << "thread param: " << thread_param << endl;
+    cout << "thread       : " << thread_param << endl;
+    cout << "thread param : " << thread_param << endl;
 
-    exit(0);
+    //exit(0);
 
     if (verbose_char_read_instances == 'v' && verbose_char_WFSP == 'v')
     {
