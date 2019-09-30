@@ -11,7 +11,14 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/CPP/main",
-      "args": ["--verbose", "vv", "-i", "./data/ins_05_20_4.txt"],
+      "args": [
+        "--verbose",
+        "vv",
+        "-i",
+        "./data/ins_05_20_4.txt",
+        "--cuts",
+        "1"
+      ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}/CPP",
       "environment": [],

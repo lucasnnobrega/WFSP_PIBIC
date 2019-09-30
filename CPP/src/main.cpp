@@ -16,7 +16,7 @@
 
 using namespace std;
 
-void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_param, int thread_param)
+void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thread_param)
 {
     // Criando o Ambiente
     IloEnv env;
@@ -674,12 +674,12 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     // (22)
     // Feito na implementação das variáveis
 
-    //     ██╗ ██╗     ██████╗██████╗ ██╗     ███████╗██╗  ██╗
-    //    ██╔╝██╔╝    ██╔════╝██╔══██╗██║     ██╔════╝╚██╗██╔╝
-    //   ██╔╝██╔╝     ██║     ██████╔╝██║     █████╗   ╚███╔╝
-    //  ██╔╝██╔╝      ██║     ██╔═══╝ ██║     ██╔══╝   ██╔██╗
-    // ██╔╝██╔╝       ╚██████╗██║     ███████╗███████╗██╔╝ ██╗
-    // ╚═╝ ╚═╝         ╚═════╝╚═╝     ╚══════╝╚══════╝╚═╝  ╚═╝
+    //  ██████╗██████╗ ██╗     ███████╗██╗  ██╗
+    // ██╔════╝██╔══██╗██║     ██╔════╝╚██╗██╔╝
+    // ██║     ██████╔╝██║     █████╗   ╚███╔╝
+    // ██║     ██╔═══╝ ██║     ██╔══╝   ██╔██╗
+    // ╚██████╗██║     ███████╗███████╗██╔╝ ██╗
+    //  ╚═════╝╚═╝     ╚══════╝╚══════╝╚═╝  ╚═╝
     // CPLEX
     // Creating a CPLEX solver
     cout << "\n################################################################\n";
@@ -704,8 +704,8 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
 
     cplex.out() << GREEN << "ObjValue = " << RESET << cplex.getObjValue() << endl;
 
-    /*
     cplex.out() << "################################################################\n\n";
+    /*
 
     if (verbose == 'v')
     {
@@ -794,7 +794,6 @@ int main(int argc, const char **argv)
     // Types of arguments
     parser.addArgument("-v", "--verbose", 1, false);
     parser.addArgument("-i", "--input", 1, false);
-    parser.addArgument("-c", "--cuts", 1, false);
     parser.addArgument("-t", "--thread", 1, false);
 
     // Parse the command-line arguments
@@ -807,16 +806,6 @@ int main(int argc, const char **argv)
     char verbose_char_WFSP = verbose[1];
 
     string relative_file_path = parser.retrieve<string>("input");
-
-    string cuts = parser.retrieve<string>("cuts");
-    int cut_param = cuts[0] - '0';
-
-    /* check here if cut_param is bounded by 0 and 9 */
-    if (cut_param < 0 or cut_param > 9)
-    {
-        cerr << "Cut argument out of boundary [0, 9]" << endl;
-        exit(0);
-    }
 
     string thread = parser.retrieve<string>("thread");
     int thread_param = stoi(thread);
@@ -866,7 +855,7 @@ int main(int argc, const char **argv)
                 cout << endl;
             }
 
-            WFSP(aux->number_of_symbols, aux->m, aux->priorities, verbose_char_WFSP, cut_param, thread_param);
+            WFSP(aux->number_of_symbols, aux->m, aux->priorities, verbose_char_WFSP, thread_param);
             free(aux);
         }
     }
