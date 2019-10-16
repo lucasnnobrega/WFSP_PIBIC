@@ -817,11 +817,6 @@ int main(int argc, const char **argv)
         exit(0);
     }
 
-    cout << "thread       : " << thread_param << endl;
-    cout << "thread param : " << thread_param << endl;
-
-    //exit(0);
-
     if (verbose_char_read_instances == 'v' && verbose_char_WFSP == 'v')
     {
 
