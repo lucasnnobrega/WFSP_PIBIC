@@ -29,7 +29,7 @@ void draftToLogger(IloModel modelo,
                    int *M,
                    int *priorities,
                    IloIntVarArray D,
-                   char verbose)
+                   int verbose)
 {
   IloEnv env = modelo.getEnv();
 
@@ -44,7 +44,7 @@ void draftToLogger(IloModel modelo,
       {
         //cplex.out() << " OUT = " << cplex.getValue(y[i][k][h]) << endl;
         // If the value is equal to 1, save in the sequence vector
-        //if (verbose == 'v')
+        //if (verbose > 1)
         //  cplex.out() << cplex.getValue(y[i][k][h]);
         if (cplex.getValue(y[i][k][h]) == 1)
         //if (a < 4)
@@ -61,7 +61,7 @@ void draftToLogger(IloModel modelo,
     }
   }
 
-  if (verbose == 'v')
+  if (verbose > 1)
     cout << endl
          << endl
          << endl;
@@ -135,9 +135,9 @@ void draftToLogger(IloModel modelo,
   writeOutputCustom(verbose, content);
 }
 
-int write(char verbose)
+int write(int verbose)
 {
-  if (verbose == 'v')
+  if (verbose > 1)
     std::cout << "Criado o arquivo" << std::endl;
 
   ofstream myfile;
@@ -147,8 +147,8 @@ int write(char verbose)
   return 0;
 }
 
-//File_content *read_instances(const char *relative_file_path, char verbose)
-File_content *read_instances(string relative_file_path, char verbose)
+//File_content *read_instances(const char *relative_file_path, int verbose)
+File_content *read_instances(string relative_file_path, int verbose)
 {
   string linhas[5];
 
@@ -163,10 +163,10 @@ File_content *read_instances(string relative_file_path, char verbose)
     for (int i = 0; i < count; i++)
     {
       getline(myfile, linhas[i]);
-      if (verbose == 'v')
+      if (verbose > 1)
         cout << "Linha: " << linhas[i] << '\n';
     }
-    if (verbose == 'v')
+    if (verbose > 1)
       cout << "\n\n";
 
     int number_of_symbols = stoi(linhas[0]);
@@ -182,7 +182,7 @@ File_content *read_instances(string relative_file_path, char verbose)
       myarray[i] = linhas[2][i] - '0';
     }
 
-    if (verbose == 'v')
+    if (verbose > 1)
     {
       cout << "\n\n\n";
       cout << "##########################################" << endl;
@@ -192,7 +192,7 @@ File_content *read_instances(string relative_file_path, char verbose)
     int numDigits = 0;
     for (int i = 0; i < linhas[2].length(); i++)
     {
-      if (verbose == 'v')
+      if (verbose > 1)
       {
         cout << "Iteration n: " << i << endl;
         cout << GREEN << "HEAD: " << RESET << myarray[i] << endl;
@@ -204,7 +204,7 @@ File_content *read_instances(string relative_file_path, char verbose)
       {
         //compose_num_str.push_back(myarray[numDigits]);
         compose_num_str.push_back(linhas[2][i]);
-        if (verbose == 'v')
+        if (verbose > 1)
         {
           cout << "myarray[i]: " << myarray[i] << endl;
           cout << "i: " << i << " compose_num_str: " << compose_num_str << endl;
@@ -215,14 +215,14 @@ File_content *read_instances(string relative_file_path, char verbose)
       }
       myarray_clean[i - numDigits] = stoi(compose_num_str);
 
-      if (verbose == 'v')
+      if (verbose > 1)
       {
         cout << "myarray_clean[i]: " << myarray_clean[i];
         cout << endl
              << endl;
       }
     }
-    if (verbose == 'v')
+    if (verbose > 1)
     {
       cout << "##########################################" << endl;
 
@@ -237,24 +237,24 @@ File_content *read_instances(string relative_file_path, char verbose)
     {
       myarray_final[i] = myarray_clean[i];
 
-      if (verbose == 'v')
+      if (verbose > 1)
       {
         cout << myarray_clean[i] << " ";
       }
     }
 
-    if (verbose == 'v')
+    if (verbose > 1)
       cout << "\nend iteration" << endl
            << endl
            << endl;
 
     for (int i = 0; i < linhas[2].length(); i++)
     {
-      if (verbose == 'v')
+      if (verbose > 1)
         cout << "counter: " << i << " number: " << myarray[i] << " new " << myarray_clean[i] << '\n';
     }
 
-    if (verbose == 'v')
+    if (verbose > 1)
     {
       cout << "\n\n############################\n\nLast For:\n";
       for (int i = 0; i < number_of_symbols; i++)
@@ -266,7 +266,7 @@ File_content *read_instances(string relative_file_path, char verbose)
     free(myarray);
     free(myarray_clean);
 
-    if (verbose == 'v')
+    if (verbose > 1)
     {
       cout << "\n\n############################\n\nOthers Values:\n";
       cout << "Number of symbols: " << number_of_symbols << endl;
@@ -288,7 +288,7 @@ File_content *read_instances(string relative_file_path, char verbose)
   return content;
 }
 
-File_content *read_instances_clean(string relative_file_path, char verbose)
+File_content *read_instances_clean(string relative_file_path, int verbose)
 {
   int number_of_symbols;
   int m;
@@ -304,11 +304,13 @@ File_content *read_instances_clean(string relative_file_path, char verbose)
     entrada >> priorities[i];
   }
 
-  std::cout << "\n\nTeste com função nova" << std::endl;
-
-  for (int j = 0; j < number_of_symbols; j++)
+  if (verbose > 2)
   {
-    cout << " |priority " << priorities[j];
+    std::cout << "\n\nTeste com função nova" << std::endl;
+    for (int j = 0; j < number_of_symbols; j++)
+    {
+      cout << " |priority " << priorities[j];
+    }
   }
 
   cout << endl;
@@ -323,7 +325,7 @@ File_content *read_instances_clean(string relative_file_path, char verbose)
   return content;
 }
 
-int writeOutput(char verbose, Write_content content_to_write)
+int writeOutput(int verbose, Write_content content_to_write)
 {
 
   int objective = content_to_write.objective;
@@ -338,7 +340,7 @@ int writeOutput(char verbose, Write_content content_to_write)
   int *Di = content_to_write.Di;
   int *Df = content_to_write.Df;
 
-  if (verbose == 'v')
+  if (verbose > 1)
   {
     std::cout << GREEN << "Inside Write function" << RESET << endl;
     std::cout << "Lista de variáveis:       " << endl;
@@ -373,14 +375,14 @@ int writeOutput(char verbose, Write_content content_to_write)
     if (i < sequence.size())
     {
       myfile << sequence[i][0] + 1 << " - ";
-      if (verbose == 'v')
+      if (verbose > 1)
         cout << sequence[i][0] + 1 << "-";
     }
     else
     {
       myfile << "*"
              << " - ";
-      if (verbose == 'v')
+      if (verbose > 1)
         cout << "*"
              << " - ";
     }
@@ -407,7 +409,7 @@ int writeOutput(char verbose, Write_content content_to_write)
   return 0;
 }
 
-int writeOutputCustom(char verbose, Write_content content_to_write)
+int writeOutputCustom(int verbose, Write_content content_to_write)
 {
 
   int objective = content_to_write.objective;

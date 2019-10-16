@@ -16,7 +16,7 @@
 
 using namespace std;
 
-void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thread_param)
+void WFSP(int number_of_symbols, int m, int priorities[], int verbose, int thread_param)
 {
     // Criando o Ambiente
     IloEnv env;
@@ -31,15 +31,15 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
     //* Dados
 
     // Numero de Simbolos
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << GREEN << "Inside WFSP function" << RESET << std::endl;
     int n = number_of_symbols;
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "Number of symbols: " << number_of_symbols << " n: " << n << std::endl;
 
     // Conjunto de Simbolos X1 ... Xn
     int X[n];
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "X created" << endl;
 
     // Numero Maximo de copias do simbolo Xi E X
@@ -49,7 +49,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
     {
         M[i] = n; // CONFERIR ok
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "M created: M[0] = " << M[0] << endl;
 
     // Conjunto de indices das cópias xi E X,  Ki = {1, ..., Mi}
@@ -82,7 +82,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         c[i] = priorities[i];
         char var[100];
         sprintf(var, "Priority: %d", c[i]);
-        if (verbose == 'v')
+        if (verbose > 0)
             std::cout << "Priority: " << c[i] << " ";
     }
     std::cout << std::endl;
@@ -90,7 +90,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
     // Conjunto de posicoes que podem ser ocupadas pela k-ésima cópia do simbolo Xi E X
     // Hik = {k, ... ,TMAX}
     int **H[n];
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "Creating the array Hik:" << std::endl;
 
     for (int i = 0; i < n; i++)
@@ -112,7 +112,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
     }
 
     //* Verify input data
-    if (verbose == 'v')
+    if (verbose > 0)
     {
         std::cout << "#####################################" << std::endl;
         std::cout << "Verify input data: " << std::endl;
@@ -161,7 +161,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
             }
         }
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "y created" << std::endl;
 
     // d_i,k,k+1
@@ -194,7 +194,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
             modelo.add(d[i][k]);
         }
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "d created" << std::endl;
 
     // D_i
@@ -210,7 +210,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         D[i].setName(var);
         modelo.add(D[i]);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "D created" << std::endl;
 
     // P
@@ -223,7 +223,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
     sprintf(var, "P");
     P.setName(var);
     modelo.add(P);
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "P created" << std::endl;
 
     // p_ik
@@ -247,7 +247,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         }
     }
 
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "p created" << std::endl;
 
     // new variable
@@ -268,7 +268,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         E[h].setName(var);
         modelo.add(E[h]);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "E created" << std::endl;
 
     // sum{i in X, k in K[i]} y_ikh ≤ 1, ∀h ∈ {1, . . . , T MAX}
@@ -285,7 +285,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         }
         modelo.add(E[h] >= soma - 1);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "New restriction created" << std::endl;
 
     // ███████╗   ██████╗
@@ -305,7 +305,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
     IloObjective obj(env, (P + soma * TMAX * c[0]), IloObjective::Minimize);
     modelo.add(obj);
 
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "Objective function created" << std::endl;
 
     // ███████╗    █████╗
@@ -322,7 +322,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
     {
         modelo.add(P >= D[i] * c[i]);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "Restriction 3 created" << std::endl;
 
     // (4.3) (4)
@@ -334,7 +334,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
             modelo.add(D[i] >= d[i][k]);
         }
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "Restriction 4 created" << std::endl;
 
     // (4.4) (5)
@@ -359,7 +359,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         }
         // modelo.add(soma <= 1);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "Restriction 5 created" << std::endl;
 
     // sum{h in H[i][k]} y_ikh ≤ 1,, (4.4) (6)
@@ -375,7 +375,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
             modelo.add(soma <= 1);
         }
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "Restriction 6 created" << std::endl;
 
     // sum{k in K[i], h in H[i][k]} y_ikh ≤ 1,  (4.4) (7)
@@ -391,7 +391,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         }
         modelo.add(soma >= 1);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "Restriction 7 created" << std::endl;
 
     // Missing for all k_i in K in the Article (8) Tese (4.7)
@@ -408,7 +408,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
             modelo.add(p[i][k] == soma);
         }
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "Restriction 8 created" << std::endl;
 
     // (9) Tese (4.8)
@@ -428,7 +428,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
             modelo.add(soma_esq >= soma_dir);
         }
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "Restriction 9 created" << std::endl;
 
     // (10) Tese (4.9)
@@ -445,7 +445,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
             modelo.add(p[i][k + 1] >= p[i][k] - (1 - soma) * TMAX);
         }
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "Restriction 10 created" << std::endl;
 
     // (11) Tese (4.10)
@@ -459,7 +459,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
             }
         }
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         std::cout << "Restriction 11 created" << std::endl;
 
     // (12) Tese ()
@@ -483,7 +483,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
     //   ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝╚══════╝    ╚═╝╚═╝  ╚═╝╚═╝
     // Variaveis PII
 
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << GREEN << "Declaring New Variables (W, U, R, alpha[], w[])" << RESET << endl;
     //W
     IloIntVarArray W(env, n, 0, IloIntMax);
@@ -496,7 +496,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         W[i].setName(var);
         modelo.add(W[i]);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "W created" << endl;
 
     //Ui
@@ -510,7 +510,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         U[i].setName(var);
         modelo.add(U[i]);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "U created" << endl;
 
     //Ri
@@ -524,7 +524,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         R[i].setName(var);
         modelo.add(R[i]);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "R created" << endl;
 
     // alpha
@@ -548,7 +548,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
             modelo.add(alpha[i][k]);
         }
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "alpha created" << endl;
 
     // w
@@ -572,7 +572,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
             modelo.add(w[i][k]);
         }
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "w created" << endl;
 
     // ███╗   ██╗███████╗██╗    ██╗    ██████╗ ███████╗███████╗████████╗██████╗ ██╗ ██████╗████████╗██╗ ██████╗ ███╗   ██╗███████╗
@@ -583,7 +583,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
     // ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝     ╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝ ╚═════╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 
     //* New Restrictions
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "New Restrictions" << endl;
 
     // (15)
@@ -591,7 +591,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
     {
         modelo.add(D[i] >= W[i]);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "Restriction 15 created" << endl;
 
     // (16)
@@ -599,7 +599,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
     {
         modelo.add(W[i] >= U[i] - R[i]);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "Restriction 16 created" << endl;
     // (17)
     for (int i = 0; i < n; i++)
@@ -617,7 +617,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         }
         modelo.add(U[i] == soma + p[i][0]);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "Restriction 17 created" << endl;
 
     // (18)
@@ -630,7 +630,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         }
         modelo.add(R[i] == soma);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "Restriction 18 created" << endl;
 
     // (19)
@@ -643,7 +643,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
         }
         modelo.add(soma == 1);
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "Restriction 19 created" << endl;
 
     // (20)
@@ -654,7 +654,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
             modelo.add(alpha[i][k] <= 1 - w[i][k] + p[i][k]);
         }
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "Restriction 20 created" << endl;
 
     // (21)
@@ -665,7 +665,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
             modelo.add(alpha[i][k] <= w[i][k] * TMAX);
         }
     }
-    if (verbose == 'v')
+    if (verbose > 0)
         cout << "Restriction 21 created" << endl;
 
     // (22)
@@ -705,9 +705,9 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int thre
     cplex.out() << GREEN << "ObjValue = " << RESET << cplex.getObjValue() << endl;
 
     cplex.out() << "################################################################\n\n";
-    /*
 
-    if (verbose == 'v')
+    /*
+    if (verbose > 0)
     {
 
         cout << "W: " << endl;
@@ -800,14 +800,20 @@ int main(int argc, const char **argv)
     parser.parse(argc, argv);
 
     string verbose = parser.retrieve<string>("verbose");
+    string relative_file_path = parser.retrieve<string>("input");
+    string thread = parser.retrieve<string>("thread");
 
     // Because verbose is a string (array)
-    char verbose_char_read_instances = verbose[0];
-    char verbose_char_WFSP = verbose[1];
+    int verbose_char_read_instances = verbose[0];
+    int verbose_char_WFSP = verbose[1];
 
-    string relative_file_path = parser.retrieve<string>("input");
+    // Converting the input to choose better the verbose mode
+    int verbose_int_read_instances = int(verbose[0]) - 48;
+    int verbose_int_WFSP = int(verbose[1]) - 48;
 
-    string thread = parser.retrieve<string>("thread");
+    cout << verbose_int_read_instances << endl;
+    cout << verbose_int_WFSP << endl;
+
     int thread_param = stoi(thread);
 
     /* check here if thread is bounded by 0 and 9 */
@@ -817,27 +823,29 @@ int main(int argc, const char **argv)
         exit(0);
     }
 
-    if (verbose_char_read_instances == 'v' && verbose_char_WFSP == 'v')
+    if (verbose_int_read_instances > 2 && verbose_int_WFSP > 2)
     {
 
         cout << GREEN << "\n\nInside the main function" << RESET << endl;
-        cout << "verbose:            " << verbose << endl;
-        cout << "relative_file_path: " << relative_file_path << endl;
-        cout << "verbose_char_read_instances: " << verbose_char_read_instances << endl;
-        cout << "verbose_char_WFSP: " << verbose_char_WFSP << endl;
+        cout << " verbose:            " << verbose << endl;
+        cout << " relative_file_path: " << relative_file_path << endl;
+        cout << " verbose_char_read_instances: " << verbose_char_read_instances << endl;
+        cout << " verbose_char_WFSP: " << verbose_char_WFSP << endl;
     }
+
+    //exit(0);
 
     try
     {
-        if (verbose_char_read_instances == 'v' && verbose_char_WFSP == 'v')
+        if (verbose_int_read_instances > 2 && verbose_int_WFSP > 2)
             cout << GREEN << "Inside the try" << RESET << endl;
 
         File_content *aux = NULL;
-        aux = read_instances_clean(relative_file_path, verbose_char_read_instances);
+        aux = read_instances_clean(relative_file_path, verbose_int_read_instances);
 
         if (aux)
         {
-            if (verbose_char_read_instances == 'v' && verbose_char_WFSP == 'v')
+            if (verbose_int_read_instances > 2 && verbose_int_WFSP > 2)
             {
                 std::cout << "Inside the try -> IF" << std::endl;
                 std::cout << " number of symbols: " << aux->number_of_symbols << std::endl;
@@ -850,7 +858,7 @@ int main(int argc, const char **argv)
                 cout << endl;
             }
 
-            WFSP(aux->number_of_symbols, aux->m, aux->priorities, verbose_char_WFSP, thread_param);
+            WFSP(aux->number_of_symbols, aux->m, aux->priorities, verbose_int_WFSP, thread_param);
             free(aux);
         }
     }

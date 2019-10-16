@@ -32,11 +32,11 @@ typedef struct Write_Content //log
   int *Df;
 } Write_content;
 
-int write(char verbose);
+int write(int verbose);
 
-int writeOutput(char verbose, Write_content content_to_write);
+int writeOutput(int verbose, Write_content content_to_write);
 
-int writeOutputCustom(char verbose, Write_content content_to_write);
+int writeOutputCustom(int verbose, Write_content content_to_write);
 
 bool sortByH(const vector<int> &v1, const vector<int> &v2);
 
@@ -49,11 +49,11 @@ void draftToLogger(IloModel modelo,
                    int *M,
                    int *priorities,
                    IloIntVarArray D,
-                   char verbose);
+                   int verbose);
 
-//File_content *read_instances(const char *relative_file_path, char verbose);
-File_content *read_instances(string relative_file_path, char verbose);
+//File_content *read_instances(const char *relative_file_path, int verbose);
+File_content *read_instances(string relative_file_path, int verbose);
 
-File_content *read_instances_clean(string relative_file_path, char verbose);
+File_content *read_instances_clean(string relative_file_path, int verbose);
 
 #endif // read_write

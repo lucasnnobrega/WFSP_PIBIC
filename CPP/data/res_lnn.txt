@@ -7,9 +7,9 @@ Number4
 Objective: 36
 
 Sequence:
-1 - 2 - 1 - 2 - 1 - 2 - 1 - 2 - 4 - 5 - * - * - * - * - * - * - * - * - * - * - 
+2 - 3 - 2 - 1 - 2 - 3 - 1 - 2 - 1 - 1 - 4 - 5 - * - * - * - * - * - * - * - * - 
 
-Occupied positions: 10 of 20
+Occupied positions: 12 of 20
 
 symbol 1--> Priority:  4, Di:  0, Df:  3, Pi: 0, Pf: 12
 symbol 2--> Priority:  16, Di:  0, Df:  3, Pi: 0, Pf: 48
@@ -20,7 +20,7 @@ symbol 5--> Priority:  17, Di:  0, Df:  12, Pi: 0, Pf: 204
 (Available copies, Used copies)
 symbol 1 -->  5,  4
 symbol 2 -->  5,  4
-symbol 3 -->  5,  0
+symbol 3 -->  5,  2
 symbol 4 -->  5,  1
 symbol 5 -->  5,  1
 
