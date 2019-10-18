@@ -624,6 +624,25 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     if (verbose == 'v')
         cout << "Restriction 21 created" << endl;
 
+    //  ██████╗██╗   ██╗████████╗███████╗
+    // ██╔════╝██║   ██║╚══██╔══╝██╔════╝
+    // ██║     ██║   ██║   ██║   ███████╗
+    // ██║     ██║   ██║   ██║   ╚════██║
+    // ╚██████╗╚██████╔╝   ██║   ███████║
+    //  ╚═════╝ ╚═════╝    ╚═╝   ╚══════╝
+    // CUTS
+
+    if (cut_param == 9)
+    {
+        // (5)
+        for (int i = 0; i < n - 1; i++)
+        {
+            modelo.add(D[i] <= D[i + 1]);
+        }
+        if (verbose == 'v')
+            cout << "Restriction CUT 5 created" << endl;
+    }
+
     // (22)
     // Feito na implementação das variáveis
 
@@ -677,6 +696,9 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     cplex.out() << "\nsolution status = " << cplex.getStatus() << endl;
 
     cplex.out() << GREEN << "ObjValue = " << RESET << cplex.getObjValue() << endl;
+
+    //if (cut_param == 5)
+    //    cplex.out() << GREEN << " Count Callback = " << RESET << contador << endl;
 
     /*
     cplex.out() << "################################################################\n\n";
@@ -808,7 +830,7 @@ int main(int argc, const char **argv)
     cout << "thread      : " << thread_param << endl;
     cout << "thread param: " << thread_param << endl;
 
-    exit(0);
+    ///exit(0);
 
     if (verbose_char_read_instances == 'v' && verbose_char_WFSP == 'v')
     {

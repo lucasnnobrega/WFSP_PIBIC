@@ -1,6 +1,9 @@
 #include "../include/MyCutCallback.h"
 
+int contador = 0;
+
 MyCutCallback::MyCutCallback(IloEnv env, const IloIntVarArray &x_ref) : IloCplex::UserCutCallbackI(env), x(x_ref), x_vars(env)
+//MyCutCallback::MyCutCallback(IloEnv env, const IloIntVarArray &x_ref) : IloCplex::LazyConstraintCallbackI(env), x(x_ref), x_vars(env)
 {
    //preenche x_vars
    /*
@@ -107,6 +110,9 @@ std::vector<IloConstraint> *MyCutCallback::separate()
 //código do callback que é executado pelo cplex.
 void MyCutCallback::main()
 {
+
+   contador = contador + 1;
+
    int n_p3 = x.getSize();
 
    std::vector<IloConstraint> *cons_p3 = separate();
@@ -117,4 +123,6 @@ void MyCutCallback::main()
       add(cons_p3->at(i)).end(); //aqui tambem ha a possibilidade de se usar addLocal. Nesse caso, o corte so eh adicionado na subarvore enraizada pelo no atual
    }
    delete cons_p3;
+
+   std::cout << "contador: " << contador << std::endl;
 }

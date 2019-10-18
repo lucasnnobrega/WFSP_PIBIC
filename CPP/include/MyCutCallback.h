@@ -8,7 +8,7 @@
 #include <iostream>
 
 /** Cut callback */
-class MyCutCallback : public IloCplex::UserCutCallbackI
+class MyCutCallback : public IloCplex::UserCutCallbackI //LazyConstraintCallbackI //
 {
 private:
    //quando da construcao do objeto desta classe, x é usado para colocar todas as variaveis no vetor x_vars.
