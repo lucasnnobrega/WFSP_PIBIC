@@ -1,27 +1,13 @@
-Number1
-Number2
-Number3
-Number4
 
 **********************************************
-Objective: 24
+Objective: 0
 
 Sequence:
-1 - 1 - 2 - 1 - 4 - 2 - 3 - 5 - * - * - * - * - * - * - * - 
 
-Occupied positions: 8 of 15
 
-symbol 1--> Priority:  11, Di:  0, Df:  3, Pi: 0, Pf: 33
-symbol 2--> Priority:  5, Di:  0, Df:  4, Pi: 0, Pf: 20
-symbol 3--> Priority:  4, Di:  0, Df:  8, Pi: 0, Pf: 32
-symbol 4--> Priority:  12, Di:  0, Df:  24, Pi: 0, Pf: 288
-symbol 5--> Priority:  5, Di:  0, Df:  24, Pi: 0, Pf: 120
+Occupied positions: 0 of 0
+
 
 (Available copies, Used copies)
-symbol 1 -->  5,  3
-symbol 2 -->  5,  2
-symbol 3 -->  5,  1
-symbol 4 -->  5,  1
-symbol 5 -->  5,  1
 
 **********************************************
