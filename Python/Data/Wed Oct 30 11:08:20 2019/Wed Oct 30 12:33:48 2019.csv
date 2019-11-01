@@ -1,0 +1,181 @@
+,file,corte 0 ,corte 2,corte 6
+0,ins_05_10_1.txt,0.2743992805480957,0.33008480072021484,0.274385929107666
+1,ins_05_10_10.txt,0.15782904624938965,0.16765761375427246,0.16503620147705078
+2,ins_05_10_2.txt,0.18544650077819824,0.1854090690612793,0.18292880058288574
+3,ins_05_10_3.txt,0.19917941093444824,0.19354462623596191,0.21136808395385742
+4,ins_05_10_4.txt,0.11941289901733398,0.10511565208435059,0.10385394096374512
+5,ins_05_10_5.txt,0.17730426788330078,0.1707603931427002,0.18261265754699707
+6,ins_05_10_6.txt,0.23836565017700195,0.17844247817993164,0.23760032653808594
+7,ins_05_10_7.txt,0.2072458267211914,0.20533514022827148,0.20888924598693848
+8,ins_05_10_8.txt,0.1480405330657959,0.14026331901550293,0.15205883979797363
+9,ins_05_10_9.txt,0.34232401847839355,0.364290714263916,0.3445124626159668
+10,ins_05_15_1.txt,2.5387983322143555,2.7429723739624023,2.473361015319824
+11,ins_05_15_10.txt,0.6972129344940186,0.7351343631744385,0.6428642272949219
+12,ins_05_15_2.txt,9.610108137130737,11.086009979248047,9.584124565124512
+13,ins_05_15_3.txt,11.294694900512695,57.91357707977295,11.187273263931274
+14,ins_05_15_4.txt,4.136571645736694,4.123248338699341,4.186919689178467
+15,ins_05_15_5.txt,53.62113666534424,67.90003657341003,54.17128086090088
+16,ins_05_15_6.txt,5.277186393737793,2.3609373569488525,5.27716851234436
+17,ins_05_15_8.txt,13.293407678604126,7.200823545455933,13.256973505020142
+18,ins_05_15_9.txt,1.5610344409942627,2.5746443271636963,1.5808701515197754
+19,ins_05_20_1.txt,115.09176111221313,49.915184020996094,115.57950973510742
+20,ins_05_20_10.txt,ttl,ttl,ttl
+21,ins_05_20_2.txt,6.501738548278809,14.180548667907715,5.8747382164001465
+22,ins_05_20_3.txt,50.683125734329224,34.4708731174469,50.74990272521973
+23,ins_05_20_4.txt,20.59117317199707,23.234813690185547,20.675645112991333
+24,ins_05_20_5.txt,ttl,80.1000394821167,ttl
+25,ins_05_20_6.txt,72.66440534591675,65.19817900657654,61.003910541534424
+26,ins_05_20_7.txt,ttl,ttl,ttl
+27,ins_05_20_8.txt,0.9407544136047363,1.8893914222717285,1.3175504207611084
+28,ins_05_20_9.txt,ttl,ttl,ttl
+29,ins_07_14_1.txt,2.046614170074463,1.7772243022918701,2.0666723251342773
+30,ins_07_14_10.txt,1.2416210174560547,1.6050341129302979,1.0994038581848145
+31,ins_07_14_2.txt,0.8431065082550049,0.9050862789154053,0.9109869003295898
+32,ins_07_14_3.txt,3.8792405128479004,3.430068016052246,3.645597457885742
+33,ins_07_14_4.txt,4.222384929656982,9.37699007987976,4.290082216262817
+34,ins_11_22_9.txt,ttl,ttl,ttl
+35,ins_11_33_1.txt,ttl,ttl,ttl
+36,ins_11_33_10.txt,ttl,ttl,ttl
+37,ins_11_33_2.txt,ttl,ttl,ttl
+38,ins_11_33_3.txt,ttl,ttl,ttl
+39,ins_11_33_4.txt,ttl,ttl,ttl
+40,ins_11_33_5.txt,ttl,ttl,ttl
+41,ins_11_33_6.txt,ttl,ttl,ttl
+42,ins_11_33_7.txt,ttl,ttl,ttl
+43,ins_11_33_8.txt,ttl,ttl,ttl
+44,ins_11_33_9.txt,ttl,ttl,ttl
+45,ins_11_44_1.txt,ttl,ttl,ttl
+46,ins_11_44_10.txt,ttl,ttl,ttl
+47,ins_11_44_2.txt,ttl,ttl,ttl
+48,ins_11_44_3.txt,ttl,ttl,ttl
+49,ins_11_44_4.txt,ttl,ttl,ttl
+50,ins_11_44_5.txt,ttl,ttl,ttl
+51,ins_13_52_1.txt,ttl,ttl,ttl
+52,ins_13_52_10.txt,ttl,ttl,ttl
+53,ins_13_52_2.txt,ttl,ttl,ttl
+54,ins_13_52_3.txt,ttl,ttl,ttl
+55,ins_13_52_4.txt,ttl,ttl,ttl
+56,ins_13_52_5.txt,ttl,ttl,ttl
+57,ins_13_52_6.txt,ttl,ttl,ttl
+58,ins_13_52_7.txt,ttl,ttl,ttl
+59,ins_13_52_8.txt,ttl,ttl,ttl
+60,ins_13_52_9.txt,ttl,ttl,ttl
+61,ins_15_30_1.txt,ttl,ttl,ttl
+62,ins_15_30_10.txt,ttl,ttl,ttl
+63,ins_15_30_2.txt,ttl,ttl,ttl
+64,ins_15_30_3.txt,ttl,ttl,ttl
+65,ins_15_30_4.txt,ttl,ttl,ttl
+66,ins_15_30_5.txt,ttl,ttl,ttl
+67,ins_15_30_6.txt,ttl,ttl,ttl
+68,ins_05_15_7.txt,39.04958510398865,33.07323622703552,40.27156186103821
+69,ins_07_14_5.txt,36.27209758758545,59.84237599372864,36.4355571269989
+70,ins_07_28_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_28_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_28_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_28_7.txt
+71,ins_09_27_5.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_27_5.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_27_5.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_27_5.txt
+72,ins_11_22_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_22_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_22_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_22_8.txt
+73,ins_11_44_6.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_44_6.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_44_6.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_44_6.txt
+74,ins_13_39_9.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_39_9.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_39_9.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_39_9.txt
+75,ins_15_30_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_30_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_30_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_30_7.txt
+76,ins_07_28_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_28_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_28_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_28_8.txt
+77,ins_07_28_9.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_28_9.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_28_9.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_28_9.txt
+78,ins_09_18_1.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_18_1.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_18_1.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_18_1.txt
+79,ins_09_18_10.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_18_10.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_18_10.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_18_10.txt
+80,ins_09_18_2.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_18_2.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_18_2.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_18_2.txt
+81,ins_09_18_3.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_18_3.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_18_3.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_18_3.txt
+82,ins_09_18_4.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_18_4.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_18_4.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_18_4.txt
+83,ins_09_18_5.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_18_5.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_18_5.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_18_5.txt
+84,ins_09_18_6.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_18_6.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_18_6.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_18_6.txt
+85,ins_09_18_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_18_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_18_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_18_7.txt
+86,ins_09_18_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_18_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_18_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_18_8.txt
+87,ins_09_18_9.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_18_9.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_18_9.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_18_9.txt
+88,ins_09_27_1.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_27_1.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_27_1.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_27_1.txt
+89,ins_09_27_10.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_27_10.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_27_10.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_27_10.txt
+90,ins_09_27_2.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_27_2.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_27_2.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_27_2.txt
+91,ins_09_27_3.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_27_3.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_27_3.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_27_3.txt
+92,ins_09_27_4.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_27_4.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_27_4.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_27_4.txt
+93,ins_09_27_6.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_27_6.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_27_6.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_27_6.txt
+94,ins_09_27_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_27_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_27_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_27_7.txt
+95,ins_09_27_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_27_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_27_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_27_8.txt
+96,ins_09_27_9.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_27_9.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_27_9.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_27_9.txt
+97,ins_09_36_1.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_36_1.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_36_1.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_36_1.txt
+98,ins_09_36_10.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_36_10.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_36_10.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_36_10.txt
+99,ins_09_36_2.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_36_2.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_36_2.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_36_2.txt
+100,ins_09_36_3.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_36_3.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_36_3.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_36_3.txt
+101,ins_09_36_4.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_36_4.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_36_4.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_36_4.txt
+102,ins_09_36_5.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_36_5.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_36_5.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_36_5.txt
+103,ins_09_36_6.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_36_6.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_36_6.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_36_6.txt
+104,ins_09_36_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_36_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_36_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_36_7.txt
+105,ins_09_36_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_36_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_36_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_36_8.txt
+106,ins_09_36_9.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_09_36_9.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_09_36_9.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_09_36_9.txt
+107,ins_11_22_1.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_22_1.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_22_1.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_22_1.txt
+108,ins_11_22_10.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_22_10.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_22_10.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_22_10.txt
+109,ins_11_22_2.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_22_2.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_22_2.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_22_2.txt
+110,ins_11_22_3.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_22_3.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_22_3.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_22_3.txt
+111,ins_11_22_4.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_22_4.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_22_4.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_22_4.txt
+112,ins_11_22_5.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_22_5.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_22_5.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_22_5.txt
+113,ins_11_22_6.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_22_6.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_22_6.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_22_6.txt
+114,ins_11_22_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_22_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_22_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_22_7.txt
+115,ins_07_14_6.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_14_6.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_14_6.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_14_6.txt
+116,ins_07_14_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_14_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_14_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_14_7.txt
+117,ins_07_14_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_14_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_14_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_14_8.txt
+118,ins_07_14_9.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_14_9.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_14_9.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_14_9.txt
+119,ins_07_21_1.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_21_1.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_21_1.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_21_1.txt
+120,ins_07_21_10.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_21_10.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_21_10.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_21_10.txt
+121,ins_07_21_2.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_21_2.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_21_2.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_21_2.txt
+122,ins_07_21_3.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_21_3.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_21_3.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_21_3.txt
+123,ins_07_21_4.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_21_4.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_21_4.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_21_4.txt
+124,ins_07_21_5.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_21_5.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_21_5.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_21_5.txt
+125,ins_07_21_6.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_21_6.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_21_6.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_21_6.txt
+126,ins_07_21_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_21_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_21_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_21_7.txt
+127,ins_07_21_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_21_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_21_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_21_8.txt
+128,ins_07_21_9.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_21_9.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_21_9.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_21_9.txt
+129,ins_07_28_1.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_28_1.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_28_1.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_28_1.txt
+130,ins_07_28_10.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_28_10.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_28_10.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_28_10.txt
+131,ins_07_28_2.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_28_2.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_28_2.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_28_2.txt
+132,ins_07_28_3.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_28_3.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_28_3.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_28_3.txt
+133,ins_07_28_4.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_28_4.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_28_4.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_28_4.txt
+134,ins_07_28_5.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_28_5.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_28_5.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_28_5.txt
+135,ins_07_28_6.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_07_28_6.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_07_28_6.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_07_28_6.txt
+136,ins_11_44_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_44_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_44_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_44_7.txt
+137,ins_11_44_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_44_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_44_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_44_8.txt
+138,ins_11_44_9.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_11_44_9.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_11_44_9.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_11_44_9.txt
+139,ins_13_26_1.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_26_1.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_26_1.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_26_1.txt
+140,ins_13_26_10.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_26_10.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_26_10.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_26_10.txt
+141,ins_13_26_2.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_26_2.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_26_2.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_26_2.txt
+142,ins_13_26_3.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_26_3.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_26_3.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_26_3.txt
+143,ins_13_26_4.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_26_4.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_26_4.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_26_4.txt
+144,ins_13_26_5.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_26_5.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_26_5.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_26_5.txt
+145,ins_13_26_6.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_26_6.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_26_6.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_26_6.txt
+146,ins_13_26_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_26_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_26_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_26_7.txt
+147,ins_13_26_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_26_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_26_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_26_8.txt
+148,ins_13_26_9.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_26_9.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_26_9.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_26_9.txt
+149,ins_13_39_1.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_39_1.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_39_1.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_39_1.txt
+150,ins_13_39_10.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_39_10.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_39_10.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_39_10.txt
+151,ins_13_39_2.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_39_2.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_39_2.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_39_2.txt
+152,ins_13_39_3.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_39_3.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_39_3.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_39_3.txt
+153,ins_13_39_4.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_39_4.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_39_4.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_39_4.txt
+154,ins_13_39_5.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_39_5.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_39_5.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_39_5.txt
+155,ins_13_39_6.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_39_6.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_39_6.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_39_6.txt
+156,ins_13_39_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_39_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_39_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_39_7.txt
+157,ins_13_39_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_13_39_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_13_39_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_13_39_8.txt
+158,ins_15_30_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_30_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_30_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_30_8.txt
+159,ins_15_30_9.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_30_9.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_30_9.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_30_9.txt
+160,ins_15_45_1.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_45_1.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_45_1.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_45_1.txt
+161,ins_15_45_10.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_45_10.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_45_10.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_45_10.txt
+162,ins_15_45_2.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_45_2.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_45_2.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_45_2.txt
+163,ins_15_45_3.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_45_3.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_45_3.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_45_3.txt
+164,ins_15_45_4.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_45_4.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_45_4.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_45_4.txt
+165,ins_15_45_5.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_45_5.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_45_5.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_45_5.txt
+166,ins_15_45_6.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_45_6.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_45_6.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_45_6.txt
+167,ins_15_45_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_45_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_45_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_45_7.txt
+168,ins_15_45_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_45_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_45_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_45_8.txt
+169,ins_15_45_9.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_45_9.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_45_9.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_45_9.txt
+170,ins_15_60_1.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_60_1.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_60_1.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_60_1.txt
+171,ins_15_60_10.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_60_10.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_60_10.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_60_10.txt
+172,ins_15_60_2.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_60_2.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_60_2.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_60_2.txt
+173,ins_15_60_3.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_60_3.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_60_3.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_60_3.txt
+174,ins_15_60_4.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_60_4.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_60_4.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_60_4.txt
+175,ins_15_60_5.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_60_5.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_60_5.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_60_5.txt
+176,ins_15_60_6.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_60_6.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_60_6.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_60_6.txt
+177,ins_15_60_7.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_60_7.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_60_7.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_60_7.txt
+178,ins_15_60_8.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_60_8.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_60_8.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_60_8.txt
+179,ins_15_60_9.txt,../CPP/main -v aa -c 0 -t 1 -i ../CPP/instances/ins_15_60_9.txt,../CPP/main -v aa -c 2 -t 1 -i ../CPP/instances/ins_15_60_9.txt,../CPP/main -v aa -c 6 -t 1 -i ../CPP/instances/ins_15_60_9.txt

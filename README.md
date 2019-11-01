@@ -15,14 +15,39 @@ Usage to alocate the data transmission through Digital TV.
 
 _For more examples and usage, please refer to the [WFSP Website](https://sites.google.com/site/weightedfairsequencesproblem/home)._
 
+./main -v vv -c 9 -t 1 -i ./instances/ins_07_14_1.txt
+
+### Parameters
+
+- -v or --verbose
+  - mode with more output
+- -c or --cuts
+
+  - implementation and where (root or callback)
+
+  | Number | Preposition  |    Where    |
+  | :----: | :----------: | :---------: |
+  |   0    | Without cuts |   Nowhere   |
+  |   2    |      5       |   In root   |
+  |   6    |      5       | In callback |
+
+- -t or --threads
+
+  - number of threads used in the CPLEX, in range [0,16].
+
+- i or --input
+  - instance file path
+
 ## Development setup
 
 Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
 
 ## Release History
 
-* 0.0.1
-    * Work in progress
+- 1.0.0
+  - New objective function with conjecture enabled
+- 0.0.1
+  - Work in progress
 
 ## Meta
 

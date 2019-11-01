@@ -61,7 +61,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     for (int i = 0; i < n; i++)
     {
 
-        int *aux = new int(M[i]);
+        int *aux = new int[M[i]];
         K[i] = aux;
 
         for (int j = 0; j < M[i]; j++)
@@ -632,15 +632,23 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     //  ╚═════╝ ╚═════╝    ╚═╝   ╚══════╝
     // CUTS
 
-    if (cut_param == 9)
+    if (cut_param == 6)
     {
-        // (5)
+        // Preposition (4) - Cut 1
+
+        if (verbose == 'v')
+            cout << "Restriction CUT 1 - Preposition 4 - in root mode - created" << endl;
+    }
+
+    if (cut_param == 7)
+    {
+        // Preposition (5) - Cut 2
         for (int i = 0; i < n - 1; i++)
         {
             modelo.add(D[i] <= D[i + 1]);
         }
         if (verbose == 'v')
-            cout << "Restriction CUT 5 created" << endl;
+            cout << "Restriction CUT 2 - Preposition 5 - in root mode - created" << endl;
     }
 
     // (22)
@@ -649,12 +657,12 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     // (22)
     // Feito na implementação das variáveis
 
-    //     ██╗ ██╗     ██████╗██████╗ ██╗     ███████╗██╗  ██╗
-    //    ██╔╝██╔╝    ██╔════╝██╔══██╗██║     ██╔════╝╚██╗██╔╝
-    //   ██╔╝██╔╝     ██║     ██████╔╝██║     █████╗   ╚███╔╝
-    //  ██╔╝██╔╝      ██║     ██╔═══╝ ██║     ██╔══╝   ██╔██╗
-    // ██╔╝██╔╝       ╚██████╗██║     ███████╗███████╗██╔╝ ██╗
-    // ╚═╝ ╚═╝         ╚═════╝╚═╝     ╚══════╝╚══════╝╚═╝  ╚═╝
+    //  ██████╗██████╗ ██╗     ███████╗██╗  ██╗
+    // ██╔════╝██╔══██╗██║     ██╔════╝╚██╗██╔╝
+    // ██║     ██████╔╝██║     █████╗   ╚███╔╝
+    // ██║     ██╔═══╝ ██║     ██╔══╝   ██╔██╗
+    // ╚██████╗██║     ███████╗███████╗██╔╝ ██╗
+    //  ╚═════╝╚═╝     ╚══════╝╚══════╝╚═╝  ╚═╝
 
     // CPLEX
     // Creating a CPLEX solver
@@ -662,9 +670,9 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     cout << "####################### CPLEX SOLVER ###########################\n";
     IloCplex cplex(modelo);
 
-    if (cut_param == 5)
+    if (cut_param == 2)
     {
-        cplex.out() << "Using callback nº 5" << endl;
+        cplex.out() << "Using cut number 2, preposition 5 in callback mode" << endl;
         // Create a variable for callback use
         const IloIntVarArray &D_ref = D;
 
@@ -693,8 +701,12 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     cplex.exportModel("modelo.lp");
 
     cplex.solve();
-    cplex.out() << "\nsolution status = " << cplex.getStatus() << endl;
 
+    cplex.out() << "\n";
+    cplex.out() << GREEN << "Get Status = " << RESET << cplex.getStatus() << endl;
+    cplex.out() << GREEN << "Cplex Status = " << RESET << cplex.getCplexStatus() << endl;
+    cplex.out() << GREEN << "Cplex Sub Status = " << RESET << cplex.getCplexSubStatus() << endl;
+    cplex.out() << GREEN << "Cplex Time = " << RESET << cplex.getCplexTime() << endl;
     cplex.out() << GREEN << "ObjValue = " << RESET << cplex.getObjValue() << endl;
 
     //if (cut_param == 5)
@@ -820,15 +832,12 @@ int main(int argc, const char **argv)
     string thread = parser.retrieve<string>("thread");
     int thread_param = stoi(thread);
 
-    /* check here if thread is bounded by 0 and 9 */
+    /* check here if thread is bounded by 0 and 16 */
     if (thread_param < 0 or thread_param > 16)
     {
         cerr << "Thread argument out of boundary [0, 16]" << endl;
         exit(0);
     }
-
-    cout << "thread      : " << thread_param << endl;
-    cout << "thread param: " << thread_param << endl;
 
     ///exit(0);
 
@@ -836,10 +845,12 @@ int main(int argc, const char **argv)
     {
 
         cout << GREEN << "\n\nInside the main function" << RESET << endl;
-        cout << "verbose:            " << verbose << endl;
-        cout << "relative_file_path: " << relative_file_path << endl;
-        cout << "verbose_char_read_instances: " << verbose_char_read_instances << endl;
-        cout << "verbose_char_WFSP: " << verbose_char_WFSP << endl;
+        cout << " verbose:            " << verbose << endl;
+        cout << " relative_file_path: " << relative_file_path << endl;
+        cout << " verbose_char_read_instances: " << verbose_char_read_instances << endl;
+        cout << " verbose_char_WFSP: " << verbose_char_WFSP << endl;
+        cout << " thread      : " << thread_param << endl;
+        cout << " thread param: " << thread_param << endl;
     }
 
     try

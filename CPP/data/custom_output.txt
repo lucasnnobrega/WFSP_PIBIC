@@ -2,9 +2,36 @@ MY COMMENTS:
 
 Sequence in the program:
 i - k - h
+4 - 0 - 0
+1 - 0 - 2
+3 - 0 - 3
+0 - 0 - 5
+2 - 0 - 6
+1 - 1 - 7
+0 - 1 - 8
+2 - 1 - 10
+0 - 2 - 11
 
 Sequence in the mathematical format:
 (i+1) - (k+1) - (h+1)
+  5   -   1   -   1
+  2   -   1   -   3
+  4   -   1   -   4
+  1   -   1   -   6
+  3   -   1   -   7
+  2   -   2   -   8
+  1   -   2   -   9
+  3   -   2   -   11
+  1   -   3   -   12
 
 Sequence in the mathematical format for CSV:
 (i+1),(k+1),(h+1),
+5,1,1
+2,1,3
+4,1,4
+1,1,6
+3,1,7
+2,2,8
+1,2,9
+3,2,11
+1,3,12

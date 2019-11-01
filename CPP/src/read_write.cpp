@@ -304,14 +304,16 @@ File_content *read_instances_clean(string relative_file_path, char verbose)
     entrada >> priorities[i];
   }
 
-  std::cout << "\n\nTeste com função nova" << std::endl;
-
-  for (int j = 0; j < number_of_symbols; j++)
+  if (verbose == 'v')
   {
-    cout << " |priority " << priorities[j];
-  }
+    std::cout << "\n\nTest with new function" << std::endl;
 
-  cout << endl;
+    for (int j = 0; j < number_of_symbols; j++)
+    {
+      cout << " |priority " << priorities[j];
+    }
+    cout << endl;
+  }
 
   File_content *content;
   content = (File_content *)malloc(sizeof(File_content));
