@@ -25,15 +25,18 @@ _For more examples and usage, please refer to the [WFSP Website](https://sites.g
 
   - implementation and where (root or callback)
 
-  | Number |  Preposition  | Cut |    Where    |
-  | :----: | :-----------: | :-: | :---------: |
-  |   0    | Without cuts  |     |   Nowhere   |
-  |   1    |       4       | C1  |   In root   |
-  |   2    |       5       | C2  |   In root   |
-  |   3    |       6       | C3  |   In root   |
-  |   4    |  Conjecture   |     |   In root   |
-  |   6    |       5       | C2  | In Callback |
-  |   9    | 4, 5, 6, Conj | All |   In root   |
+  | Number |  Preposition  | Cut |        Where        | Done |
+  | :----: | :-----------: | :-: | :-----------------: | :--: |
+  |   0    | Without cuts  |  -  |       Nowhere       |  Ok  |
+  |   1    |       4       | C1  |       In root       |  Ok  |
+  |   2    |       5       | C2  |       In root       |  Ok  |
+  |   3    |       6       | C3  |       In root       |  Ok  |
+  |   4    |  Conjecture   |  -  |       In root       |  Ok  |
+  |   5    |       5       | C2  |     In Callback     |  Ok  |
+  |   6    |       6       | C3  |     In Callback     |      |
+  |   7    |  Conjecture   |  -  |     In Callback     |      |
+  |   8    | 4, 5, 6, Conj | All | In Callback && root |      |
+  |   9    | 4, 5, 6, Conj | All |       In root       |  Ok  |
 
 * -t or --threads
 

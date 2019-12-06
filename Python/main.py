@@ -9,18 +9,21 @@ from copy import deepcopy
 
 from constantes import *
 
-cut_param = [0, 1, 2, 3, 4, 6, 9]
+cut_param = [0, 1, 2, 3, 4, 5, 9]
 
 corte_array = [("corte " + str(i)) for i in cut_param]
 
+corte_array[0] = "sem"
 corte_array[4] = "conjectura"
-corte_array[6] = "todos"
+corte_array[-1] = "todos"
 
 commands_per_file = [{
     "file": file,
     "cortes": ["../CPP/main -v aa -c {} -t 1 -i ../CPP/instances/{}".format(c, file) for c in cut_param]
 } for file in os.listdir("../CPP/instances")]
 
+# Necessario para ordenar as instancias pelo tamanho delas
+commands_per_file = sorted(commands_per_file, key=lambda k: k['file'])
 
 timeout = 3600  # Em segundos => 1 hora tem 60 minutos que por sua vez tem 60 segundos
 
@@ -81,13 +84,12 @@ def mainLoop(timeout):
         # print(df2.head(6))
         df2.to_csv("./Data/" + folder_name + "/" +
                    str(i+1) + " " + str(time.ctime()) + ".csv")
-        '''
-        print(f"./Data/{folder_name}/{i+1} {time.ctime()}.csv")
-        '''
+
+        #print(f"./Data/{folder_name}/{i+1} {time.ctime()}.csv")
     return data
 
 
-    # Driver function
+# Driver function
 if __name__ == "__main__":
 
     '''

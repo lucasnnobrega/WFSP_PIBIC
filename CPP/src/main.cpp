@@ -13,7 +13,11 @@
 #include "../include/read_write.h"
 #include "../include/argparser.hpp"
 
+// Preposition 5, Cut 2
 #include "../include/MyCutCallback.h"
+
+// Conjecture
+#include "../include/MyCutCallbackConjecture.h"
 
 using namespace std;
 
@@ -728,7 +732,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     cout << "####################### CPLEX SOLVER ###########################\n";
     IloCplex cplex(modelo);
 
-    if (cut_param == 6)
+    if (cut_param == 5)
     {
         cplex.out() << "Using cut number 2, preposition 5 in callback mode" << endl;
         // Create a variable for callback use
@@ -736,6 +740,18 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
 
         // Instance of MyCutCallback
         MyCutCallback *cutCbk = new (env) MyCutCallback(env, D_ref);
+
+        // Tell CPLEX to use the Callback
+        cplex.use(cutCbk);
+    }
+    if (cut_param == 6)
+    {
+        cplex.out() << "Using conjecture in callback mode" << endl;
+        // Create a variable for callback use
+        const IloIntVarArray &D_ref = D;
+
+        // Instance of MyCutCallback
+        MyCutCallbackConjecture *cutCbk = new (env) MyCutCallbackConjecture(env, D_ref);
 
         // Tell CPLEX to use the Callback
         cplex.use(cutCbk);
