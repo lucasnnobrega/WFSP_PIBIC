@@ -16,9 +16,6 @@
 // Preposition 5, Cut 2
 #include "../include/MyCutCallback.h"
 
-// Conjecture
-#include "../include/MyCutCallbackConjecture.h"
-
 using namespace std;
 
 void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_param, int thread_param)
@@ -739,7 +736,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
         const IloIntVarArray &D_ref = D;
 
         // Instance of MyCutCallback
-        MyCutCallback *cutCbk = new (env) MyCutCallback(env, D_ref);
+        MyCutCallback *cutCbk = new (env) MyCutCallback(env, D_ref, 5);
 
         // Tell CPLEX to use the Callback
         cplex.use(cutCbk);
@@ -748,10 +745,10 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     {
         cplex.out() << "Using conjecture in callback mode" << endl;
         // Create a variable for callback use
-        const IloIntVarArray &D_ref = D;
+        const IloArray<IloArray<IloBoolVarArray>> &y_ref = y;
 
         // Instance of MyCutCallback
-        MyCutCallbackConjecture *cutCbk = new (env) MyCutCallbackConjecture(env, D_ref);
+        MyCutCallback *cutCbk = new (env) MyCutCallback(env, y_ref, 6);
 
         // Tell CPLEX to use the Callback
         cplex.use(cutCbk);
