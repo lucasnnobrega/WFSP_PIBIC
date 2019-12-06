@@ -25,22 +25,29 @@ _For more examples and usage, please refer to the [WFSP Website](https://sites.g
 
   - implementation and where (root or callback)
 
-  | Number | Preposition  |    Where    |
-  | :----: | :----------: | :---------: |
-  |   0    | Without cuts |   Nowhere   |
-  |   2    |      5       |   In root   |
-  |   6    |      5       | In callback |
+  | Number |  Preposition  | Cut |    Where    |
+  | :----: | :-----------: | :-: | :---------: |
+  |   0    | Without cuts  |     |   Nowhere   |
+  |   1    |       4       | C1  |   In root   |
+  |   2    |       5       | C2  |   In root   |
+  |   3    |       6       | C3  |   In root   |
+  |   4    |  Conjecture   |     |   In root   |
+  |   6    |       5       | C2  | In Callback |
+  |   9    | 4, 5, 6, Conj | All |   In root   |
 
-- -t or --threads
+* -t or --threads
 
   - number of threads used in the CPLEX, in range [0,16].
 
-- i or --input
+* -i or --input
   - instance file path
 
 ## Development setup
 
 Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
+
+To run one instance use the code in CPP folder like the Usage example.
+To run the benchmark program, open Python folder and run ./main.py program.
 
 ## Release History
 

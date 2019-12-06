@@ -632,15 +632,17 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
     //  ╚═════╝ ╚═════╝    ╚═╝   ╚══════╝
     // CUTS
 
-    if (cut_param == 6)
+    if (cut_param == 1 or cut_param == 9)
     {
         // Preposition (4) - Cut 1
+
+        modelo.add(y[n - 1][0][0] == 1);
 
         if (verbose == 'v')
             cout << "Restriction CUT 1 - Preposition 4 - in root mode - created" << endl;
     }
 
-    if (cut_param == 7)
+    if (cut_param == 2 or cut_param == 9)
     {
         // Preposition (5) - Cut 2
         for (int i = 0; i < n - 1; i++)
@@ -650,6 +652,61 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
         if (verbose == 'v')
             cout << "Restriction CUT 2 - Preposition 5 - in root mode - created" << endl;
     }
+
+    if (cut_param == 3 or cut_param == 9)
+    {
+        // Preposition (6) - Cut 3
+        for (int i = 0; i < n; i++)
+        {
+
+            for (int k = 0; k < M[i] - 1; k++)
+            {
+                // Para todo h pertencente a intersecçao de H[i][k] com H[i][k+1]
+                // A intersecçao destes 2 conjuntos é {k + 1 , ... , TMAX}
+                // -1 por começar do zero
+                // -1 por possuir h + 1 na formula
+                // h = 1 por representar a intersecção
+                for (int h = 0; h < TMAX - k - 1; h++)
+                {
+                    //cout << i << " " << k << " " << h << " " << endl;
+                    modelo.add(y[i][k][h] + y[i][k + 1][h] <= 1);
+                }
+            }
+        }
+        if (verbose == 'v')
+            cout << "Restriction CUT 3 - Preposition 6 - in root mode - created" << endl;
+    }
+
+    if (cut_param == 4 or cut_param == 9)
+    {
+
+        for (int i = 0; i < n - 1; i++)
+        {
+
+            for (int k = 0; k < M[i + 1]; k++)
+            {
+
+                IloExpr somaE(env);
+                IloExpr somaD(env);
+
+                for (int h = 0; h < TMAX - k; h++)
+                {
+                    somaE += y[i + 1][k][h];
+                }
+
+                for (int h = 0; h < TMAX - k; h++)
+                {
+                    somaD += y[i][k][h];
+                }
+
+                modelo.add(somaE <= somaD);
+            }
+        }
+        if (verbose == 'v')
+            cout << "Restriction CONJECTURE 1 - in root mode - created" << endl;
+    }
+
+    //exit(123123);
 
     // (22)
     // Feito na implementação das variáveis
@@ -666,11 +723,12 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
 
     // CPLEX
     // Creating a CPLEX solver
-    cout << "\n################################################################\n";
+    cout
+        << "\n################################################################\n";
     cout << "####################### CPLEX SOLVER ###########################\n";
     IloCplex cplex(modelo);
 
-    if (cut_param == 2)
+    if (cut_param == 6)
     {
         cplex.out() << "Using cut number 2, preposition 5 in callback mode" << endl;
         // Create a variable for callback use

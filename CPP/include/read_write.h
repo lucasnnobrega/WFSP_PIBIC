@@ -19,7 +19,7 @@ typedef struct Files_Content
 
 typedef struct Write_Content //log
 {
-  int objective;
+  double objective;
   int number_of_symbols;
   int TMAX;
   int occupied_positions;

@@ -71,6 +71,9 @@ void draftToLogger(IloModel modelo,
   Write_content content;
 
   content.objective = cplex.getObjValue();
+  printf("\n----> %.2lf %.2lf\n", content.objective, cplex.getObjValue());
+
+  cout << RED << cplex.getObjValue() << "  " << content.objective << RESET;
 
   content.number_of_symbols = number_of_symbols; // OK
 

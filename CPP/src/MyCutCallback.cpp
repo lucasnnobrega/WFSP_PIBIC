@@ -111,7 +111,7 @@ std::vector<IloConstraint> *MyCutCallback::separate()
 void MyCutCallback::main()
 {
 
-   contador = contador + 1;
+   //contador = contador + 1;
 
    int n_p3 = x.getSize();
 
@@ -124,5 +124,5 @@ void MyCutCallback::main()
    }
    delete cons_p3;
 
-   std::cout << "contador: " << contador << std::endl;
+   //std::cout << "contador: " << contador << std::endl;
 }
