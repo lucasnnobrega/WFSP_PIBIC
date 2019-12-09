@@ -2,7 +2,7 @@
 
 int contador = 0;
 
-MyCutCallback::MyCutCallback(IloEnv env, const IloIntVarArray &x_ref, int cut_param) : IloCplex::UserCutCallbackI(env), x(x_ref), x_vars(env)
+MyCutCallback::MyCutCallback(IloEnv env, const IloIntVarArray &x_ref, int cut_param, int TMAX) : IloCplex::UserCutCallbackI(env), x(x_ref), x_vars(env)
 //MyCutCallback::MyCutCallback(IloEnv env, const IloIntVarArray &x_ref, int cut_param) : IloCplex::LazyConstraintCallbackI(env), x(x_ref), x_vars(env)
 {
    //preenche x_vars
@@ -27,31 +27,34 @@ MyCutCallback::MyCutCallback(IloEnv env, const IloIntVarArray &x_ref, int cut_pa
    std::cout << "Inside Callback Constructor" << std::endl;
 
    env_class = env;
+   TMAX_class = TMAX;
 }
 
-MyCutCallback::MyCutCallback(IloEnv env, const IloArray<IloArray<IloBoolVarArray>> &x_ref, int cut_param) : IloCplex::UserCutCallbackI(env), y_class(x_ref), x_vars(env)
+MyCutCallback::MyCutCallback(IloEnv env, const IloArray<IloArray<IloBoolVarArray>> &x_ref, int cut_param, int TMAX) : IloCplex::UserCutCallbackI(env), y_class(x_ref), x_vars(env)
 //MyCutCallback::MyCutCallback(IloEnv env, const IloArray<IloArray<IloBoolVarArray>> &x_ref, int cut_param) : IloCplex::LazyConstraintCallbackI(env), x(x_ref), x_vars(env)
 {
-
-   cut_class_param = cut_param;
 
    //preenche x_vars
    std::cout << "Inside Callback Constructor 2" << std::endl;
 
+   /*
    for (int i = 0; i < y_class.getSize(); i++)
    {
       for (int k = 0; k < y_class[i].getSize(); k++)
       {
          for (int h = 0; h < y_class[i][k].getSize(); h++)
          {
-            this->x_vars.add(this->y_class[i][k][h]);
+            this->y_vars.add(this->y_class[i][k][h]);
          }
       }
    }
+   */
 
    std::cout << "Inside Callback Constructor 2" << std::endl;
 
+   cut_class_param = cut_param;
    env_class = env;
+   TMAX_class = TMAX;
 }
 
 //cplex exige a implementacao deste metodo. Ele apenas retorna uma copia do callback
@@ -59,11 +62,11 @@ IloCplex::CallbackI *MyCutCallback::duplicateCallback() const
 {
    if (cut_class_param == 5)
    {
-      return new (getEnv()) MyCutCallback(getEnv(), x, cut_class_param);
+      return new (getEnv()) MyCutCallback(getEnv(), x, cut_class_param, TMAX_class);
    }
    if (cut_class_param == 7)
    {
-      return new (getEnv()) MyCutCallback(getEnv(), y_class, cut_class_param);
+      return new (getEnv()) MyCutCallback(getEnv(), y_class, cut_class_param, TMAX_class);
    }
 }
 
@@ -117,11 +120,13 @@ std::vector<IloConstraint> *MyCutCallback::separate_case7()
             for (int h = 0; h < TMAX_class - k; h++)
             {
                somaE += y_class[i + 1][k][h];
+               somaE_int += getValue(y_class[i + 1][k][h]);
             }
 
             for (int h = 0; h < TMAX_class - k; h++)
             {
                somaD += y_class[i][k][h];
+               somaD_int += getValue(y_class[i][k][h]);
             }
 
             //modelo.add(somaE <= somaD);
@@ -129,9 +134,9 @@ std::vector<IloConstraint> *MyCutCallback::separate_case7()
             somaE_min_somaD = somaE - somaD;
 
             //if (somaE_min_somaD)
-            if (somaE - somaD)
+            if (somaE_int <= somaD_int + 0.01)
             {
-               double viol = x_vals[i] - x_vals[i + 1];
+
                cons->push_back(somaE <= somaD);
             }
          }

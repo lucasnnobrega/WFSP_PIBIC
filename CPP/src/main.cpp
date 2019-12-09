@@ -736,7 +736,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
         const IloIntVarArray &D_ref = D;
 
         // Instance of MyCutCallback
-        MyCutCallback *cutCbk = new (env) MyCutCallback(env, D_ref, 5);
+        MyCutCallback *cutCbk = new (env) MyCutCallback(env, D_ref, 5, TMAX);
 
         // Tell CPLEX to use the Callback
         cplex.use(cutCbk);
@@ -748,7 +748,7 @@ void WFSP(int number_of_symbols, int m, int priorities[], char verbose, int cut_
         const IloArray<IloArray<IloBoolVarArray>> &y_ref = y;
 
         // Instance of MyCutCallback
-        MyCutCallback *cutCbk = new (env) MyCutCallback(env, y_ref, 6);
+        MyCutCallback *cutCbk = new (env) MyCutCallback(env, y_ref, 6, TMAX);
 
         // Tell CPLEX to use the Callback
         cplex.use(cutCbk);

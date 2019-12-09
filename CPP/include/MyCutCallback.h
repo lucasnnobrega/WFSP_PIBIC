@@ -8,18 +8,21 @@
 #include <iostream>
 
 /** Cut callback */
-class MyCutCallback : public IloCplex::UserCutCallbackI //LazyConstraintCallbackI //
+class MyCutCallback : public IloCplex::UserCutCallbackI //UserCutCallbackI //LazyConstraintCallbackI //
 {
 private:
    //quando da construcao do objeto desta classe, x é usado para colocar todas as variaveis no vetor x_vars.
    //IloArray<IloBoolVarArray> x;
    IloIntVarArray x;
 
-   IloArray<IloArray<IloBoolVarArray>> y_class;
-
    //x_vars contem as variaveis x. Com esse vetor, peço todos os valores das variaveis x de uma vez só para o CPLEX. Isso é muito mais rápido que pedir cada valor
    //de uma vez.
    IloNumVarArray x_vars;
+
+   IloArray<IloArray<IloBoolVarArray>> y_class;
+
+   // Variavel para armazenar os valores de y_class
+   IloArray<IloArray<IloBoolVarArray>> y_vars;
 
    // Contem qual corte sera executado
    int cut_class_param;
